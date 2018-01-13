@@ -66,6 +66,10 @@ public:
 	virtual const char* GetPlatformName( bool* pbIs64Bit ) = 0;
 	
 	virtual int32 GetSteam2FullASTicket( uint8* pubTicket, int32 cubTicket ) = 0;
+
+	virtual void SetWinningPingTimeForCellID( uint32 uPing ) = 0;
+	
+	virtual void GetSteam2ID( TSteamGlobalUserID *pUserID ) = 0;
 };
 
 #endif // ISTEAM2BRIDGE002_H

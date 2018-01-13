@@ -41,7 +41,7 @@ public:
 
 	// returns the CSteamID of the account currently logged into the Steam client
 	// a CSteamID is a unique identifier for an account, and used to differentiate users in all parts of the Steamworks API
-	STEAMWORKS_STRUCT_RETURN_0(CSteamID, GetSteamID) /*virtual CSteamID GetSteamID() = 0;*/
+	virtual CSteamID GetSteamID() = 0;
 
 	// Multiplayer Authentication functions
 
@@ -67,7 +67,7 @@ public:
 	// Legacy functions
 
 	// used by only a few games to track usage events
-	virtual void TrackAppUsageEvent( CGameID gameID, EAppUsageEvent eAppUsageEvent, const char *pchExtraInfo = "" ) = 0;
+	virtual void TrackAppUsageEvent( CGameID gameID, int eAppUsageEvent, const char *pchExtraInfo = "" ) = 0;
 
 	// get the local storage folder for current Steam account to write application data, e.g. save games, configs etc.
 	// this will usually be something like "C:\Progam Files\Steam\userdata\<SteamID>\<AppID>\local"
@@ -104,7 +104,7 @@ public:
 	// In that case, nBytesWritten is set to the size of the buffer required to decompress the given
 	// data. The suggested buffer size for the destination buffer is 22 kilobytes.
 	// The output format of the data is 16-bit signed at 11025 samples per second.
-	virtual EVoiceResult DecompressVoice( void *pCompressed, uint32 cbCompressed, void *pDestBuffer, uint32 cbDestBufferSize, uint32 *nBytesWritten ) = 0;
+	virtual EVoiceResult DecompressVoice( const void *pCompressed, uint32 cbCompressed, void *pDestBuffer, uint32 cbDestBufferSize, uint32 *nBytesWritten ) = 0;
 
 	// Retrieve ticket to be sent to the entity who wishes to authenticate you. 
 	// pcbTicket retrieves the length of the actual ticket.
@@ -140,6 +140,39 @@ public:
 
 	// retrieve a finished ticket
 	virtual bool GetEncryptedAppTicket( void *pTicket, int cbMaxTicket, uint32 *pcbTicket ) = 0;
+
+#ifdef _PS3
+	// Initiates PS3 Logon request using just PSN ticket.  
+	//
+	// PARAMS: bInteractive - If set tells Steam to go ahead and show the PS3 NetStart dialog if needed to
+	// prompt the user for network setup/PSN logon before initiating the Steam side of the logon.
+	//
+	// Listen for SteamServersConnected_t or SteamServerConnectFailure_t for status.  SteamServerConnectFailure_t
+	// may return with EResult k_EResultPSNAccountUnlinked if the PSN account is unknown to Steam.  You should
+	// then call LogOnAndLinkSteamAccountToPSN() after prompting the user for credentials to establish a link. 
+	// Future calls to LogOn() after the one time link call should succeed as long as the user is connected to PSN.
+	virtual void LogOn( bool bInteractive ) = 0;
+
+	// Initiates a request to logon with a specific steam username/password and create a PSN account link at 
+	// the same time.  Should call this only if LogOn() has failed and indicated the PSN account is unlinked.
+	//
+	// PARAMS: bInteractive - If set tells Steam to go ahead and show the PS3 NetStart dialog if needed to
+	// prompt the user for network setup/PSN logon before initiating the Steam side of the logon.  pchUserName 
+	// should be the users Steam username, and pchPassword should be the users Steam password.
+	// 
+	// Listen for SteamServersConnected_t or SteamServerConnectFailure_t for status.  SteamServerConnectFailure_t
+	// may return with EResult k_EResultPSNAccountAlreadyLinked if already linked to another account. 
+	virtual void LogOnAndLinkSteamAccountToPSN( bool bInteractive, const char *pchUserName, const char *pchPassword ) = 0;
+
+	// Final logon option for PS3, this logs into an existing account if already linked, but if not already linked
+	// creates a new account using the info in the PSN ticket to generate a unique account name.  The new account is
+	// then linked to the PSN ticket.  This is the faster option for new users who don't have an existing Steam account
+	// to get into multiplayer.
+	//
+	// PARAMS: bInteractive - If set tells Steam to go ahead and show the PS3 NetStart dialog if needed to
+	// prompt the user for network setup/PSN logon before initiating the Steam side of the logon.
+	virtual void LogOnAndCreateNewSteamAccountIfNeeded( bool bInteractive ) = 0;
+#endif
 };
 
 #endif // ISTEAMUSER014_H

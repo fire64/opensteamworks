@@ -23,7 +23,6 @@
 #include "SteamTypes.h"
 #include "UtilsCommon.h"
 
-
 abstract_class UNSAFE_INTERFACE IClientUtils
 {
 public:
@@ -35,6 +34,7 @@ public:
 	// return the number of seconds since the user 
 	virtual uint32 GetSecondsSinceAppActive() = 0;
 	virtual uint32 GetSecondsSinceComputerActive() = 0;
+	virtual void SetComputerActive() = 0;
 
 	// the universe this client is connecting to
 	virtual EUniverse GetConnectedUniverse() = 0;
@@ -47,12 +47,12 @@ public:
 	virtual const char *GetIPCountry() = 0;
 
 	// returns true if the image exists, and valid sizes were filled out
-	virtual bool GetImageSize( int iImage, uint32 *pnWidth, uint32 *pnHeight ) = 0;
+	virtual bool GetImageSize( int32 iImage, uint32 *pnWidth, uint32 *pnHeight ) = 0;
 
 	// returns true if the image exists, and the buffer was successfully filled out
 	// results are returned in RGBA format
 	// the destination buffer size should be 4 * height * width * sizeof(char)
-	virtual bool GetImageRGBA( int iImage, uint8 *pubDest, int nDestBufferSize ) = 0;
+	virtual bool GetImageRGBA( int32 iImage, uint8 *pubDest, int32 nDestBufferSize ) = 0;
 
 	// returns the IP of the reporting server for valve - currently only used in Source engine games
 	virtual bool GetCSERIPPort( uint32 *unIP, uint16 *usPort ) = 0;
@@ -74,7 +74,7 @@ public:
 	// can be used directly, but more commonly used via the callback dispatch API (see steam_api.h)
 	virtual bool IsAPICallCompleted( SteamAPICall_t hSteamAPICall, bool *pbFailed ) = 0;
 	virtual ESteamAPICallFailure GetAPICallFailureReason( SteamAPICall_t hSteamAPICall ) = 0;
-	virtual bool GetAPICallResult( SteamAPICall_t hSteamAPICall, void *pCallback, int cubCallback, int iCallbackExpected, bool *pbFailed ) = 0;
+	virtual bool GetAPICallResult( SteamAPICall_t hSteamAPICall, void *pCallback, int32 cubCallback, int32 iCallbackExpected, bool *pbFailed ) = 0;
 
 	virtual bool SignalAppsToShutDown() = 0;
 
@@ -87,7 +87,18 @@ public:
 
 	virtual uint64 GetBuildID() = 0;
 
+	virtual void SetCurrentUIMode( EUIMode eUIMode ) = 0;
+	virtual bool ShowGamepadTextInput( EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eInputLineMode, const char *szText, uint32 uMaxLength ) = 0;
+	virtual uint32 GetEnteredGamepadTextLength() = 0;
+	virtual bool GetEnteredGamepadTextInput( char *pchValue, uint32 cchValueMax ) = 0;
+	virtual void GamepadTextInputClosed( HSteamPipe hSteamPipe, bool, const char * ) = 0;
+
 	virtual void SetSpew( ESpewGroup eSpewGroup, int32 iSpewLevel, int32 iLogLevel ) = 0;
+
+	virtual bool BDownloadsDisabled() = 0;
+
+	virtual void SetFocusedWindow( EWindowType eWindowType, uint32 uUnk ) = 0;
+	virtual const char *GetSteamUILanguage() = 0;
 };
 
 #endif // ICLIENTUTILS_H

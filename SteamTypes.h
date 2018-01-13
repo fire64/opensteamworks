@@ -104,7 +104,7 @@
 typedef unsigned char uint8;
 typedef signed char int8;
 
-#if defined( _MSV_VER )
+#if defined( _MSC_VER )
 
 	typedef __int16 int16;
 	typedef unsigned __int16 uint16;
@@ -121,7 +121,7 @@ typedef signed char int8;
 		typedef unsigned __int32 uintp;
 	#endif
 
-#else // _MSV_VER
+#else // _MSC_VER
 
 	typedef short int16;
 	typedef unsigned short uint16;
@@ -137,7 +137,7 @@ typedef signed char int8;
 		typedef unsigned int uintp;
 	#endif
 
-#endif // else _MSV_VER
+#endif // else _MSC_VER
 
 
 #ifndef abstract_class
@@ -253,6 +253,7 @@ typedef signed char int8;
 // lobby type description
 enum ELobbyType
 {
+	k_ELobbyTypePrivate = 0,		// only way to join the lobby is to invite to someone else
 	k_ELobbyTypeFriendsOnly = 1,	// shows for friends or invitees, but not in lobby list
 	k_ELobbyTypePublic = 2,			// visible for friends and in lobby list
 	k_ELobbyTypeInvisible = 3,		// returned by search, but not visible to other friends 
@@ -301,7 +302,7 @@ enum EUniverse
 	k_EUniverseBeta = 2,
 	k_EUniverseInternal = 3,
 	k_EUniverseDev = 4,
-	k_EUniverseRC = 5,
+//	k_EUniverseRC = 5, // Removed
 
 	k_EUniverseMax
 };
@@ -325,24 +326,23 @@ enum EUniverse
 #endif // NO_STEAM
 
 
-typedef void* (*CreateInterfaceFn)( const char *pName, int *pReturnCode );
-typedef void* (*FactoryFn)( const char *pName );
-typedef void* (*InstantiateInterfaceFn)( void );
+#ifdef __clang__
+# define CLANG_ATTR(ATTR) __attribute__((annotate( ATTR )))
+#else
+# define CLANG_ATTR(ATTR)
+#endif
 
-typedef void  (*SteamAPIWarningMessageHook_t)(int hpipe, const char *message);
-typedef void (*KeyValueIteratorCallback_t)(const char* key, const char* value, void* kv);
-
-typedef void (*SteamNotificationCallback_t)(ESteamNotify eEvent, unsigned int nData);
-
-typedef bool (*SteamBGetCallbackFn)( int hpipe, void *pCallbackMsg );
-typedef void (*SteamFreeLastCallbackFn)( int hpipe );
-typedef bool (*SteamGetAPICallResultFn)( int hpipe, uint64 hSteamAPICall, void* pCallback, int cubCallback, int iCallbackExpected, bool* pbFailed );
-
-//-----------------------------------------------------------------------------
-// Purpose: Passed as argument to SteamAPI_UseBreakpadCrashHandler to enable optional callback
-//  just before minidump file is captured after a crash has occurred.  (Allows app to append additional comment data to the dump, etc.)
-//-----------------------------------------------------------------------------
-typedef void (*PFNPreMinidumpCallback)(void *context);
+#define METHOD_DESC(DESC) CLANG_ATTR( "desc:" #DESC ";" )
+#define IGNOREATTR() CLANG_ATTR( "ignore" )
+#define OUT_STRUCT() CLANG_ATTR( "out_struct: ;" )
+#define OUT_ARRAY_CALL(COUNTER,FUNCTION,PARAMS) CLANG_ATTR( "out_array_call:" #COUNTER "," #FUNCTION "," #PARAMS ";" )
+#define OUT_ARRAY_COUNT(COUNTER, DESC) CLANG_ATTR( "out_array_count:" #COUNTER  ";desc:" #DESC )
+#define ARRAY_COUNT(COUNTER) CLANG_ATTR( "array_count:" #COUNTER ";" )
+#define ARRAY_COUNT_D(COUNTER, DESC) CLANG_ATTR( "array_count:" #COUNTER ";desc:" #DESC )
+#define BUFFER_COUNT(COUNTER) CLANG_ATTR( "buffer_count:" #COUNTER ";" )
+#define OUT_BUFFER_COUNT(COUNTER) CLANG_ATTR( "out_buffer_count:" #COUNTER ";" )
+#define OUT_STRING_COUNT(COUNTER) CLANG_ATTR( "out_string_count:" #COUNTER ";" )
+#define DESC(DESC) CLANG_ATTR("desc:" #DESC ";")
 
 //-----------------------------------------------------------------------------
 // Purpose: Used by ICrashHandler interfaces to reference particular installed crash handlers
@@ -391,8 +391,10 @@ typedef uint64 GID_t;
 const GID_t k_GIDNil = 0xffffffffffffffffull;
 
 // For convenience, we define a number of types that are just new names for GIDs
-typedef GID_t JobID_t;			// Each Job has a unique ID
+typedef uint64 JobID_t;			// Each Job has a unique ID
 typedef GID_t TxnID_t;			// Each financial transaction has a unique ID
+
+const JobID_t k_JobIDNil = 0xffffffffffffffffull;
 
 const GID_t k_TxnIDNil = k_GIDNil;
 const GID_t k_TxnIDUnknown = 0;
@@ -405,6 +407,9 @@ const PackageId_t k_uPackageIdFreeSub = 0x0;
 const PackageId_t k_uPackageIdInvalid = 0xFFFFFFFF;
 const PackageId_t k_uPackageIdWallet = -2;
 const PackageId_t k_uPackageIdMicroTxn = -3;
+
+typedef uint32 BundleId_t;
+const BundleId_t k_uBundleIdInvalid = 0;
 
 // this is baked into client messages and interfaces as an int, 
 // make sure we never break this.
@@ -498,6 +503,12 @@ typedef enum ShareType_t
 	SHARE_MANUAL = 2,
 } ShareType_t;
 
+typedef uint64 AssetClassId_t;
+const AssetClassId_t k_ulAssetClassIdInvalid = 0x0;
+
+typedef uint32 PhysicalItemId_t;
+const PhysicalItemId_t k_uPhysicalItemIdInvalid = 0x0;
+
 // this is baked into client messages and interfaces as an int, 
 // make sure we never break this.  AppIds and DepotIDs also presently
 // share the same namespace, but since we'd like to change that in the future
@@ -523,6 +534,10 @@ const CellID_t k_uCellIDInvalid = 0xFFFFFFFF;
 typedef uint64 SteamAPICall_t;
 const SteamAPICall_t k_uAPICallInvalid = 0x0;
 
+typedef uint32 AccountID_t;
+
+typedef uint32 PartnerId_t;
+
 // handle to a communication pipe to the Steam client
 typedef int32 HSteamPipe;
 // handle to single instance of a steam user
@@ -546,61 +561,18 @@ typedef uint32 HTTPRequestHandle;
 
 typedef int unknown_ret; // unknown return value
 
-typedef int HServerQuery;
-const int HSERVERQUERY_INVALID = 0xffffffff;
-
 // returns true of the flags indicate that a user has been removed from the chat
 #define BChatMemberStateChangeRemoved( rgfChatMemberStateChangeFlags ) ( rgfChatMemberStateChangeFlags & ( k_EChatMemberStateChangeDisconnected | k_EChatMemberStateChangeLeft | k_EChatMemberStateChangeKicked | k_EChatMemberStateChangeBanned ) )
-
-// game server flags
-const uint32 k_unFavoriteFlagNone			= 0x00;
-const uint32 k_unFavoriteFlagFavorite		= 0x01; // this game favorite entry is for the favorites list
-const uint32 k_unFavoriteFlagHistory		= 0x02; // this game favorite entry is for the history list
-
-// handle to a socket
-typedef uint32 SNetSocket_t;
-typedef uint32 SNetListenSocket_t;
-
-// max size on chat messages
-const uint32 k_cchFriendChatMsgMax = 0x3000;
-
-// maximum number of characters in a user's name. Two flavors; one for UTF-8 and one for UTF-16.
-// The UTF-8 version has to be very generous to accomodate characters that get large when encoded
-// in UTF-8.
-enum
-{
-	k_cchPersonaNameMax = 128,
-	k_cwchPersonaNameMax = 32,
-};
-
-// size limit on chat room or member metadata
-const uint32 k_cubChatMetadataMax = 8192;
-
-const int k_cchSystemIMTextMax = 4096;	// upper bound of length of system IM text
-
-// size limit on stat or achievement name (UTF-8 encoded)
-const int k_cchStatNameMax = 128;
-
-// maximum number of bytes for a leaderboard name (UTF-8 encoded)
-const int k_cchLeaderboardNameMax = 128;
-
-// maximum number of details int32's storable for a single leaderboard entry
-const int k_cLeaderboardDetailsMax = 64;
-
-// handle to a single leaderboard
-typedef uint64 SteamLeaderboard_t;
-
-// handle to a set of downloaded entries in a leaderboard
-typedef uint64 SteamLeaderboardEntries_t;
 
 typedef void (*PFNLegacyKeyRegistration)( const char *pchCDKey, const char *pchInstallPath );
 typedef bool (*PFNLegacyKeyInstalled)();
 
 const unsigned int k_unSteamAccountIDMask = 0xFFFFFFFF;
 const unsigned int k_unSteamAccountInstanceMask = 0x000FFFFF;
-// we allow 2 simultaneous user account instances right now, 1= desktop, 2 = console, 0 = all
+// we allow 3 simultaneous user account instances right now, 1= desktop, 2 = console, 4 = web, 0 = all
 const unsigned int k_unSteamUserDesktopInstance = 1;	 
 const unsigned int k_unSteamUserConsoleInstance = 2;
+const unsigned int k_unSteamUserWebInstance		= 4;
 
 // Special flags for Chat accounts - they go in the top 8 bits
 // of the steam ID's "instance", leaving 12 for the actual instances
@@ -614,10 +586,6 @@ enum EChatSteamIDInstanceFlags
 
 	// Max of 8 flags
 };
-
-// A handle to a piece of user generated content
-typedef uint64 UGCHandle_t;
-const UGCHandle_t k_UGCHandleInvalid = 0xffffffffffffffffull;
 
 #define STEAM_USING_FILESYSTEM							(0x00000001)
 #define STEAM_USING_LOGGING								(0x00000002)
@@ -703,6 +671,27 @@ typedef	unsigned short		SteamInstanceID_t;		// MUST be 16 bits
 typedef char SteamPersonalQuestion_t[ STEAM_QUESTION_MAXLEN + 1 ];
 
 
+typedef void* (*CreateInterfaceFn)( const char *pName, int *pReturnCode );
+typedef void* (*FactoryFn)( const char *pName );
+typedef void* (*InstantiateInterfaceFn)( void );
+
+typedef void  (*SteamAPIWarningMessageHook_t)(int hpipe, const char *message);
+typedef void( *SteamAPI_PostAPIResultInProcess_t )(SteamAPICall_t callHandle, void *, uint32 unCallbackSize, int iCallbackNum);
+typedef uint32 ( *SteamAPI_CheckCallbackRegistered_t )( int iCallbackNum );
+typedef void (*KeyValueIteratorCallback_t)(const char* key, const char* value, void* kv);
+
+typedef void (*SteamNotificationCallback_t)(ESteamNotify eEvent, unsigned int nData);
+
+typedef bool (*SteamBGetCallbackFn)( int hpipe, void *pCallbackMsg );
+typedef void (*SteamFreeLastCallbackFn)( int hpipe );
+typedef bool (*SteamGetAPICallResultFn)( int hpipe, uint64 hSteamAPICall, void* pCallback, int cubCallback, int iCallbackExpected, bool* pbFailed );
+
+//-----------------------------------------------------------------------------
+// Purpose: Passed as argument to SteamAPI_UseBreakpadCrashHandler to enable optional callback
+//  just before minidump file is captured after a crash has occurred.  (Allows app to append additional comment data to the dump, etc.)
+//-----------------------------------------------------------------------------
+typedef void (*PFNPreMinidumpCallback)(void *context);
+
 //-----------------------------------------------------------------------------
 // Purpose: Base values for callback identifiers, each callback must
 //			have a unique ID.
@@ -722,7 +711,8 @@ enum ECallbackType
 	k_iSteamUserStatsCallbacks = 1100,
 	k_iSteamNetworkingCallbacks = 1200,
 	k_iClientRemoteStorageCallbacks = 1300,
-	k_iSteamUserItemsCallbacks = 1400,
+	//k_iSteamUserItemsCallbacks = 1400,
+	k_iClientDepotBuilderCallbacks = 1400,
 	k_iSteamGameServerItemsCallbacks = 1500,
 	k_iClientUtilsCallbacks = 1600,
 	k_iSteamGameCoordinatorCallbacks = 1700,
@@ -733,7 +723,249 @@ enum ECallbackType
 	k_iClientScreenshotsCallbacks = 2200,
 	k_iSteamScreenshotsCallbacks = 2300,
 	k_iClientAudioCallbacks = 2400,
+	k_iClientUnifiedMessagesCallbacks = 2500,
+	k_iSteamStreamLauncherCallbacks = 2600,
+	k_iClientControllerCallbacks = 2700,
+	k_iSteamControllerCallbacks = 2800,
+	k_iClientParentalSettingsCallbacks = 2900,
+	k_iClientDeviceAuthCallbacks = 3000,
+	k_iClientNetworkDeviceManagerCallbacks = 3100,
+	k_iClientMusicCallbacks = 3200,
+	k_iClientRemoteClientManagerCallbacks = 3300,
+	k_iClientUGCCallbacks = 3400,
+	k_iSteamStreamClientCallbacks = 3500,
+	k_IClientProductBuilderCallbacks = 3600,
+	k_iClientShortcutsCallbacks = 3700,
+	k_iClientRemoteControlManagerCallbacks = 3800,
+	k_iSteamAppListCallbacks = 3900,
+	k_iSteamMusicCallbacks = 4000,
+	k_iSteamMusicRemoteCallbacks = 4100,
+	k_iClientVRCallbacks = 4200,
+	k_iClientReservedCallbacks = 4300,
+	k_iSteamReservedCallbacks = 4400,
+	k_iSteamHTMLSurfaceCallbacks = 4500,
+	k_iClientVideoCallbacks = 4600,
+	k_iClientInventoryCallbacks = 4700
 };
+
+
+//-----------------------------------------------------------------------------
+// The CALLBACK macros are for client side callback logging enabled with
+// log_callback <first callnbackID> <last callbackID>
+// Do not change any of these. 
+//-----------------------------------------------------------------------------
+
+struct SteamCallback_t
+{
+public:
+	SteamCallback_t() {}
+};
+
+#ifndef REFERENCE
+#define REFERENCE(arg) ((void)arg)
+#endif
+
+#define DEFINE_CALLBACK( callbackname, callbackid ) \
+struct callbackname : SteamCallback_t { \
+	enum { k_iCallback = callbackid }; \
+	static callbackname *GetNullPointer() { return 0; } \
+	static const char *GetCallbackName() { return #callbackname; } \
+	static uint32  GetCallbackID() { return callbackname::k_iCallback; }
+
+#define CALLBACK_MEMBER( varidx, vartype, varname ) \
+public: vartype varname ; \
+	static void GetMemberVar_##varidx( unsigned int &varOffset, unsigned int &varSize, uint32 &varCount, const char **pszName, const char **pszType ) { \
+	varOffset = (unsigned int)(size_t)&GetNullPointer()->varname; \
+	varSize = sizeof( vartype ); \
+	varCount = 1; \
+	*pszName = #varname; *pszType = #vartype; }
+
+#define CALLBACK_ARRAY( varidx, vartype, varname, varcount ) \
+public: vartype varname [ varcount ]; \
+	static void GetMemberVar_##varidx( unsigned int &varOffset, unsigned int &varSize, uint32 &varCount, const char **pszName, const char **pszType ) { \
+	varOffset = (unsigned int)(size_t)&GetNullPointer()->varname[0]; \
+	varSize = sizeof( vartype ); \
+	varCount = varcount; \
+	*pszName = #varname; *pszType = #vartype; }
+
+
+#define END_CALLBACK_INTERNAL_BEGIN( numvars )  \
+	static uint32  GetNumMemberVariables() { return numvars; } \
+	static bool    GetMemberVariable( uint32 index, uint32 &varOffset, uint32 &varSize,  uint32 &varCount, const char **pszName, const char **pszType ) { \
+	switch ( index ) { default : return false;
+
+
+#define END_CALLBACK_INTERNAL_SWITCH( varidx ) case varidx : GetMemberVar_##varidx( varOffset, varSize, varCount, pszName, pszType ); return true;
+
+#define END_CALLBACK_INTERNAL_END() }; } };
+
+#define END_DEFINE_CALLBACK_0() \
+	static uint32  GetNumMemberVariables() { return 0; } \
+	static bool    GetMemberVariable( uint32 index, uint32 &varOffset, uint32 &varSize,  uint32 &varCount, const char **pszName, const char **pszType ) { REFERENCE( pszType ); REFERENCE( pszName ); REFERENCE( varCount ); REFERENCE( varSize ); REFERENCE( varOffset ); REFERENCE( index ); return false; } \
+	};
+
+
+#define END_DEFINE_CALLBACK_1() \
+	END_CALLBACK_INTERNAL_BEGIN( 1 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
+	END_CALLBACK_INTERNAL_END()
+
+#define END_DEFINE_CALLBACK_2() \
+	END_CALLBACK_INTERNAL_BEGIN( 2 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
+	END_CALLBACK_INTERNAL_END()
+
+#define END_DEFINE_CALLBACK_3() \
+	END_CALLBACK_INTERNAL_BEGIN( 3 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
+	END_CALLBACK_INTERNAL_END()
+
+#define END_DEFINE_CALLBACK_4() \
+	END_CALLBACK_INTERNAL_BEGIN( 4 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
+	END_CALLBACK_INTERNAL_END()
+
+#define END_DEFINE_CALLBACK_5() \
+	END_CALLBACK_INTERNAL_BEGIN( 5 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
+	END_CALLBACK_INTERNAL_END()
+
+
+#define END_DEFINE_CALLBACK_6() \
+	END_CALLBACK_INTERNAL_BEGIN( 6 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
+	END_CALLBACK_INTERNAL_END()
+
+#define END_DEFINE_CALLBACK_7() \
+	END_CALLBACK_INTERNAL_BEGIN( 7 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
+	END_CALLBACK_INTERNAL_END()
+
+#define END_DEFINE_CALLBACK_8() \
+	END_CALLBACK_INTERNAL_BEGIN( 8 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 7 ) \
+	END_CALLBACK_INTERNAL_END()
+
+#define END_DEFINE_CALLBACK_9() \
+	END_CALLBACK_INTERNAL_BEGIN( 9 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 7 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 8 ) \
+	END_CALLBACK_INTERNAL_END()
+
+#define END_DEFINE_CALLBACK_10() \
+	END_CALLBACK_INTERNAL_BEGIN( 10 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 7 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 8 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 9 ) \
+	END_CALLBACK_INTERNAL_END()
+
+#define END_DEFINE_CALLBACK_11() \
+	END_CALLBACK_INTERNAL_BEGIN( 11 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 7 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 8 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 9 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 10 ) \
+	END_CALLBACK_INTERNAL_END()
+
+#define END_DEFINE_CALLBACK_12() \
+	END_CALLBACK_INTERNAL_BEGIN( 12 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 7 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 8 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 9 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 10 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 11 ) \
+	END_CALLBACK_INTERNAL_END()
+
+#define END_DEFINE_CALLBACK_13() \
+	END_CALLBACK_INTERNAL_BEGIN( 13 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 7 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 8 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 9 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 10 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 11 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 12 ) \
+	END_CALLBACK_INTERNAL_END()
+
+#define END_DEFINE_CALLBACK_14() \
+	END_CALLBACK_INTERNAL_BEGIN( 14 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 7 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 8 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 9 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 10 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 11 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 12 ) \
+	END_CALLBACK_INTERNAL_SWITCH( 13 ) \
+	END_CALLBACK_INTERNAL_END()
 
 
 #ifndef NO_STEAM

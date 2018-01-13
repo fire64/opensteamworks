@@ -38,6 +38,8 @@
 #define STEAMUSER_INTERFACE_VERSION_014 "SteamUser014"
 #define STEAMUSER_INTERFACE_VERSION_015 "SteamUser015"
 #define STEAMUSER_INTERFACE_VERSION_016 "SteamUser016"
+#define STEAMUSER_INTERFACE_VERSION_017 "SteamUser017"
+#define STEAMUSER_INTERFACE_VERSION_018 "SteamUser018"
 
 // Callback values for callback ValidateAuthTicketResponse_t which is a response to BeginAuthSession
 typedef enum EAuthSessionResponse
@@ -51,6 +53,7 @@ typedef enum EAuthSessionResponse
 	k_EAuthSessionResponseAuthTicketCanceled = 6,			// The ticket has been canceled by the issuer
 	k_EAuthSessionResponseAuthTicketInvalidAlreadyUsed = 7,	// This ticket has already been used, it is not valid.
 	k_EAuthSessionResponseAuthTicketInvalid = 8,			// This ticket is not from a user instance currently connected to steam.
+	k_EAuthSessionResponsePublisherIssuedBan = 9,			// The user is banned for this game. The ban came via the web api and not VAC
 } EAuthSessionResponse;
 
 // results from BeginAuthSession
@@ -95,6 +98,11 @@ typedef enum ELogonState
 	k_ELogonStateLoggingOff = 2,
 	k_ELogonStateLoggedOn = 3
 } ELogonState;
+
+typedef enum ELauncherType
+{
+	// TODO: Reverse this enum
+} ELauncherType;
 
 //-----------------------------------------------------------------------------
 // Purpose: types of VAC bans
@@ -224,6 +232,16 @@ enum ERequestAccountDataAction
 	//k_ERequestAccountDataActionIsAccountNameInUse = 4, // Only used internally
 };
 
+enum ESteamGuardProvider
+{
+	// TODO: Reverse this enum
+};
+
+enum EUserConnect
+{
+	// TODO: Reverse this enum
+};
+
 #pragma pack( push, 8 )
 //-----------------------------------------------------------------------------
 // Purpose: called when a connections to the Steam back-end has been established
@@ -245,7 +263,9 @@ struct SteamServersConnected_t
 struct SteamServerConnectFailure_t
 {
 	enum { k_iCallback = k_iSteamUserCallbacks + 2 };
+
 	EResult m_eResult;
+	bool m_bStillRetrying;
 };
 
 //-----------------------------------------------------------------------------
@@ -255,6 +275,7 @@ struct SteamServerConnectFailure_t
 struct SteamServersDisconnected_t
 {
 	enum { k_iCallback = k_iSteamUserCallbacks + 3 };
+
 	EResult m_eResult;
 };
 
@@ -310,6 +331,9 @@ struct IPCFailure_t
 	uint8 m_eFailureType;
 };
 
+//-----------------------------------------------------------------------------
+// Purpose: Signaled whenever licenses change
+//-----------------------------------------------------------------------------
 struct LicensesUpdated_t
 {
 	enum { k_iCallback = k_iSteamUserCallbacks + 25 };
@@ -337,8 +361,10 @@ struct OBSOLETE_CALLBACK DRMSDKFileTransferResult_t
 struct ValidateAuthTicketResponse_t
 {
 	enum { k_iCallback = k_iSteamUserCallbacks + 43 };
+
 	CSteamID m_SteamID;
 	EAuthSessionResponse m_eAuthSessionResponse;
+	CSteamID m_OwnerSteamID; // different from m_SteamID if borrowed
 };
 
 //-----------------------------------------------------------------------------
@@ -362,6 +388,36 @@ struct EncryptedAppTicketResponse_t
 
 	EResult m_eResult;
 };
+
+//-----------------------------------------------------------------------------
+// callback for GetAuthSessionTicket
+//-----------------------------------------------------------------------------
+struct GetAuthSessionTicketResponse_t
+{
+	enum { k_iCallback = k_iSteamUserCallbacks + 63 };
+
+	HAuthTicket m_hAuthTicket;
+	EResult m_eResult;
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: sent to your game in response to a steam://gamewebcallback/ command
+//-----------------------------------------------------------------------------
+struct GameWebCallback_t
+{
+	enum { k_iCallback = k_iSteamUserCallbacks + 64 };
+	char m_szURL[256];
+};
+
+//-----------------------------------------------------------------------------
+// Purpose: sent to your game in response to ISteamUser::RequestStoreAuthURL
+//-----------------------------------------------------------------------------
+struct StoreAuthURLResponse_t
+{
+	enum { k_iCallback = k_iSteamUserCallbacks + 65 };
+	char m_szURL[512];
+};
+
 
 
 
@@ -803,6 +859,61 @@ struct UpdateItemAnnouncement_t
 {
 	enum { k_iCallback = k_iClientUserCallbacks + 58 };
 
+	uint32 m_cNewItems;
+};
+
+struct ChangeSteamGuardOptionsResponse_t
+{
+	enum { k_iCallback = k_iClientUserCallbacks + 59 };
+
+	EResult m_eResult;
+};
+
+struct UpdateCommentNotification_t
+{
+	enum { k_iCallback = k_iClientUserCallbacks + 60 };
+
+	uint32 m_cNewComments;
+	uint32 m_cNewCommentsOwner;
+	uint32 m_cNewCommentsSubscriptions;
+};
+
+struct FriendUserStatusPublished_t
+{
+	enum { k_iCallback = k_iClientUserCallbacks + 61 };
+
+	CSteamID m_steamIDFriend;
+	AppId_t m_unAppID;
+	char m_szStatus[512];
+};
+
+struct UpdateOfflineMessageNotification_t
+{
+	enum { k_iCallback = k_iClientUserCallbacks + 62 };
+	
+	// TODO : Reverse this callback
+};
+
+struct FriendMessageHistoryChatLog_t
+{
+	enum { k_iCallback = k_iClientUserCallbacks + 63 };
+	
+	// TODO : Reverse this callback
+};
+
+struct TestAvailablePasswordResponse_t
+{
+	enum { k_iCallback = k_iClientUserCallbacks + 64 };
+	
+	// TODO : Reverse this callback
+};
+
+// 65 ??
+
+struct GetSteamGuardDetailsResponse_t
+{
+	enum { k_iCallback = k_iClientUserCallbacks + 66 };
+	
 	// TODO : Reverse this callback
 };
 

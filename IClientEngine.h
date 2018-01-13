@@ -49,6 +49,12 @@ class IClientGameServerStats;
 class IClientConfigStore;
 class IClientScreenshots;
 class IClientAudio;
+class IClientUnifiedMessages;
+class IClientStreamLauncher;
+class IClientNetworkDeviceManager;
+class IClientController;
+class IClientParentalSettings;
+class IClientDeviceAuth;
 
 abstract_class UNSAFE_INTERFACE IClientEngine
 {
@@ -61,6 +67,7 @@ public:
 	virtual HSteamUser ConnectToGlobalUser( HSteamPipe hSteamPipe ) = 0;
 
 	virtual HSteamUser CreateLocalUser( HSteamPipe* phSteamPipe, EAccountType eAccountType ) = 0;
+	virtual void CreatePipeToLocalUser( HSteamUser hSteamUser, HSteamPipe* phSteamPipe ) = 0;
 
 	virtual void ReleaseUser( HSteamPipe hSteamPipe, HSteamUser hUser ) = 0;
 
@@ -100,12 +107,13 @@ public:
 	virtual bool GetAPICallResult( HSteamPipe hSteamPipe, SteamAPICall_t hSteamAPICall, void* pCallback, int cubCallback, int iCallbackExpected, bool* pbFailed ) = 0;
 
 	virtual IClientDepotBuilder *GetIClientDepotBuilder( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
+	virtual IClientNetworkDeviceManager *GetIClientNetworkDeviceManager( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
 
 	virtual void ConCommandInit( IConCommandBaseAccessor *pAccessor ) = 0;
 
 	virtual IClientAppManager *GetIClientAppManager( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
 	virtual IClientConfigStore *GetIClientConfigStore( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	
+
 	virtual bool BOverlayNeedsPresent() = 0;
 
 	virtual IClientGameStats *GetIClientGameStats( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
@@ -114,6 +122,11 @@ public:
 	virtual bool BShutdownIfAllPipesClosed() = 0;
 
 	virtual IClientAudio *GetIClientAudio( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
+	virtual IClientUnifiedMessages *GetIClientUnifiedMessages( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
+	virtual IClientController *GetIClientController( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
+	virtual IClientParentalSettings *GetIClientParentalSettings( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
+	virtual IClientStreamLauncher *GetIClientStreamLauncher( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
+	virtual IClientDeviceAuth *GetIClientDeviceAuth( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
 };
 
 #endif // ICLIENTENGINE_H

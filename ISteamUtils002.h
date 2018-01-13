@@ -56,6 +56,19 @@ public:
 
 	// return the amount of battery power left in the current system in % [0..100], 255 for being on AC power
 	virtual uint8 GetCurrentBatteryPower() = 0;
+
+	// returns the appID of the current process
+	virtual uint32 GetAppID() = 0;
+
+	// Sets the position where the overlay instance for the currently calling game should show notifications.
+	// This position is per-game and if this function is called from outside of a game context it will do nothing.
+	virtual void SetOverlayNotificationPosition( ENotificationPosition eNotificationPosition ) = 0;
+
+	// API asynchronous call results
+	// can be used directly, but more commonly used via the callback dispatch API (see steam_api.h)
+	virtual bool IsAPICallCompleted( SteamAPICall_t hSteamAPICall, bool *pbFailed ) = 0;
+	virtual ESteamAPICallFailure GetAPICallFailureReason( SteamAPICall_t hSteamAPICall ) = 0;
+	virtual bool GetAPICallResult( SteamAPICall_t hSteamAPICall, void *pCallback, int cubCallback, int iCallbackExpected, bool *pbFailed ) = 0;
 };
 
 

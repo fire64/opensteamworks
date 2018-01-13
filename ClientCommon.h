@@ -41,6 +41,15 @@ class ISteamGameServerItems;
 class ISteamGameServerStats;
 class ISteamHTTP;
 class ISteamScreenshots;
+class ISteamUnifiedMessages;
+class ISteamController;
+class ISteamUGC;
+class ISteamMusic;
+class ISteamMusicRemote;
+class ISteamAppList;
+class ISteamHTMLSurface;
+class ISteamInventory;
+class ISteamVideo;
 
 
 #define CLIENTENGINE_INTERFACE_VERSION "CLIENTENGINE_INTERFACE_VERSION002"
@@ -53,5 +62,10 @@ class ISteamScreenshots;
 #define STEAMCLIENT_INTERFACE_VERSION_010		"SteamClient010"
 #define STEAMCLIENT_INTERFACE_VERSION_011		"SteamClient011"
 #define STEAMCLIENT_INTERFACE_VERSION_012		"SteamClient012"
+#define STEAMCLIENT_INTERFACE_VERSION_013		"SteamClient013"
+#define STEAMCLIENT_INTERFACE_VERSION_014		"SteamClient014"
+#define STEAMCLIENT_INTERFACE_VERSION_015		"SteamClient015"
+#define STEAMCLIENT_INTERFACE_VERSION_016		"SteamClient016"
+#define STEAMCLIENT_INTERFACE_VERSION_017		"SteamClient017"
 
 #endif

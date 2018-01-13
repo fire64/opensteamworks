@@ -41,10 +41,10 @@ public:
 
 	// returns the CSteamID of the account currently logged into the Steam client
 	// a CSteamID is a unique identifier for an account, and used to differentiate users in all parts of the Steamworks API
-	STEAMWORKS_STRUCT_RETURN_0(CSteamID, GetSteamID) /*virtual CSteamID GetSteamID() = 0;*/
+	virtual CSteamID GetSteamID() = 0;
 
 	// Multiplayer Authentication functions
-	
+
 	// InitiateGameConnection() starts the state machine for authenticating the game client with the game server
 	// It is the client portion of a three-way handshake between the client, the game server, and the steam servers
 	//
@@ -67,7 +67,7 @@ public:
 	// Legacy functions
 
 	// used by only a few games to track usage events
-	virtual void TrackAppUsageEvent( CGameID gameID, EAppUsageEvent eAppUsageEvent, const char *pchExtraInfo = "" ) = 0;
+	virtual void TrackAppUsageEvent( CGameID gameID, int eAppUsageEvent, const char *pchExtraInfo = "" ) = 0;
 
 	// get the local storage folder for current Steam account to write application data, e.g. save games, configs etc.
 	// this will usually be something like "C:\Progam Files\Steam\userdata\<SteamID>\<AppID>\local"
@@ -89,7 +89,6 @@ public:
 	// number of bytes written to pDestBuffer. The output format of the data is 16-bit signed at 
 	// 11025 samples per second.
 	virtual EVoiceResult DecompressVoice( void *pCompressed, uint32 cbCompressed, void *pDestBuffer, uint32 cbDestBufferSize, uint32 *nBytesWritten ) = 0;
-
 };
 
 #endif // ISTEAMUSER011_H

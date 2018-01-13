@@ -38,8 +38,8 @@ public:
 
 	// creates a socket and begin connection to a remote destination
 	// can connect via a known steamID (client or game server), or directly to an IP
-	// on success will trigger a SocketStatusCallback_t callback
-	// on failure or timeout will trigger a SocketStatusCallback_t callback with a failure code in m_eSNetSocketState
+	// on success will trigger a SocketConnectCallback_t callback
+	// on failure or timeout will trigger a SocketConnectionFailureCallback_t callback
 	virtual SNetSocket_t CreateP2PConnectionSocket( CSteamID steamIDTarget, int nVirtualPort, int nTimeoutSec ) = 0;
 	virtual SNetSocket_t CreateConnectionSocket( uint32 nIP, uint16 nPort, int nTimeoutSec ) = 0;
 
@@ -52,7 +52,8 @@ public:
 
 	// sending data
 	// must be a handle to a connected socket
-	// data is all sent via UDP, and thus send sizes are limited to 1200 bytes; after this, many routers will start dropping packets
+	// data size cannot be more than 8k, although in UDP mode (default),
+	// it's recommended packets be no larger than 1300 bytes
 	// use the reliable flag with caution; although the resend rate is pretty aggressive,
 	// it can still cause stalls in receiving data (like TCP)
 	virtual bool SendDataOnSocket( SNetSocket_t hSocket, void *pubData, uint32 cubData, bool bReliable ) = 0;
@@ -80,7 +81,7 @@ public:
 	// if *pcubMsgSize < cubDest, only partial data is written
 	// returns false if no data is available
 	// fills out *phSocket with the socket that data is available on
-	virtual bool RetrieveData( SNetListenSocket_t hListenSocket, void *pubDest, uint32 cubDest, uint32 *pcubMsgSize ) = 0;
+	virtual bool RetrieveData( SNetListenSocket_t hListenSocket, void *pubDest, uint32 cubDest, uint32 *pcubMsgSize, SNetSocket_t *phSocket ) = 0;
 
 	// returns information about the specified socket, filling out the contents of the pointers
 	virtual bool GetSocketInfo( SNetSocket_t hSocket, CSteamID *pSteamIDRemote, int *peSocketStatus, uint32 *punIPRemote, uint16 *punPortRemote ) = 0;

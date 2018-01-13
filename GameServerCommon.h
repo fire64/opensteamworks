@@ -32,6 +32,7 @@
 #define STEAMGAMESERVER_INTERFACE_VERSION_009 "SteamGameServer009"
 #define STEAMGAMESERVER_INTERFACE_VERSION_010 "SteamGameServer010"
 #define STEAMGAMESERVER_INTERFACE_VERSION_011 "SteamGameServer011"
+#define STEAMGAMESERVER_INTERFACE_VERSION_012 "SteamGameServer012"
 
 
 // Result codes to GSHandleClientDeny/Kick
@@ -62,7 +63,8 @@ struct GSClientApprove_t
 {
 	enum { k_iCallback = k_iSteamGameServerCallbacks + 1 };
 
-	CSteamID m_SteamID;
+	CSteamID m_SteamID;			// SteamID of approved player
+	CSteamID m_OwnerSteamID;	// SteamID of original owner for game license
 };
 
 
@@ -87,9 +89,6 @@ struct GSClientKick_t
 	EDenyReason m_eDenyReason;
 };
 
-// NOTE: callback values 4 and 5 are skipped because they are used for old deprecated callbacks, 
-// do not reuse them here.
-
 // client has been denied to connect to this game server because of a Steam2 auth failure
 struct GSClientSteam2Deny_t
 {
@@ -98,7 +97,6 @@ struct GSClientSteam2Deny_t
 	uint32 m_UserID;
 	ESteamError m_eSteamError;
 };
-
 
 // client has been accepted by Steam2 to connect to this game server
 struct GSClientSteam2Accept_t
@@ -166,8 +164,26 @@ struct GSReputation_t
 	uint32	m_unBanExpires;		// Time the ban expires, expressed in the Unix epoch (seconds since 1/1/1970)
 };
 
-// TODO : Add callback 210
-// TODO : Add callback 211
+// Sent as a reply to AssociateWithClan()
+struct AssociateWithClanResult_t
+{
+	enum { k_iCallback = k_iSteamGameServerCallbacks + 10 };
+
+	EResult	m_eResult;				// Result of the call;
+};
+
+// Sent as a reply to ComputeNewPlayerCompatibility()
+struct ComputeNewPlayerCompatibilityResult_t
+{
+	enum { k_iCallback = k_iSteamGameServerCallbacks + 11 };
+
+	EResult	m_eResult;				// Result of the call;
+	int m_cPlayersThatDontLikeCandidate;
+	int m_cPlayersThatCandidateDoesntLike;
+	int m_cClanPlayersThatDontLikeCandidate;
+	CSteamID m_SteamIDCandidate;
+};
+
 
 
 // received when the game server requests to be displayed as secure (VAC protected)

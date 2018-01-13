@@ -41,7 +41,7 @@ public:
 
 	// returns the CSteamID of the account currently logged into the Steam client
 	// a CSteamID is a unique identifier for an account, and used to differentiate users in all parts of the Steamworks API
-	STEAMWORKS_STRUCT_RETURN_0(CSteamID, GetSteamID) /*virtual CSteamID GetSteamID() = 0;*/
+	virtual CSteamID GetSteamID() = 0;
 
 	// Multiplayer Authentication functions
 
@@ -67,7 +67,7 @@ public:
 	// Legacy functions
 
 	// used by only a few games to track usage events
-	virtual void TrackAppUsageEvent( CGameID gameID, EAppUsageEvent eAppUsageEvent, const char *pchExtraInfo = "" ) = 0;
+	virtual void TrackAppUsageEvent( CGameID gameID, int eAppUsageEvent, const char *pchExtraInfo = "" ) = 0;
 
 	// get the local storage folder for current Steam account to write application data, e.g. save games, configs etc.
 	// this will usually be something like "C:\Progam Files\Steam\userdata\<SteamID>\<AppID>\local"
@@ -104,7 +104,7 @@ public:
 	// In that case, nBytesWritten is set to the size of the buffer required to decompress the given
 	// data. The suggested buffer size for the destination buffer is 22 kilobytes.
 	// The output format of the data is 16-bit signed at 11025 samples per second.
-	virtual EVoiceResult DecompressVoice( void *pCompressed, uint32 cbCompressed, void *pDestBuffer, uint32 cbDestBufferSize, uint32 *nBytesWritten ) = 0;
+	virtual EVoiceResult DecompressVoice( const void *pCompressed, uint32 cbCompressed, void *pDestBuffer, uint32 cbDestBufferSize, uint32 *nBytesWritten ) = 0;
 
 	// Retrieve ticket to be sent to the entity who wishes to authenticate you. 
 	// pcbTicket retrieves the length of the actual ticket.

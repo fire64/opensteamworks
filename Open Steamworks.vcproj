@@ -64,15 +64,11 @@
 			Name="Link Libraries"
 			>
 			<File
-				RelativePath="..\Resources\steam.lib"
+				RelativePath="..\Resources\Libs\Win32\Steam.lib"
 				>
 			</File>
 			<File
-				RelativePath="..\Resources\steam_api.lib"
-				>
-			</File>
-			<File
-				RelativePath="..\Resources\steamclient.lib"
+				RelativePath="..\Resources\Libs\Win32\steamclient.lib"
 				>
 			</File>
 		</Filter>
@@ -216,6 +212,14 @@
 				</File>
 				<File
 					RelativePath=".\IClientScreenshots.h"
+					>
+				</File>
+				<File
+					RelativePath=".\IClientStreamLauncher.h"
+					>
+				</File>
+				<File
+					RelativePath=".\IClientUnifiedMessages.h"
 					>
 				</File>
 				<File
@@ -397,6 +401,14 @@
 						RelativePath=".\ISteamFriends011.h"
 						>
 					</File>
+					<File
+						RelativePath=".\ISteamFriends012.h"
+						>
+					</File>
+					<File
+						RelativePath=".\ISteamFriends013.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="ISteamGameServer"
@@ -574,6 +586,26 @@
 						>
 					</File>
 					<File
+						RelativePath=".\ISteamRemoteStorage007.h"
+						>
+					</File>
+					<File
+						RelativePath=".\ISteamRemoteStorage008.h"
+						>
+					</File>
+					<File
+						RelativePath=".\ISteamRemoteStorage009.h"
+						>
+					</File>
+					<File
+						RelativePath=".\ISteamRemoteStorage010.h"
+						>
+					</File>
+					<File
+						RelativePath=".\ISteamRemoteStorage011.h"
+						>
+					</File>
+					<File
 						RelativePath=".\RemoteStorageCommon.h"
 						>
 					</File>
@@ -682,6 +714,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\ISteamUserStats011.h"
+						>
+					</File>
+					<File
 						RelativePath=".\UserStatsCommon.h"
 						>
 					</File>
@@ -773,6 +809,10 @@
 						RelativePath=".\ISteamHTTP001.h"
 						>
 					</File>
+					<File
+						RelativePath=".\ISteamHTTP002.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="ISteamScreenshots"
@@ -783,6 +823,42 @@
 					</File>
 					<File
 						RelativePath=".\ScreenshotsCommon.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ISteamOAuth"
+					>
+					<File
+						RelativePath=".\ISteamOAuth001.h"
+						>
+					</File>
+					<File
+						RelativePath=".\OAuthCommon.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ISteamUnifiedMessages"
+					>
+					<File
+						RelativePath=".\ISteamUnifiedMessages001.h"
+						>
+					</File>
+					<File
+						RelativePath=".\UnifiedMessagesCommon.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="ISteamStreamLauncher"
+					>
+					<File
+						RelativePath=".\ISteamStreamLauncher001.h"
+						>
+					</File>
+					<File
+						RelativePath=".\StreamLauncherCommon.h"
 						>
 					</File>
 				</Filter>

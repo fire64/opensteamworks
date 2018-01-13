@@ -27,6 +27,7 @@
 // versions
 #define CLIENTSCREENSHOTS_INTERFACE_VERSION "CLIENTSCREENSHOTS_INTERFACE_VERSION001"
 #define STEAMSCREENSHOTS_INTERFACE_VERSION_001 "STEAMSCREENSHOTS_INTERFACE_VERSION001"
+#define STEAMSCREENSHOTS_INTERFACE_VERSION_002 "STEAMSCREENSHOTS_INTERFACE_VERSION002"
 
 // Handle is valid for the lifetime of your process and no longer
 typedef uint32 ScreenshotHandle;
@@ -35,6 +36,10 @@ typedef uint32 ScreenshotHandle;
 const uint32 k_nScreenshotMaxTaggedUsers = 32;
 const int k_cubUFSTagTypeMax = 255;
 const int k_cubUFSTagValueMax = 255;
+
+// Required with of a thumbnail provided to AddScreenshotToLibrary.  If you do not provide a thumbnail
+// one will be generated.
+const int k_ScreenshotThumbWidth = 200;
 
 
 // callbacks
@@ -47,6 +52,7 @@ const int k_cubUFSTagValueMax = 255;
 struct ScreenshotReady_t
 {
 	enum { k_iCallback = k_iSteamScreenshotsCallbacks + 1 };
+
 	ScreenshotHandle m_hLocal;
 	EResult m_eResult;
 };

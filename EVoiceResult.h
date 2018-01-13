@@ -32,6 +32,8 @@ typedef enum EVoiceResult
 	k_EVoiceResultDataCorrupted = 5,
 	k_EVoiceResultRestricted = 6,
 	k_EVoiceResultUnsupportedCodec = 7,
+	k_EVoiceResultReceiverOutOfDate = 8,
+	k_EVoiceResultReceiverDidNotAnswer = 9,
 } EVoiceResult;
 
 #endif // EVOICERESULT_H

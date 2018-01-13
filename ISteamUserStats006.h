@@ -33,22 +33,12 @@ public:
 	virtual bool RequestCurrentStats() = 0;
 
 	// Data accessors
-#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual bool GetStat( const char *pchName, int32 *pData ) = 0;
 	virtual bool GetStat( const char *pchName, float *pData ) = 0;
-#else
-	virtual bool GetStat( const char *pchName, float *pData ) = 0;
-	virtual bool GetStat( const char *pchName, int32 *pData ) = 0;
-#endif
 
 	// Set / update data
-#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual bool SetStat( const char *pchName, int32 nData ) = 0;
 	virtual bool SetStat( const char *pchName, float fData ) = 0;
-#else
-	virtual bool SetStat( const char *pchName, float fData ) = 0;
-	virtual bool SetStat( const char *pchName, int32 nData ) = 0;
-#endif
 	virtual bool UpdateAvgRateStat( const char *pchName, float flCountThisSession, double dSessionLength ) = 0;
 
 	// Achievement flag accessors
@@ -59,6 +49,8 @@ public:
 	// Store the current data on the server, will get a callback when set
 	// And one callback for every new achievement
 	virtual bool StoreStats() = 0;
+
+	// Achievement / GroupAchievement metadata
 
 	// Gets the icon of the achievement, which is a handle to be used in IClientUtils::GetImageRGBA(), or 0 if none set
 	virtual int GetAchievementIcon( const char *pchName ) = 0;
@@ -77,31 +69,23 @@ public:
 	// these stats won't be auto-updated; you'll need to call RequestUserStats() again to refresh any data
 	virtual SteamAPICall_t RequestUserStats( CSteamID steamIDUser ) = 0;
 
-
 	// requests stat information for a user, usable after a successful call to RequestUserStats()
-#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, int32 *pData ) = 0;
 	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, float *pData ) = 0;
-#else
-	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, float *pData ) = 0;
-	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, int32 *pData ) = 0;
-#endif
 	virtual bool GetUserAchievement( CSteamID steamIDUser, const char *pchName, bool *pbAchieved ) = 0;
 
 	// Reset stats 
 	virtual bool ResetAllStats( bool bAchievementsToo ) = 0;
-
 
 	// Leaderboard functions
 
 	// asks the Steam back-end for a leaderboard by name, and will create it if it's not yet
 	// This call is asynchronous, with the result returned in LeaderboardFindResult_t
 	virtual SteamAPICall_t FindOrCreateLeaderboard( const char *pchLeaderboardName, ELeaderboardSortMethod eLeaderboardSortMethod, ELeaderboardDisplayType eLeaderboardDisplayType ) = 0;
-	
+
 	// as above, but won't create the leaderboard if it's not found
 	// This call is asynchronous, with the result returned in LeaderboardFindResult_t
 	virtual SteamAPICall_t FindLeaderboard( const char *pchLeaderboardName ) = 0;
-
 
 	// returns the name of a leaderboard
 	virtual const char *GetLeaderboardName( SteamLeaderboard_t hSteamLeaderboard ) = 0;
@@ -124,7 +108,7 @@ public:
 	//   e.g. DownloadLeaderboardEntries( hLeaderboard, k_ELeaderboardDataRequestGlobalAroundUser, -3, 3 ) will return 7 rows, 3 before the user, 3 after
 	// k_ELeaderboardDataRequestFriends requests all the rows for friends of the current user 
 	virtual SteamAPICall_t DownloadLeaderboardEntries( SteamLeaderboard_t hSteamLeaderboard, ELeaderboardDataRequest eLeaderboardDataRequest, int nRangeStart, int nRangeEnd ) = 0;
-	
+
 	// Returns data about a single leaderboard entry
 	// use a for loop from 0 to LeaderboardScoresDownloaded_t::m_cEntryCount to get all the downloaded entries
 	// e.g.
@@ -143,10 +127,9 @@ public:
 
 	// Uploads a user score to the Steam back-end.
 	// This call is asynchronous, with the result returned in LeaderboardScoreUploaded_t
-	// If the score passed in is no better than the existing score this user has in the leaderboard, then the leaderboard will not be updated.
 	// Details are extra game-defined information regarding how the user got that score
 	// pScoreDetails points to an array of int32's, cScoreDetailsCount is the number of int32's in the list
-	virtual SteamAPICall_t UploadLeaderboardScore( SteamLeaderboard_t hSteamLeaderboard,ELeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod, int32 nScore, int32 *pScoreDetails, int cScoreDetailsCount ) = 0;
+	virtual SteamAPICall_t UploadLeaderboardScore( SteamLeaderboard_t hSteamLeaderboard, ELeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod, int32 nScore, const int32 *pScoreDetails, int cScoreDetailsCount ) = 0;
 
 	// Retrieves the number of players currently playing your game (online + offline)
 	// This call is asynchronous, with the result returned in NumberOfCurrentPlayers_t

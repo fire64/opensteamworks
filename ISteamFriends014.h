@@ -166,7 +166,7 @@ public:
 	virtual SteamAPICall_t RequestClanOfficerList( CSteamID steamIDClan ) = 0;
 
 	// iteration of clan officers - can only be done when a RequestClanOfficerList() call has completed
-
+	
 	// returns the steamID of the clan owner
 	virtual CSteamID GetClanOwner( CSteamID steamIDClan ) = 0;
 	// returns the number of officers in a clan (including the owner)

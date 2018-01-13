@@ -26,7 +26,6 @@
 class servernetadr_t 
 {
 public:
-	servernetadr_t() : m_usConnectionPort( 0 ), m_usQueryPort( 0 ), m_unIP( 0 ) {}
 
 	void	Init( unsigned int ip, uint16 usQueryPort, uint16 usConnectionPort );
 #ifdef NETADR_H

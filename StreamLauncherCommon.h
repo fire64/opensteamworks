@@ -28,6 +28,7 @@
 enum EStreamLauncherResult
 {
 	// TODO: Reverse this enum
+	k_EStreamLauncherResultHz = 0
 };
 
 // callbacks

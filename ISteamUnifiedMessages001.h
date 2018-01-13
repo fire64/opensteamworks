@@ -23,6 +23,8 @@
 #include "SteamTypes.h"
 #include "UnifiedMessagesCommon.h"
 
+typedef uint64 ClientUnifiedMessageHandle;
+
 abstract_class ISteamUnifiedMessages001
 {
 public:

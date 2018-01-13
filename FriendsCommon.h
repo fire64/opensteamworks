@@ -73,14 +73,6 @@ enum EChatEntryType
 	k_EChatEntryTypeLobbyGameStart = 5,	// lobby game is starting
 	k_EChatEntryTypeLeftConversation = 6, // user has left the conversation ( closed chat window )
 	// Above are previous FriendMsgType entries, now merged into more generic chat entry types
-	k_EChatEntryTypeEntered = 7,		// user has entered the conversation (used in multi-user chat and group chat)
-	k_EChatEntryTypeWasKicked = 8,		// user was kicked (data: 64-bit steamid of actor performing the kick)
-	k_EChatEntryTypeWasBanned = 9,		// user was banned (data: 64-bit steamid of actor performing the ban)
-	k_EChatEntryTypeDisconnected = 10,	// user disconnected
-	k_EChatEntryTypeHistoricalChat = 11,	// a chat message from user's chat history or offilne message
-	k_EChatEntryTypeReserved1 = 12,
-	k_EChatEntryTypeReserved2 = 13,
-	k_EChatEntryTypeLinkBlocked = 14, // a link was removed by the chat filter.
 };
 
 //-----------------------------------------------------------------------------
@@ -89,11 +81,11 @@ enum EChatEntryType
 enum EFriendRelationship
 {
 	k_EFriendRelationshipNone = 0,
-	k_EFriendRelationshipBlocked = 1,			// this doesn't get stored; the user has just done an Ignore on an friendship invite
+	k_EFriendRelationshipBlocked = 1,
 	k_EFriendRelationshipRequestRecipient = 2,
 	k_EFriendRelationshipFriend = 3,
 	k_EFriendRelationshipRequestInitiator = 4,
-	k_EFriendRelationshipIgnored = 5,			// this is stored; the user has explicit blocked this other user from comments/chat/etc
+	k_EFriendRelationshipIgnored = 5,
 	k_EFriendRelationshipIgnoredFriend = 6,
 	k_EFriendRelationshipSuggested = 7,
 
@@ -191,20 +183,18 @@ enum EPersonaStateFlag
 // these flags describe what the client has learned has changed recently, so on startup you'll see a name, avatar & relationship change for every friend
 enum EPersonaChange
 {
-	k_EPersonaChangeName		= 0x0001,
-	k_EPersonaChangeStatus		= 0x0002,
-	k_EPersonaChangeComeOnline	= 0x0004,
-	k_EPersonaChangeGoneOffline	= 0x0008,
-	k_EPersonaChangeGamePlayed	= 0x0010,
-	k_EPersonaChangeGameServer	= 0x0020,
-	k_EPersonaChangeAvatar		= 0x0040,
-	k_EPersonaChangeJoinedSource= 0x0080,
-	k_EPersonaChangeLeftSource	= 0x0100,
-	k_EPersonaChangeRelationshipChanged = 0x0200,
-	k_EPersonaChangeNameFirstSet = 0x0400,
-	k_EPersonaChangeFacebookInfo = 0x0800,
-	k_EPersonaChangeNickname =	0x1000,
-	k_EPersonaChangeSteamLevel = 0x2000,
+	k_EPersonaChangeName		= 0x001,
+	k_EPersonaChangeStatus		= 0x002,
+	k_EPersonaChangeComeOnline	= 0x004,
+	k_EPersonaChangeGoneOffline	= 0x008,
+	k_EPersonaChangeGamePlayed	= 0x010,
+	k_EPersonaChangeGameServer	= 0x020,
+	k_EPersonaChangeAvatar		= 0x040,
+	k_EPersonaChangeJoinedSource= 0x080,
+	k_EPersonaChangeLeftSource	= 0x100,
+	k_EPersonaChangeRelationshipChanged = 0x200,
+	k_EPersonaChangeNameFirstSet = 0x400,
+	k_EPersonaChangeFacebookInfo = 0x800,
 };
 
 enum EChatPermission
@@ -313,12 +303,6 @@ const int k_cchMaxFriendGroupName = 64;
 
 // maximum number of groups a single user is allowed
 const int k_cFriendGroupLimit = 100;
-
-// friends group identifier type
-typedef int16 FriendsGroupID_t;
-
-// invalid friends group identifier constant
-const FriendsGroupID_t k_FriendsGroupID_Invalid = -1;
 
 const int k_nMaxFriends = 250;
 const int k_nMaxPendingInvitations = 48;

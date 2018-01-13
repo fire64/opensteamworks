@@ -44,15 +44,15 @@ class ISteamScreenshots;
 class ISteamUnifiedMessages;
 class ISteamController;
 class ISteamUGC;
+class ISteamAppList;
 class ISteamMusic;
 class ISteamMusicRemote;
-class ISteamAppList;
 class ISteamHTMLSurface;
 class ISteamInventory;
 class ISteamVideo;
 
 
-#define CLIENTENGINE_INTERFACE_VERSION "CLIENTENGINE_INTERFACE_VERSION002"
+#define CLIENTENGINE_INTERFACE_VERSION "CLIENTENGINE_INTERFACE_VERSION003"
 
 
 #define STEAMCLIENT_INTERFACE_VERSION_006		"SteamClient006"

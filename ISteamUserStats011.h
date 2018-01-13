@@ -28,7 +28,6 @@
 //-----------------------------------------------------------------------------
 abstract_class ISteamUserStats011
 {
-public:
 	// Ask the server to send down this user's data and achievements for this game
 	virtual bool RequestCurrentStats() = 0;
 

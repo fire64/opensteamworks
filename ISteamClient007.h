@@ -77,7 +77,7 @@ public:
 	// returns the ISteamMatchmakingServers interface
 	virtual ISteamMatchmakingServers *GetISteamMatchmakingServers( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
-	// returns the a generic interface
+	// returns a generic interface
 	virtual void *GetISteamGenericInterface( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
 	// this needs to be called every frame to process matchmaking results
@@ -107,6 +107,7 @@ public:
 
 	// remote storage
 	virtual ISteamRemoteStorage *GetISteamRemoteStorage( HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
+
 };
 
 #endif // ISTEAMCLIENT007_H

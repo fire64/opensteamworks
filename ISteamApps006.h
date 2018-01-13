@@ -74,7 +74,7 @@ public:
 	// returns current app install folder for AppID, returns folder name length
 	virtual uint32 GetAppInstallDir( AppId_t appID, char *pchFolder, uint32 cchFolderBufferSize ) = 0;
 	virtual bool BIsAppInstalled( AppId_t appID ) = 0; // returns true if that app is installed (not necessarily owned)
-
+	
 	virtual CSteamID GetAppOwner() = 0; // returns the SteamID of the original owner. If different from current user, it's borrowed
 
 	// Returns the associated launch param if the game is run via steam://run/<appid>//?param1=value1;param2=value2;param3=value3 etc.
@@ -83,15 +83,14 @@ public:
 	// but it is advised that you not param names beginning with an underscore for your own features.
 	virtual const char *GetLaunchQueryParam( const char *pchKey ) = 0;
 
-	// get download progress for optional DLC
-	virtual bool GetDlcDownloadProgress( AppId_t nAppID, uint64 *punBytesDownloaded, uint64 *punBytesTotal ) = 0; 
-
 #ifdef _PS3
 	// Result returned in a RegisterActivationCodeResponse_t callresult
 	virtual SteamAPICall_t RegisterActivationCode( const char *pchActivationCode ) = 0;
 #endif
-};
 
+	// get download progress for optional DLC
+	virtual bool GetDlcDownloadProgress( AppId_t nAppID, uint64 *punBytesDownloaded, uint64 *punBytesTotal ) = 0;
+};
 
 
 #endif // ISTEAMAPPS006_H

@@ -105,29 +105,6 @@ enum ESpewGroup
 	k_ESpewGroupHttpserver = 33,
 };
 
-//-----------------------------------------------------------------------------
-// Purpose: codes for well defined launch options
-//-----------------------------------------------------------------------------
-enum ELaunchOptionType
-{
-	k_ELaunchOptionType_None		= 0,	// unknown what launch option does
-	k_ELaunchOptionType_Default		= 1,	// runs the game, app, whatever in default mode
-	k_ELaunchOptionType_SafeMode	= 2,	// runs the game in safe mode
-	k_ELaunchOptionType_Multiplayer = 3,	// runs the game in multiplayer mode
-	k_ELaunchOptionType_Config		= 4,	// runs config tool for this game
-	k_ELaunchOptionType_VR			= 5,	// runs game in VR mode
-	k_ELaunchOptionType_Server		= 6,	// runs dedicated server for this game
-	k_ELaunchOptionType_Editor		= 7,	// runs game editor
-	k_ELaunchOptionType_Manual		= 8,	// shows game manual
-	k_ELaunchOptionType_Benchmark	= 9,	// runs game benchmark
-	k_ELaunchOptionType_Option1		= 10,	// generic run option, uses description field for game name
-	k_ELaunchOptionType_Option2		= 11,	// generic run option, uses description field for game name
-	k_ELaunchOptionType_Option3     = 12,	// generic run option, uses description field for game name
-
-
-	k_ELaunchOptionType_Dialog 		= 1000, // show launch options dialog
-};
-
 enum EUIMode
 {
 	k_EUIModeNormal = 0,
@@ -145,6 +122,11 @@ enum EGamepadTextInputLineMode
 };
 
 enum EWindowType
+{
+	// TODO: Reverse this enum
+};
+
+enum EGameLaunchMethod
 {
 	// TODO: Reverse this enum
 };
@@ -220,5 +202,12 @@ struct CellIDChanged_t
 
 #pragma pack( pop )
 
+class CUtlBuffer
+#ifdef _S4N_
+{
+	int m_iPadding;
+}
+#endif
+;
 
 #endif // UTILSCOMMON_H

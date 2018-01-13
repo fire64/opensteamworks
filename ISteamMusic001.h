@@ -23,15 +23,12 @@
 #include "SteamTypes.h"
 #include "MusicCommon.h"
 
-//-----------------------------------------------------------------------------
-// Purpose: interface to user independent utility functions
-//-----------------------------------------------------------------------------
 abstract_class ISteamMusic001
 {
 public:
 	virtual bool BIsEnabled() = 0;
 	virtual bool BIsPlaying() = 0;
-
+	
 	virtual AudioPlayback_Status GetPlaybackStatus() = 0; 
 
 	virtual void Play() = 0;
@@ -42,7 +39,7 @@ public:
 	// volume is between 0.0 and 1.0
 	virtual void SetVolume( float flVolume ) = 0;
 	virtual float GetVolume() = 0;
+	
 };
 
 #endif // ISTEAMMUSIC001_H
-

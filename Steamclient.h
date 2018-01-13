@@ -38,6 +38,7 @@
 #include "ISteamClient010.h"
 #include "ISteamClient011.h"
 #include "ISteamClient012.h"
+#include "ISteamClient013.h"
 #include "ISteamClient014.h"
 #include "ISteamClient015.h"
 #include "ISteamClient016.h"
@@ -79,7 +80,6 @@
 #include "ISteamUser015.h"
 #include "ISteamUser016.h"
 #include "ISteamUser017.h"
-#include "ISteamUser018.h"
 
 // OAuth
 #include "ISteamOAuth001.h"
@@ -91,7 +91,9 @@
 #include "ISteamApps004.h"
 #include "ISteamApps005.h"
 #include "ISteamApps006.h"
-#include "ISteamApps007.h"
+
+// app list
+#include "ISteamAppList001.h"
 
 // user stats
 #include "ISteamUserStats001.h"
@@ -127,6 +129,9 @@
 #include "ISteamGameServer010.h"
 #include "ISteamGameServer011.h"
 #include "ISteamGameServer012.h"
+
+// inventory
+#include "ISteamInventory001.h"
 
 // master server updater
 #include "ISteamMasterServerUpdater001.h"
@@ -170,7 +175,6 @@
 #include "ISteamRemoteStorage010.h"
 #include "ISteamRemoteStorage011.h"
 #include "ISteamRemoteStorage012.h"
-#include "ISteamRemoteStorage013.h"
 
 // content server
 #include "ISteamContentServer001.h"
@@ -192,9 +196,6 @@
 // app ticket
 #include "ISteamAppTicket001.h"
 
-// applist
-#include "ISteamAppList001.h"
-
 // http
 #include "ISteamHTTP001.h"
 #include "ISteamHTTP002.h"
@@ -205,33 +206,16 @@
 // stream launcher
 #include "ISteamStreamLauncher001.h"
 
-// ugc
-#include "ISteamUGC001.h"
-#include "ISteamUGC002.h"
-#include "ISteamUGC003.h"
-#include "ISteamUGC004.h"
-#include "ISteamUGC005.h"
-#include "ISteamUGC007.h"
+// controller
+#include "ISteamController001.h"
 
 // music
 #include "ISteamMusic001.h"
 
-// music remote
-#include "ISteamMusicRemote001.h"
-
-// controller
-#include "ISteamController001.h"
-#include "ISteamController003.h"
-
-// html surface
-#include "ISteamHTMLSurface002.h"
-#include "ISteamHTMLSurface003.h"
-
-// inventory
-#include "ISteamInventory001.h"
-
-// video
-#include "ISteamVideo001.h"
+// ugc
+#include "ISteamUGC001.h"
+#include "ISteamUGC002.h"
+#include "ISteamUGC003.h"
 
 #ifndef NO_ICLIENT
 // client interfaces
@@ -248,6 +232,7 @@
 #include "IClientGameServer.h"
 #include "IClientGameServerStats.h"
 #include "IClientGameStats.h"
+#include "IClientInventory.h"
 #include "IClientMasterServerUpdater.h"
 #include "IClientMatchmaking.h"
 #include "IClientMatchmakingServers.h"
@@ -263,6 +248,11 @@
 #include "IClientStreamLauncher.h"
 #include "IClientNetworkDeviceManager.h"
 #include "IClientDeviceAuth.h"
+#include "IClientMusic.h"
+#include "IClientProductBuilder.h"
+#include "IClientShortcuts.h"
+#include "IClientStreamClient.h"
+#include "IClientUGC.h"
 #endif // NO_ICLIENT
 
 // callback
@@ -394,38 +384,16 @@ S_API_UNSAFE ISteamRemoteStorage002* STEAM_CALL SteamRemoteStorage();
 // sets whether or not Steam_RunCallbacks() should do a try {} catch (...) {} around calls to issuing callbacks
 S_API void STEAM_CALL SteamAPI_SetTryCatchCallbacks( bool bTryCatchCallbacks );
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------------//
-//	steam callback and call-result helpers
-//
-//	The following macros and classes are used to register your application for
-//	callbacks and call-results, which are delivered in a predictable manner.
-//
-//	STEAM_CALLBACK macros are meant for use inside of a C++ class definition.
-//	They map a Steam notification callback directly to a class member function
-//	which is automatically prototyped as "void func( callback_type *pParam )".
-//
-//	CCallResult is used with specific Steam APIs that return "result handles".
-//	The handle can be passed to a CCallResult object's Set function, along with
-//	an object pointer and member-function pointer. The member function will
-//	be executed once the results of the Steam API call are available.
-//
-//	CCallback and CCallbackManual classes can be used instead of STEAM_CALLBACK
-//	macros if you require finer control over registration and unregistration.
-//
-//	Callbacks and call-results are queued automatically and are only
-//	delivered/executed when your application calls SteamAPI_RunCallbacks().
-//----------------------------------------------------------------------------------------------------------------------------------------------------------//
 S_API void SteamAPI_RunCallbacks();
 
 
 
-// Internal functions used by the utility CCallback objects to receive callbacks
+// functions used by the utility CCallback objects to receive callbacks
 S_API void SteamAPI_RegisterCallback( class CCallbackBase *pCallback, int iCallback );
 S_API void SteamAPI_UnregisterCallback( class CCallbackBase *pCallback );
-// Internal functions used by the utility CCallResult objects to receive async call results
+// functions used by the utility CCallResult objects to receive async call results
 S_API void SteamAPI_RegisterCallResult( class CCallbackBase *pCallback, SteamAPICall_t hAPICall );
 S_API void SteamAPI_UnregisterCallResult( class CCallbackBase *pCallback, SteamAPICall_t hAPICall );
-
 //----------------------------------------------------------------------------------------------------------------------------------------------------------//
 //	steamclient.dll private wrapper functions
 //

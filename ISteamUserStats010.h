@@ -33,12 +33,22 @@ public:
 	virtual bool RequestCurrentStats() = 0;
 
 	// Data accessors
+#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual bool GetStat( const char *pchName, int32 *pData ) = 0;
 	virtual bool GetStat( const char *pchName, float *pData ) = 0;
+#else
+	virtual bool GetStat( const char *pchName, float *pData ) = 0;
+	virtual bool GetStat( const char *pchName, int32 *pData ) = 0;
+#endif
 
 	// Set / update data
+#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual bool SetStat( const char *pchName, int32 nData ) = 0;
 	virtual bool SetStat( const char *pchName, float fData ) = 0;
+#else
+	virtual bool SetStat( const char *pchName, float fData ) = 0;
+	virtual bool SetStat( const char *pchName, int32 nData ) = 0;
+#endif
 	virtual bool UpdateAvgRateStat( const char *pchName, float flCountThisSession, double dSessionLength ) = 0;
 
 	// Achievement flag accessors
@@ -62,15 +72,12 @@ public:
 
 	// Achievement / GroupAchievement metadata
 
-	// Gets the icon of the achievement, which is a handle to be used in ISteamUtils::GetImageRGBA(), or 0 if none set. 
+	// Gets the icon of the achievement, which is a handle to be used in IClientUtils::GetImageRGBA(), or 0 if none set. 
 	// A return value of 0 may indicate we are still fetching data, and you can wait for the UserAchievementIconFetched_t callback
 	// which will notify you when the bits are ready. If the callback still returns zero, then there is no image set for the
 	// specified achievement.
 	virtual int GetAchievementIcon( const char *pchName ) = 0;
-
-	// Get general attributes for an achievement. Accepts the following keys:
-	// - "name" and "desc" for retrieving the localized achievement name and description (returned in UTF8)
-	// - "hidden" for retrieving if an achievement is hidden (returns "0" when not hidden, "1" when hidden)
+	// Get general attributes (display name, desc, etc) for an Achievement
 	virtual const char *GetAchievementDisplayAttribute( const char *pchName, const char *pchKey ) = 0;
 
 	// Achievement progress - triggers an AchievementProgress callback, that is all.
@@ -86,8 +93,13 @@ public:
 	virtual SteamAPICall_t RequestUserStats( CSteamID steamIDUser ) = 0;
 
 	// requests stat information for a user, usable after a successful call to RequestUserStats()
+#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, int32 *pData ) = 0;
 	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, float *pData ) = 0;
+#else
+	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, float *pData ) = 0;
+	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, int32 *pData ) = 0;
+#endif
 	virtual bool GetUserAchievement( CSteamID steamIDUser, const char *pchName, bool *pbAchieved ) = 0;
 	// See notes for GetAchievementAndUnlockTime above
 	virtual bool GetUserAchievementAndUnlockTime( CSteamID steamIDUser, const char *pchName, bool *pbAchieved, uint32 *punUnlockTime ) = 0;
@@ -145,7 +157,7 @@ public:
 	//				...
 	//			}
 	// once you've accessed all the entries, the data will be free'd, and the SteamLeaderboardEntries_t handle will become invalid
-	virtual bool GetDownloadedLeaderboardEntry( SteamLeaderboardEntries_t hSteamLeaderboardEntries, int index, LeaderboardEntry_t *pLeaderboardEntry, int32 *pDetails, int cDetailsMax ) = 0;
+	virtual bool GetDownloadedLeaderboardEntry( SteamLeaderboardEntries_t hSteamLeaderboardEntries, int index, LeaderboardEntry_t *pLeaderboardEntry, int32 pDetails[], int cDetailsMax ) = 0;
 
 	// Uploads a user score to the Steam back-end.
 	// This call is asynchronous, with the result returned in LeaderboardScoreUploaded_t
@@ -187,34 +199,24 @@ public:
 	virtual SteamAPICall_t RequestGlobalStats( int nHistoryDays ) = 0;
 
 	// Gets the lifetime totals for an aggregated stat
+#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual bool GetGlobalStat( const char *pchStatName, int64 *pData ) = 0;
 	virtual bool GetGlobalStat( const char *pchStatName, double *pData ) = 0;
+#else
+	virtual bool GetGlobalStat( const char *pchStatName, double *pData ) = 0;
+	virtual bool GetGlobalStat( const char *pchStatName, int64 *pData ) = 0;
+#endif
 
 	// Gets history for an aggregated stat. pData will be filled with daily values, starting with today.
 	// So when called, pData[0] will be today, pData[1] will be yesterday, and pData[2] will be two days ago, 
 	// etc. cubData is the size in bytes of the pubData buffer. Returns the number of 
 	// elements actually set.
+#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual int32 GetGlobalStatHistory( const char *pchStatName, int64 *pData, uint32 cubData ) = 0;
 	virtual int32 GetGlobalStatHistory( const char *pchStatName, double *pData, uint32 cubData ) = 0;
-
-#ifdef _PS3
-	// Call to kick off installation of the PS3 trophies. This call is asynchronous, and the results will be returned in a PS3TrophiesInstalled_t
-	// callback.
-	virtual bool InstallPS3Trophies() = 0;
-
-	// Returns the amount of space required at boot to install trophies. This value can be used when comparing the amount of space needed
-	// by the game to the available space value passed to the game at boot. The value is set during InstallPS3Trophies().
-	virtual uint64 GetTrophySpaceRequiredBeforeInstall() = 0;
-
-	// On PS3, user stats & achievement progress through Steam must be stored with the user's saved game data.
-	// At startup, before calling RequestCurrentStats(), you must pass the user's stats data to Steam via this method.
-	// If you do not have any user data, call this function with pvData = NULL and cubData = 0
-	virtual bool SetUserStatsData( const void *pvData, uint32 cubData ) = 0;
-
-	// Call to get the user's current stats data. You should retrieve this data after receiving successful UserStatsReceived_t & UserStatsStored_t
-	// callbacks, and store the data with the user's save game data. You can call this method with pvData = NULL and cubData = 0 to get the required
-	// buffer size.
-	virtual bool GetUserStatsData( void *pvData, uint32 cubData, uint32 *pcubWritten ) = 0;
+#else
+	virtual int32 GetGlobalStatHistory( const char *pchStatName, double *pData, uint32 cubData ) = 0;
+	virtual int32 GetGlobalStatHistory( const char *pchStatName, int64 *pData, uint32 cubData ) = 0;
 #endif
 };
 

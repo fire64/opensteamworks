@@ -21,13 +21,10 @@
 #endif
 
 #include "SteamTypes.h"
-#include "AppListCommon.h"
+#include "AppsCommon.h"
 
 //-----------------------------------------------------------------------------
-// Purpose: This is a restricted interface that can only be used by previously approved apps,
-//	contact your Steam Account Manager if you believe you need access to this API.
-//	This interface lets you detect installed apps for the local Steam client, useful for debugging tools
-//	to offer lists of apps to debug via Steam.
+// Purpose: interface to app data
 //-----------------------------------------------------------------------------
 abstract_class ISteamAppList001
 {
@@ -41,5 +38,4 @@ public:
 	virtual int GetAppBuildId( AppId_t nAppID ) = 0; // return the buildid of this app, may change at any time based on backend updates to the game
 };
 
-
-#endif // ISTEAMAPPLIST001_H
+#endif // ISTEAMAPPS001_H

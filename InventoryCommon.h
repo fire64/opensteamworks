@@ -21,12 +21,7 @@
 #endif
 
 
-#define STEAMINVENTORY_INTERFACE_VERSION_001 "STEAMINVENTORY_INTERFACE_V001"
-
-
-typedef int32 SteamInventoryResult_t;
-
-static const SteamInventoryResult_t k_SteamInventoryResultInvalid = -1;
+#define STEAINVENTORY_INTERFACE_VERSION_001 "STEAMINVENTORY_INTERFACE_VERSION001"
 
 // Every individual instance of an item has a globally-unique ItemInstanceID.
 // This ID is unique to the combination of (player, specific item instance)
@@ -42,12 +37,9 @@ static const SteamItemInstanceID_t k_SteamItemInstanceIDInvalid = ~(SteamItemIns
 typedef int32 SteamItemDef_t;
 
 
-#pragma pack( push, 8 )
-
-
 enum ESteamItemFlags
 {
-	// Item status flags - these flags are permanently attached to specific item instances
+	// Item status flags - these flags are permenantly attached to specific item instances
 	k_ESteamItemNoTrade = 1 << 0, // This item is account-locked and cannot be traded or given away.
 
 	// Action confirmation flags - these flags are set one time only, as part of a result set
@@ -65,6 +57,10 @@ struct SteamItemDetails_t
 	uint16 m_unQuantity;
 	uint16 m_unFlags; // see ESteamItemFlags
 };
+
+typedef int32 SteamInventoryResult_t;
+
+static const SteamInventoryResult_t k_SteamInventoryResultInvalid = -1;
 
 // SteamInventoryResultReady_t callbacks are fired whenever asynchronous
 // results transition from "Pending" to "OK" or an error state. There will
@@ -100,7 +96,4 @@ struct SteamInventoryDefinitionUpdate_t
 	enum { k_iCallback = k_iClientInventoryCallbacks + 2 };
 };
 
-#pragma pack( pop )
-
-
-#endif // INVENTORYCOMMON_H
+#endif // UGCCOMMON_H

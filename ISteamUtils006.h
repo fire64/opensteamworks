@@ -101,7 +101,6 @@ public:
 	// refresh the screen with Present or SwapBuffers to allow the overlay to do it's work.
 	virtual bool BOverlayNeedsPresent() = 0;
 
-#ifndef _PS3
 	// Asynchronous call to check if an executable file has been signed using the public key set on the signing tab
 	// of the partner site, for example to refuse to load modified executable files.  
 	// The result is returned in CheckFileSignature_t.
@@ -111,29 +110,13 @@ public:
 	//   k_ECheckFileSignatureInvalidSignature - The file exists, and the signing tab has been set for this file, but the file is either not signed or the signature does not match.
 	//   k_ECheckFileSignatureValidSignature - The file is signed and the signature is valid.
 	virtual SteamAPICall_t CheckFileSignature( const char *szFileName ) = 0;
-#endif
-
-#ifdef _PS3
-	virtual void PostPS3SysutilCallback( uint64_t status, uint64_t param, void* userdata ) = 0;
-	virtual bool BIsReadyToShutdown() = 0;
-	virtual bool BIsPSNOnline() = 0;
-
-	// Call this with localized strings for the language the game is running in, otherwise default english
-	// strings will be used by Steam.
-	virtual void SetPSNGameBootInviteStrings( const char *pchSubject, const char *pchBody ) = 0;
-#endif
-
-	// Activates the Big Picture text input dialog which only supports gamepad input
-	virtual bool ShowGamepadTextInput( EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eLineInputMode, const char *pchDescription, uint32 unCharMax ) = 0;
-
-	// Returns previously entered text & length
+	
+	virtual bool ShowGamepadTextInput( EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eInputLineMode, const char *szText, uint32 uMaxLength ) = 0;
 	virtual uint32 GetEnteredGamepadTextLength() = 0;
-	virtual bool GetEnteredGamepadTextInput( char *pchText, uint32 cchText ) = 0;	
+	virtual bool GetEnteredGamepadTextInput( char *pchValue, uint32 cchValueMax ) = 0;
 
-	// returns the language the steam client is running in, you probably want ISteamApps::GetCurrentGameLanguage instead, this is for very special usage cases
 	virtual const char *GetSteamUILanguage() = 0;
 
-	// returns true if Steam itself is running in VR mode
 	virtual bool IsSteamRunningInVR() = 0;
 };
 

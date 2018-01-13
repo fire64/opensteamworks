@@ -32,13 +32,24 @@ public:
 	virtual bool RequestCurrentStats( ) = 0;
 
 	// Data accessors
+#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual bool GetStat( const char *pchName, int32 *pData ) = 0;
 	virtual bool GetStat( const char *pchName, float *pData ) = 0;
+#else
+	virtual bool GetStat( const char *pchName, float *pData ) = 0;
+	virtual bool GetStat( const char *pchName, int32 *pData ) = 0;
+#endif
 
 	// Set / update data
+#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual bool SetStat( const char *pchName, int32 nData ) = 0;
 	virtual bool SetStat( const char *pchName, float fData ) = 0;
-	virtual bool UpdateAvgRateStat( const char *pchName, float flCountThisSession, double dSessionLength ) = 0;
+#else
+	virtual bool SetStat( const char *pchName, float fData ) = 0;
+	virtual bool SetStat( const char *pchName, int32 nData ) = 0;
+#endif
+	virtual bool UpdateAvgRateStat( const char *pchName, float, double dSessionLength ) = 0;
+
 
 	// Achievement flag accessors
 	virtual bool GetAchievement( const char *pchName, bool *pbAchieved ) = 0;
@@ -48,8 +59,6 @@ public:
 	// Store the current data on the server, will get a callback when set
 	// And one callback for every new achievement
 	virtual bool StoreStats( ) = 0;
-
-	// Achievement / GroupAchievement metadata
 
 	// Gets the icon of the achievement, which is a handle to be used in IClientUtils::GetImageRGBA(), or 0 if none set
 	virtual int GetAchievementIcon( const char *pchName ) = 0;

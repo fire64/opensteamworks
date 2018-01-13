@@ -31,8 +31,22 @@ typedef enum ECurrencyCode
 	k_ECurrencyCodeRUB = 5,
 	k_ECurrencyCodePLN = 6,
 	k_ECurrencyCodeBRL = 7,
-	//k_ECurrencyCodeMax = 8,
-	k_ECurrencyCodeNOK = 9
+	k_ECurrencyCodeJPY = 8,
+	k_ECurrencyCodeNOK = 9,
+	k_ECurrencyCodeIDR = 10,
+	k_ECurrencyCodeMYR = 11,
+	k_ECurrencyCodePHP = 12,
+	k_ECurrencyCodeSGD = 13,
+	k_ECurrencyCodeTHB = 14,
+	k_ECurrencyCodeVND = 15,
+	k_ECurrencyCodeKRW = 16,
+	k_ECurrencyCodeTRY = 17,
+	k_ECurrencyCodeUAH = 18,
+	k_ECurrencyCodeMXN = 19,
+	k_ECurrencyCodeCAD = 20,
+	k_ECurrencyCodeAUD = 21,
+	k_ECurrencyCodeNZD = 22,
+	//k_ECurrencyCodeMax = 23,
 } ECurrencyCode;
 
 #endif // ECURRENCYCODE_H

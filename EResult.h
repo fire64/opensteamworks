@@ -99,32 +99,15 @@ typedef enum EResult
 	k_EResultAccountLockedDown = 73,						// Account Locked Down
 	k_EResultAccountLogonDeniedVerifiedEmailRequired = 74,	// Account Logon Denied Verified Email Required
 	k_EResultNoMatchingURL = 75,							// No matching URL
-	k_EResultBadResponse = 76,								// Bad response
-	k_EResultRequirePasswordReEntry = 77,		// The user cannot complete the action until they re-enter their password
-	k_EResultValueOutOfRange = 78,				// the value entered is outside the acceptable range
-	k_EResultUnexpectedError = 79,				// something happened that we didn't expect to ever happen
-	k_EResultDisabled = 80,						// The requested service has been configured to be unavailable
-	k_EResultInvalidCEGSubmission = 81,			// The set of files submitted to the CEG server are not valid !
-	k_EResultRestrictedDevice = 82,				// The device being used is not allowed to perform this action
-	k_EResultRegionLocked = 83,					// The action could not be complete because it is region restricted
-	k_EResultRateLimitExceeded = 84,			// Temporary rate limit exceeded, try again later, different from k_EResultLimitExceeded which may be permanent
-	k_EResultAccountLoginDeniedNeedTwoFactor = 85,	// Need two-factor code to login
-	k_EResultItemDeleted = 86,					// The thing we're trying to access has been deleted
-	k_EResultAccountLoginDeniedThrottle = 87,	// login attempt failed, try to throttle response to possible attacker
-	k_EResultTwoFactorCodeMismatch = 88,		// two factor code mismatch (only on token setup, not on login path)
-	k_EResultTwoFactorActivationCodeMismatch = 89,	// activation code for two-factor didn't match
-	k_EResultAccountAssociatedToMultiplePartners = 90,	// account has been associated with multiple partners
-	k_EResultNotModified = 91,					// data not modified
-	k_EResultNoMobileDevice = 92,				// the account does not have a mobile device associated with it
-	k_EResultTimeNotSynced = 93,				// the time presented is out of range or tolerance
-	k_EResultSmsCodeFailed = 94,				// SMS code failure (no match, none pending, etc.)
-	k_EResultAccountLimitExceeded = 95,			// Too many accounts access this resource
-	k_EResultAccountActivityLimitExceeded = 96,	// Too many changes to this account
-	k_EResultPhoneActivityLimitExceeded = 97,	// Too many changes to this phone
-	k_EResultRefundToWallet = 98,				// Cannot refund to payment method, must use wallet
-	k_EResultEmailSendFailure = 99,				// Cannot send an email
-	k_EResultNotSettled = 100,					// Can't perform operation till payment has settled
-	k_EResultNeedCaptcha = 101,					// Needs to provide a valid captcha
+	k_EResultBadResponse = 76,								// parse failure, missing field, etc.
+	k_EResultRequirePasswordReEntry = 77,					// The user cannot complete the action until they re-enter their password
+	k_EResultValueOutOfRange = 78,							// the value entered is outside the acceptable range
+	k_EResultUnexpectedError = 79,							// 
+	k_EResultFeatureDisabled = 80,							//
+	k_EResultInvalidCEGSubmission = 81,						//
+	k_EResultRestrictedDevice = 82,							//
+	k_EResultRegionLocked = 83,								//
+	k_EResultRateLimitExceeded = 84,						//
 } EResult;
 
 #endif // ERESULT_H

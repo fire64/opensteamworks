@@ -44,7 +44,7 @@ public:
 	virtual CSteamID GetSteamID() = 0;
 
 	// Multiplayer Authentication functions
-
+	
 	// InitiateGameConnection() starts the state machine for authenticating the game client with the game server
 	// It is the client portion of a three-way handshake between the client, the game server, and the steam servers
 	//
@@ -87,7 +87,7 @@ public:
 	// levels of speech are detected.
 	// nUncompressedVoiceDesiredSampleRate is necessary to know the number of bytes to return in pcbUncompressed - can be set to 0 if you don't need uncompressed (the usual case)
 	// If you're upgrading from an older Steamworks API, you'll want to pass in 11025 to nUncompressedVoiceDesiredSampleRate
-	virtual EVoiceResult GetAvailableVoice(uint32 *pcbCompressed, uint32 *pcbUncompressed, uint32 nUncompressedVoiceDesiredSampleRate) = 0;
+	virtual EVoiceResult GetAvailableVoice( uint32 *pcbCompressed, uint32 *pcbUncompressed, uint32 nUncompressedVoiceDesiredSampleRate ) = 0;
 
 	// Gets the latest voice data from the microphone. Compressed data is an arbitrary format, and is meant to be handed back to 
 	// DecompressVoice() for playback later as a binary blob. Uncompressed data is 16-bit, signed integer, 11025Hz PCM format.
@@ -130,7 +130,7 @@ public:
 	// After receiving a user's authentication data, and passing it to BeginAuthSession, use this function
 	// to determine if the user owns downloadable content specified by the provided AppID.
 	virtual EUserHasLicenseForAppResult UserHasLicenseForApp( CSteamID steamID, AppId_t appID ) = 0;
-
+	
 	// returns true if this users looks like they are behind a NAT device. Only valid once the user has connected to steam 
 	// (i.e a SteamServersConnected_t has been issued) and may not catch all forms of NAT.
 	virtual bool BIsBehindNAT() = 0;
@@ -195,4 +195,4 @@ public:
 
 };
 
-#endif // ISTEAMUSER_H
+#endif // ISTEAMUSER016_H

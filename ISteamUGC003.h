@@ -24,12 +24,10 @@
 #include "UGCCommon.h"
 
 
-//-----------------------------------------------------------------------------
-// Purpose: Steam UGC support API
-//-----------------------------------------------------------------------------
-class ISteamUGC003
+abstract_class ISteamUGC003
 {
 public:
+
 
 	// Query UGC associated with a user. Creator app id or consumer app id must be valid and be set to the current running app. unPage should start at 1.
 	virtual UGCQueryHandle_t CreateQueryUserUGCRequest( AccountID_t unAccountID, EUserUGCList eListType, EUGCMatchingUGCType eMatchingUGCType, EUserUGCListSortOrder eSortOrder, AppId_t nCreatorAppID, AppId_t nConsumerAppID, uint32 unPage ) = 0;
@@ -90,7 +88,5 @@ public:
 	virtual bool GetItemInstallInfo( PublishedFileId_t nPublishedFileID, uint64 *punSizeOnDisk, char *pchFolder, uint32 cchFolderSize, bool *pbLegacyItem ) = 0; // returns true if item is installed
 	virtual bool GetItemUpdateInfo( PublishedFileId_t nPublishedFileID, bool *pbNeedsUpdate, bool *pbIsDownloading, uint64 *punBytesDownloaded, uint64 *punBytesTotal ) = 0;
 };
-
-
 
 #endif // ISTEAMUGC003_H

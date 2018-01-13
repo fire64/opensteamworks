@@ -29,8 +29,6 @@
 typedef uint32 HTTPRequestHandle;
 #define INVALID_HTTPREQUEST_HANDLE		0
 
-typedef uint32 HTTPCookieContainerHandle;
-#define INVALID_HTTPCOOKIE_HANDLE		0
 
 // This enum is used in client API methods, do not re-number existing values.
 enum EHTTPMethod
@@ -41,11 +39,11 @@ enum EHTTPMethod
 	k_EHTTPMethodPOST,
 	k_EHTTPMethodPUT,
 	k_EHTTPMethodDELETE,
+	k_EHTTPMethodOPTIONS,
 
 	// The remaining HTTP methods are not yet supported, per rfc2616 section 5.1.1 only GET and HEAD are required for 
 	// a compliant general purpose server.  We'll likely add more as we find uses for them.
 
-	// k_EHTTPMethodOPTIONS,
 	// k_EHTTPMethodTRACE,
 	// k_EHTTPMethodCONNECT
 };
@@ -100,7 +98,6 @@ typedef enum EHTTPStatusCode
 	k_EHTTPStatusCode415UnsupportedMediaType =	415,
 	k_EHTTPStatusCode416RequestedRangeNotSatisfiable = 416,
 	k_EHTTPStatusCode417ExpectationFailed =		417,
-	k_EHTTPStatusCode429TooManyRequests	=		429,
 
 	// Server error codes
 	k_EHTTPStatusCode500InternalServerError =	500,
@@ -130,39 +127,6 @@ struct HTTPRequestCompleted_t
 	// Will be the HTTP status code value returned by the server, k_EHTTPStatusCode200OK is the normal
 	// OK response, if you get something else you probably need to treat it as a failure.
 	EHTTPStatusCode m_eStatusCode;
-
-	uint32 m_unBodySize; // Same as GetHTTPResponseBodySize()
-};
-
-struct HTTPRequestHeadersReceived_t
-{
-	enum { k_iCallback = k_iClientHTTPCallbacks + 2 };
-
-	// Handle value for the request that has received headers.
-	HTTPRequestHandle m_hRequest;
-
-	// Context value that the user defined on the request that this callback is associated with, 0 if
-	// no context value was set.
-	uint64 m_ulContextValue;
-};
-
-struct HTTPRequestDataReceived_t
-{
-	enum { k_iCallback = k_iClientHTTPCallbacks + 3 };
-
-	// Handle value for the request that has received data.
-	HTTPRequestHandle m_hRequest;
-
-	// Context value that the user defined on the request that this callback is associated with, 0 if
-	// no context value was set.
-	uint64 m_ulContextValue;
-
-
-	// Offset to provide to GetHTTPStreamingResponseBodyData to get this chunk of data
-	uint32 m_cOffset;
-
-	// Size to provide to GetHTTPStreamingResponseBodyData to get this chunk of data
-	uint32 m_cBytesReceived;
 };
 
 

@@ -24,12 +24,10 @@
 #include "UGCCommon.h"
 
 
-//-----------------------------------------------------------------------------
-// Purpose: Steam UGC support API
-//-----------------------------------------------------------------------------
-class ISteamUGC004
+abstract_class ISteamUGC004
 {
 public:
+
 
 	// Query UGC associated with a user. Creator app id or consumer app id must be valid and be set to the current running app. unPage should start at 1.
 	virtual UGCQueryHandle_t CreateQueryUserUGCRequest( AccountID_t unAccountID, EUserUGCList eListType, EUGCMatchingUGCType eMatchingUGCType, EUserUGCListSortOrder eSortOrder, AppId_t nCreatorAppID, AppId_t nConsumerAppID, uint32 unPage ) = 0;
@@ -85,22 +83,12 @@ public:
 	virtual uint32 GetNumSubscribedItems() = 0; // number of subscribed items 
 	virtual uint32 GetSubscribedItems( PublishedFileId_t* pvecPublishedFileID, uint32 cMaxEntries ) = 0; // all subscribed item PublishFileIDs
 
-	// get EItemState flags about item on this client
-	virtual uint32 GetItemState( PublishedFileId_t nPublishedFileID ) = 0;
-
-	// get info about currently installed content on disc for items that have k_EItemStateInstalled set
-	// if k_EItemStateLegacyItem is set, pchFolder contains the path to the legacy file itself (not a folder)
-	virtual bool GetItemInstallInfo( PublishedFileId_t nPublishedFileID, uint64 *punSizeOnDisk, char *pchFolder, uint32 cchFolderSize, uint32 *punTimeStamp ) = 0;
-
-	// get info about pending update for items that have k_EItemStateNeedsUpdate set. punBytesTotal will be valid after download started once
-	virtual bool GetItemDownloadInfo( PublishedFileId_t nPublishedFileID, uint64 *punBytesDownloaded, uint64 *punBytesTotal ) = 0;
-
-	// download new or update already installed item. If function returns true, wait for DownloadItemResult_t. If the item is already installed,
-	// then files on disk should not be used until callback received. If item is not subscribed to, it will be cached for some time.
-	// If bHighPriority is set, any other item download will be suspended and this item downloaded ASAP.
-	virtual bool DownloadItem( PublishedFileId_t nPublishedFileID, bool bHighPriority ) = 0;
+	// Get info about the item on disk.  If you are supporting items published through the legacy RemoteStorage APIs then *pbLegacyItem will be set to true
+	// and pchFolder will contain the full path to the file rather than the containing folder.
+	virtual unknown_ret GetItemState( PublishedFileId_t nPublishedFileID ) = 0;
+	virtual unknown_ret GetItemInstallInfo( PublishedFileId_t nPublishedFileID, uint64 *punSizeOnDisk, char *pchFolder, uint32 cchFolderSize, uint32 * ) = 0;
+	virtual unknown_ret GetItemDownloadInfo( PublishedFileId_t nPublishedFileID, uint64 *, uint64 * ) = 0;
+	virtual unknown_ret DownloadItem( PublishedFileId_t nPublishedFileID, bool ) = 0;
 };
-
-
 
 #endif // ISTEAMUGC004_H

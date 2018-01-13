@@ -53,7 +53,6 @@ typedef enum EAuthSessionResponse
 	k_EAuthSessionResponseAuthTicketCanceled = 6,			// The ticket has been canceled by the issuer
 	k_EAuthSessionResponseAuthTicketInvalidAlreadyUsed = 7,	// This ticket has already been used, it is not valid.
 	k_EAuthSessionResponseAuthTicketInvalid = 8,			// This ticket is not from a user instance currently connected to steam.
-	k_EAuthSessionResponsePublisherIssuedBan = 9,			// The user is banned for this game. The ban came via the web api and not VAC
 } EAuthSessionResponse;
 
 // results from BeginAuthSession
@@ -265,7 +264,6 @@ struct SteamServerConnectFailure_t
 	enum { k_iCallback = k_iSteamUserCallbacks + 2 };
 
 	EResult m_eResult;
-	bool m_bStillRetrying;
 };
 
 //-----------------------------------------------------------------------------
@@ -331,9 +329,6 @@ struct IPCFailure_t
 	uint8 m_eFailureType;
 };
 
-//-----------------------------------------------------------------------------
-// Purpose: Signaled whenever licenses change
-//-----------------------------------------------------------------------------
 struct LicensesUpdated_t
 {
 	enum { k_iCallback = k_iSteamUserCallbacks + 25 };
@@ -364,7 +359,6 @@ struct ValidateAuthTicketResponse_t
 
 	CSteamID m_SteamID;
 	EAuthSessionResponse m_eAuthSessionResponse;
-	CSteamID m_OwnerSteamID; // different from m_SteamID if borrowed
 };
 
 //-----------------------------------------------------------------------------
@@ -399,25 +393,6 @@ struct GetAuthSessionTicketResponse_t
 	HAuthTicket m_hAuthTicket;
 	EResult m_eResult;
 };
-
-//-----------------------------------------------------------------------------
-// Purpose: sent to your game in response to a steam://gamewebcallback/ command
-//-----------------------------------------------------------------------------
-struct GameWebCallback_t
-{
-	enum { k_iCallback = k_iSteamUserCallbacks + 64 };
-	char m_szURL[256];
-};
-
-//-----------------------------------------------------------------------------
-// Purpose: sent to your game in response to ISteamUser::RequestStoreAuthURL
-//-----------------------------------------------------------------------------
-struct StoreAuthURLResponse_t
-{
-	enum { k_iCallback = k_iSteamUserCallbacks + 65 };
-	char m_szURL[512];
-};
-
 
 
 

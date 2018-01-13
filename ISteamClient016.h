@@ -23,6 +23,8 @@
 #include "SteamTypes.h"
 #include "ClientCommon.h"
 
+extern "C" typedef void( *SteamAPI_PostAPIResultInProcess_t )(SteamAPICall_t callHandle, void *, uint32 unCallbackSize, int iCallbackNum);
+extern "C" typedef uint32 ( *SteamAPI_CheckCallbackRegistered_t )( int iCallbackNum );
 
 //-----------------------------------------------------------------------------
 // Purpose: Interface to creating a new steam instance, or to
@@ -95,7 +97,6 @@ public:
 	// user screenshots
 	virtual ISteamScreenshots *GetISteamScreenshots( HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
-
 	// this needs to be called every frame to process matchmaking results
 	// redundant if you're already calling SteamAPI_RunCallbacks()
 	virtual void RunFrame() = 0;
@@ -130,10 +131,10 @@ public:
 
 	// Exposes the ISteamUGC interface
 	virtual ISteamUGC *GetISteamUGC( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
-	
+
 	// returns app list interface, only available on specially registered apps
 	virtual ISteamAppList *GetISteamAppList( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
-
+	
 	// Music Player
 	virtual ISteamMusic *GetISteamMusic( HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 

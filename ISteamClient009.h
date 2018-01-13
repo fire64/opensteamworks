@@ -77,14 +77,14 @@ public:
 	// returns the ISteamMatchmakingServers interface
 	virtual ISteamMatchmakingServers *GetISteamMatchmakingServers( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
-	// returns the a generic interface
+	// returns a generic interface
 	virtual void *GetISteamGenericInterface( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
 	// returns the ISteamUserStats interface
 	virtual ISteamUserStats *GetISteamUserStats( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
-	// returns the ISteamGameServerStats interface
-	virtual ISteamGameServerStats *GetISteamGameServerStats( HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
+	// returns game server stats interface
+	virtual ISteamGameServerStats *GetISteamGameServerStats( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
 	// returns apps interface
 	virtual ISteamApps *GetISteamApps( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
@@ -110,7 +110,6 @@ public:
 	// 'const char *' is the text of the message
 	// callbacks will occur directly after the API function is called that generated the warning or message
 	virtual void SetWarningMessageHook( SteamAPIWarningMessageHook_t pFunction ) = 0;
-
 };
 
 

@@ -77,14 +77,14 @@ public:
 	// returns the ISteamMatchmakingServers interface
 	virtual ISteamMatchmakingServers *GetISteamMatchmakingServers( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
-	// returns the a generic interface
+	// returns a generic interface
 	virtual void *GetISteamGenericInterface( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
 	// returns the ISteamUserStats interface
 	virtual ISteamUserStats *GetISteamUserStats( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
-	// returns the ISteamGameServerStats interface
-	virtual ISteamGameServerStats *GetISteamGameServerStats( HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
+	// returns game server stats interface
+	virtual ISteamGameServerStats *GetISteamGameServerStats( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
 	// returns apps interface
 	virtual ISteamApps *GetISteamApps( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
@@ -95,9 +95,7 @@ public:
 	// remote storage
 	virtual ISteamRemoteStorage *GetISteamRemoteStorage( HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
-	// user screenshots
 	virtual ISteamScreenshots *GetISteamScreenshots( HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
-
 
 	// this needs to be called every frame to process matchmaking results
 	// redundant if you're already calling SteamAPI_RunCallbacks()
@@ -118,14 +116,8 @@ public:
 	// Trigger global shutdown for the DLL
 	virtual bool BShutdownIfAllPipesClosed() = 0;
 
-#ifdef _PS3
-	virtual ISteamPS3OverlayRender *GetISteamPS3OverlayRender() = 0;
-#endif
-
 	// Expose HTTP interface
-	virtual ISteamHTTP *GetISteamHTTP( HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
-
-
+	virtual ISteamHTTP* GetISteamHTTP( HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 };
 
 

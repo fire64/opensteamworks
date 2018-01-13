@@ -31,7 +31,7 @@ public:
 	virtual int32 GetFileSize( AppId_t nAppId, ERemoteStorageFileRoot eRemoteStorageFileRoot, const char *pchFile  ) = 0;
 
 	virtual int32 FileRead( AppId_t nAppId, ERemoteStorageFileRoot eRemoteStorageFileRoot, const char *pchFile, void *pvData, int32 cubDataToRead ) = 0;
-
+	
 	virtual bool FileForget( AppId_t nAppId, ERemoteStorageFileRoot eRemoteStorageFileRoot, const char *pchFile ) = 0;
 	virtual bool FileDelete( AppId_t nAppId, ERemoteStorageFileRoot eRemoteStorageFileRoot, const char *pchFile ) = 0;
 	virtual SteamAPICall_t FileShare( AppId_t nAppId, ERemoteStorageFileRoot eRemoteStorageFileRoot, const char *pchFile ) = 0;
@@ -53,7 +53,7 @@ public:
 	virtual const char *GetFileNameAndSize( AppId_t nAppId, int32 iFile, ERemoteStorageFileRoot *peRemoteStorageFileRoot, int32 *pnFileSizeInBytes, bool bFromExternalAPI ) = 0;
 
 	virtual bool GetQuota( AppId_t nAppId, int32 *pnTotalBytes, int32 *pnAvailableBytes ) = 0;
-
+	
 	virtual bool IsCloudEnabledForAccount();
 	virtual bool IsCloudEnabledForApp( AppId_t nAppId );
 	virtual void SetCloudEnabledForApp( AppId_t nAppId, bool bEnable );
@@ -67,9 +67,9 @@ public:
 	virtual int32 GetCachedUGCCount() = 0;
 	virtual UGCHandle_t GetCachedUGCHandle( int32 iCachedContent ) = 0;
 
-	virtual SteamAPICall_t PublishFile( AppId_t nAppId, ERemoteStorageFileRoot eRemoteStorageFileRoot, const char *cszFileName, const char *cszPreviewFileName, AppId_t nConsumerAppId , const char *cszTitle, const char *cszDescription, ERemoteStoragePublishedFileVisibility eVisibility, SteamParamStringArray_t *pTags, EWorkshopFileType eType ) = 0;
-	virtual SteamAPICall_t PublishVideo( AppId_t nAppId, EWorkshopVideoProvider eVideoProvider, const char *cszVideoAccountName, const char *cszVideoIdentifier, ERemoteStorageFileRoot eRemoteStorageFileRoot, const char *cszFileName, AppId_t nConsumerAppId, const char *cszTitle, const char *cszDescription, ERemoteStoragePublishedFileVisibility eVisibility, SteamParamStringArray_t *pTags ) = 0;
-	virtual SteamAPICall_t PublishVideoFromURL( AppId_t nAppId, ERemoteStorageFileRoot eRemoteStorageFileRoot, const char *cszVideoURL, const char *cszFileName, AppId_t nConsumerAppId, const char *cszTitle, const char *cszDescription, ERemoteStoragePublishedFileVisibility eVisibility, SteamParamStringArray_t *pTags ) = 0;
+	virtual SteamAPICall_t PublishFile( AppId_t nAppId, ERemoteStorageFileRoot eRemoteStorageFileRoot, const char *cszFileName, const char *cszPreviewFileName, AppId_t nConsumerAppId , const char *cszTitle, const char *cszDescription, ERemoteStoragePublishedFileVisibility eVisibility, SteamParamStringArray_t const *pTags, EWorkshopFileType eType ) = 0;
+	virtual SteamAPICall_t PublishVideo( AppId_t nAppId, EWorkshopVideoProvider eVideoProvider, const char *cszVideoAccountName, const char *cszVideoIdentifier, ERemoteStorageFileRoot eRemoteStorageFileRoot, const char *cszFileName, AppId_t nConsumerAppId, const char *cszTitle, const char *cszDescription, ERemoteStoragePublishedFileVisibility eVisibility, SteamParamStringArray_t const *pTags ) = 0;
+	virtual SteamAPICall_t PublishVideoFromURL( AppId_t nAppId, ERemoteStorageFileRoot eRemoteStorageFileRoot, const char *cszVideoURL, const char *cszFileName, AppId_t nConsumerAppId, const char *cszTitle, const char *cszDescription, ERemoteStoragePublishedFileVisibility eVisibility, SteamParamStringArray_t const *pTags ) = 0;
 
 	virtual JobID_t CreatePublishedFileUpdateRequest( AppId_t nAppId, PublishedFileId_t unPublishedFileId ) = 0;
 	virtual bool UpdatePublishedFileFile( JobID_t hUpdateRequest, const char *cszFile ) = 0;
@@ -78,27 +78,27 @@ public:
 	virtual bool UpdatePublishedFileDescription( JobID_t hUpdateRequest, const char *cszDescription ) = 0;
 	virtual bool UpdatePublishedFileSetChangeDescription( JobID_t hUpdateRequest, const char *cszDescription ) = 0;
 	virtual bool UpdatePublishedFileVisibility( JobID_t hUpdateRequest, ERemoteStoragePublishedFileVisibility eVisibility ) = 0;
-	virtual bool UpdatePublishedFileTags( JobID_t hUpdateRequest, SteamParamStringArray_t *pTags ) = 0;
+	virtual bool UpdatePublishedFileTags( JobID_t hUpdateRequest, SteamParamStringArray_t const *pTags ) = 0;
 	virtual bool UpdatePublishedFileURL( JobID_t hUpdateRequest, const char *cszURL ) = 0;
-
+	
 	virtual SteamAPICall_t CommitPublishedFileUpdate( AppId_t nAppId, ERemoteStorageFileRoot eRemoteStorageFileRoot, JobID_t hUpdateRequest ) = 0;
-
+	
 	virtual SteamAPICall_t GetPublishedFileDetails( PublishedFileId_t unPublishedFileId, bool bUseNewCallback, uint32 ) = 0; // Old callback id = 1310, new callback id = 1318
 	virtual SteamAPICall_t DeletePublishedFile( PublishedFileId_t unPublishedFileId ) = 0;
 	virtual SteamAPICall_t EnumerateUserPublishedFiles( AppId_t nAppId, uint32 uStartIndex, ERemoteStoragePublishedFileSortOrder eOrder ) = 0;
 	virtual SteamAPICall_t SubscribePublishedFile( AppId_t nAppId, PublishedFileId_t unPublishedFileId ) = 0;
 	virtual SteamAPICall_t EnumerateUserSubscribedFiles( AppId_t nAppId, uint32 uStartIndex, uint8 uListType, EPublishedFileInfoMatchingFileType eMatchingFileType ) = 0;
 	virtual SteamAPICall_t UnsubscribePublishedFile( AppId_t nAppId, PublishedFileId_t unPublishedFileId ) = 0;
-
+	
 	virtual SteamAPICall_t SetUserPublishedFileAction( AppId_t nAppId, PublishedFileId_t unPublishedFileId, EWorkshopFileAction eAction ) = 0;
 	virtual SteamAPICall_t EnumeratePublishedFilesByUserAction( AppId_t nAppId, EWorkshopFileAction eAction, uint32 uStartIndex ) = 0;
 	virtual SteamAPICall_t EnumerateUserSubscribedFilesWithUpdates( AppId_t nAppId, uint32 uStartIndex, RTime32 uStartTime ) = 0;
 	virtual SteamAPICall_t GetCREItemVoteSummary( PublishedFileId_t unPublishedFileId ) = 0;
 	virtual SteamAPICall_t UpdateUserPublishedItemVote( PublishedFileId_t unPublishedFileId, bool bVoteUp ) = 0;
 	virtual SteamAPICall_t GetUserPublishedItemVoteDetails( PublishedFileId_t unPublishedFileId ) = 0;
-	virtual SteamAPICall_t EnumerateUserSharedWorkshopFiles( AppId_t nAppId, CSteamID creatorSteamID, uint32 uStartIndex, SteamParamStringArray_t *pRequiredTags, SteamParamStringArray_t *pExcludedTags ) = 0;
-	virtual SteamAPICall_t EnumeratePublishedWorkshopFiles( AppId_t nAppId, EWorkshopEnumerationType eType, uint32 uStartIndex, uint32 cDays, uint32 cCount, SteamParamStringArray_t *pTags, SteamParamStringArray_t *pUserTags ) = 0;
-
+	virtual SteamAPICall_t EnumerateUserSharedWorkshopFiles( AppId_t nAppId, CSteamID creatorSteamID, uint32 uStartIndex, SteamParamStringArray_t const *pRequiredTags, SteamParamStringArray_t const *pExcludedTags ) = 0;
+	virtual SteamAPICall_t EnumeratePublishedWorkshopFiles( AppId_t nAppId, EWorkshopEnumerationType eType, EPublishedFileInfoMatchingFileType eFileType, uint32 uStartIndex, uint32 cDays, uint32 cCount, SteamParamStringArray_t const *pTags, SteamParamStringArray_t const *pUserTags ) = 0;
+	
 	virtual EFileRemoteStorageSyncState EGetFileSyncState( AppId_t nAppId, ERemoteStorageFileRoot eRemoteStorageFileRoot, const char *pchFile ) = 0;
 	virtual bool BIsFileSyncing( AppId_t nAppId, ERemoteStorageFileRoot eRemoteStorageFileRoot, const char *pchFile ) = 0;
 
@@ -114,7 +114,7 @@ public:
 
 	virtual void LoadLocalFileInfoCache( AppId_t nAppId ) = 0;
 
-	virtual void EvaluateRemoteStorageSyncState( AppId_t nAppId ) = 0;
+	virtual void EvaluateRemoteStorageSyncState( AppId_t nAppId, bool bUnk) = 0;
 	virtual ERemoteStorageSyncState GetRemoteStorageSyncState( AppId_t nAppId ) = 0;
 
 	virtual bool HaveLatestFilesLocally( AppId_t nAppId ) = 0;
@@ -124,14 +124,14 @@ public:
 
 	virtual bool SynchronizeApp( AppId_t nAppId, bool bSyncClient, bool bSyncServer ) = 0;
 	virtual bool IsAppSyncInProgress( AppId_t nAppId ) = 0;
-
+	
 	virtual void RunAutoCloudOnAppLaunch( AppId_t nAppId ) = 0;
 	virtual void RunAutoCloudOnAppExit( AppId_t nAppId ) = 0;
-
+	
 	virtual bool ResetFileRequestState( AppId_t nAppId ) = 0;
 
 	virtual void ClearPublishFileUpdateRequests( AppId_t nAppId ) = 0;
-
+	
 	virtual int32 GetSubscribedFileDownloadCount() = 0;
 	virtual bool BGetSubscribedFileDownloadInfo( int32 iFile, PublishedFileId_t* punPublishedFileId, uint32 *puBytesDownloaded, uint32 *puBytesExpected, AppId_t* pnAppId ) = 0;
 	virtual bool BGetSubscribedFileDownloadInfo( PublishedFileId_t unPublishedFileId, uint32 *puBytesDownloaded, uint32 *puBytesExpected, AppId_t* pnAppId ) = 0;

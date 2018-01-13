@@ -46,7 +46,6 @@ public:
 	virtual void ReleaseRequest( HServerListRequest hServerListRequest ) = 0;
 
 	/* the filter operation codes that go in the key part of MatchMakingKeyValuePair_t should be one of these:
-
 		"map"
 			- Server passes the filter if the server is playing the specified map.
 		"gamedataand"
@@ -73,34 +72,26 @@ public:
 			pairs must immediately follow, i.e. this is a prefix logical operator notation.)
 			In the simplest case where Boolean expressions are not nested, this is simply
 			the number of operands.
-
 			For example, to match servers on a particular map or with a particular tag, would would
 			use these filters.
-
 				( server.map == "cp_dustbowl" || server.gametags.contains("payload") )
 				"or", "2"
 				"map", "cp_dustbowl"
 				"gametagsand", "payload"
-
 			If logical inputs are nested, then the operand specifies the size of the entire
 			"length" of its operands, not the number of immediate children.
-
 				( server.map == "cp_dustbowl" || ( server.gametags.contains("payload") && !server.gametags.contains("payloadrace") ) )
 				"or", "4"
 				"map", "cp_dustbowl"
 				"and", "2"
 				"gametagsand", "payload"
 				"gametagsnor", "payloadrace"
-
 			Unary NOT can be achieved using either "nand" or "nor" with a single operand.
-
 		"addr"
 			- Server passes the filter if the server's query address matches the specified IP or IP:port.
 		"gameaddr"
 			- Server passes the filter if the server's game address matches the specified IP or IP:port.
-
 		The following filter operations ignore the "value" part of MatchMakingKeyValuePair_t
-
 		"dedicated"
 			- Server passes the filter if it passed true to SetDedicatedServer.
 		"secure"

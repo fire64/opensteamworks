@@ -21,13 +21,10 @@
 #endif
 
 #include "SteamTypes.h"
-#include "HTMLSurfaceCommon.h"
+#include "SteamHTMLSurfaceComon.h"
 
 
-//-----------------------------------------------------------------------------
-// Purpose: Steam UGC support API
-//-----------------------------------------------------------------------------
-class ISteamHTMLSurface003
+abstract_class ISteamHTMLSurface003
 {
 public:
 	virtual ~ISteamHTMLSurface003() {}
@@ -67,7 +64,6 @@ public:
 	// run this javascript script in the currently loaded page
 	virtual void ExecuteJavascript( HHTMLBrowser unBrowserHandle, const char *pchScript ) = 0;
 
-
 	// Mouse click and mouse movement commands
 	virtual void MouseUp( HHTMLBrowser unBrowserHandle, EHTMLMouseButton eMouseButton ) = 0;
 	virtual void MouseDown( HHTMLBrowser unBrowserHandle, EHTMLMouseButton eMouseButton ) = 0;
@@ -105,14 +101,15 @@ public:
 
 	// return details about the link at position x,y on the current page
 	virtual void GetLinkAtPosition(  HHTMLBrowser unBrowserHandle, int x, int y ) = 0;
-
+	
 	// set a webcookie for the hostname in question
 	virtual void SetCookie( const char *pchHostname, const char *pchKey, const char *pchValue, const char *pchPath = "/", RTime32 nExpires = 0, bool bSecure = false, bool bHTTPOnly = false ) = 0;
 
-	// Zoom the current page by flZoom ( from 0.0 to 2.0, so to zoom to 120% use 1.2 ), zooming around point X,Y in the page (use 0,0 if you don't care)
+	// Zoom the current page by flZoom ( from 0.0 to 4.0, so to zoom to 120% use 1.2 ), zooming around point X,Y in the page (use 0,0 if you don't care)
 	virtual void SetPageScaleFactor( HHTMLBrowser unBrowserHandle, float flZoom, int nPointX, int nPointY ) = 0;
+	
+	virtual void SetBackgroundMode( HHTMLBrowser unBrowserHandle, bool bAllowed ) = 0;
 
-	virtual void SetBackgroundMode( uint32, bool ) = 0;
 
 	// CALLBACKS
 	//
@@ -133,6 +130,5 @@ public:
 	virtual void FileLoadDialogResponse( HHTMLBrowser unBrowserHandle, const char **pchSelectedFiles ) = 0;
 };
 
-
-
 #endif // ISTEAMHTMLSURFACE003_H
+

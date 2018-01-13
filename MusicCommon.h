@@ -20,31 +20,16 @@
 #pragma once
 #endif
 
-#define STEAMMUSIC_INTERFACE_VERSION_001 "STEAMMUSIC_INTERFACE_VERSION001"
-
-
 enum AudioPlayback_Status
 {
-	AudioPlayback_Undefined = 0, 
+	AudioPlayback_Undefined = 0,
 	AudioPlayback_Playing = 1,
 	AudioPlayback_Paused = 2,
 	AudioPlayback_Idle = 3
 };
 
+#define STEAMMUSIC_INTERFACE_VERSION_001 "STEAMMUSIC_INTERFACE_VERSION001"
+#define STEAMMUSICREMOTE_INTERFACE_VERSION_001 "STEAMMUSICREMOTE_INTERFACE_VERSION001"
 
-#pragma pack( push, 8 )
-
-struct PlaybackStatusHasChanged_t
-{
-	enum { k_iCallback = k_iSteamMusicCallbacks + 1 };
-};
-
-struct VolumeHasChanged_t
-{
-	enum { k_iCallback = k_iSteamMusicCallbacks + 2 };
-	float m_flNewVolume;
-};
-
-#pragma pack( pop )
 
 #endif // MUSICCOMMON_H

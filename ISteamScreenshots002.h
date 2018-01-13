@@ -29,7 +29,6 @@
 //-----------------------------------------------------------------------------
 abstract_class ISteamScreenshots002
 {
-
 public:
 	// Writes a screenshot to the user's screenshot library given the raw image data, which must be in RGB format.
 	// The return value is a handle that is valid for the duration of the game process and can be used to apply tags.
@@ -51,7 +50,7 @@ public:
 
 	// Sets metadata about a screenshot's location (for example, the name of the map)
 	virtual bool SetLocation( ScreenshotHandle hScreenshot, const char *pchLocation ) = 0;
-
+	
 	// Tags a user as being visible in the screenshot
 	virtual bool TagUser( ScreenshotHandle hScreenshot, CSteamID steamID ) = 0;
 

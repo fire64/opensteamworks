@@ -23,10 +23,7 @@
 #include "SteamTypes.h"
 #include "ControllerCommon.h"
 
-//-----------------------------------------------------------------------------
-// Purpose: Native Steam controller support API
-//-----------------------------------------------------------------------------
-class ISteamController001
+abstract_class ISteamController001
 {
 public:
 
@@ -43,14 +40,14 @@ public:
 	virtual void RunFrame() = 0;
 
 	// Get the state of the specified controller, returns false if that controller is not connected
-	virtual bool GetControllerState( uint32 unControllerIndex, SteamControllerState_t *pState ) = 0;
+	virtual bool GetControllerState( uint32 unControllerIndex, SteamControllerState001_t *pState ) = 0;
 
 	// Trigger a haptic pulse on the controller
 	virtual void TriggerHapticPulse( uint32 unControllerIndex, ESteamControllerPad eTargetPad, unsigned short usDurationMicroSec ) = 0;
 
 	// Set the override mode which is used to choose to use different base/legacy bindings from your config file
 	virtual void SetOverrideMode( const char *pchMode ) = 0;
+
 };
 
-
-#endif // ISTEAMCONTROLLER001_H
+#endif

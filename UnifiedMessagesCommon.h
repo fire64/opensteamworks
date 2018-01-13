@@ -25,19 +25,10 @@
 #define CLIENTUNIFIEDMESSAGES_INTERFACE_VERSION "CLIENTUNIFIEDMESSAGES_INTERFACE_VERSION001"
 #define STEAMUNIFIEDMESSAGES_INTERFACE_VERSION_001 "STEAMUNIFIEDMESSAGES_INTERFACE_VERSION001"
 
-typedef uint64 ClientUnifiedMessageHandle;
 
 // callbacks
 #pragma pack( push, 8 )
 
-struct SteamUnifiedMessagesSendMethodResult_t
-{
-	enum { k_iCallback = k_iClientUnifiedMessagesCallbacks + 1 };
-	ClientUnifiedMessageHandle m_hHandle;	// The handle returned by SendMethod().
-	uint64 m_unContext;						// Context provided when calling SendMethod().
-	EResult m_eResult;						// The result of the method call.
-	uint32 m_unResponseSize;				// The size of the response.
-};
 
 #pragma pack( pop )
 

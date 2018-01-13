@@ -104,7 +104,7 @@
 typedef unsigned char uint8;
 typedef signed char int8;
 
-#if defined( _MSC_VER )
+#if defined( _MSV_VER )
 
 	typedef __int16 int16;
 	typedef unsigned __int16 uint16;
@@ -121,7 +121,7 @@ typedef signed char int8;
 		typedef unsigned __int32 uintp;
 	#endif
 
-#else // _MSC_VER
+#else // _MSV_VER
 
 	typedef short int16;
 	typedef unsigned short uint16;
@@ -137,7 +137,7 @@ typedef signed char int8;
 		typedef unsigned int uintp;
 	#endif
 
-#endif // else _MSC_VER
+#endif // else _MSV_VER
 
 
 #ifndef abstract_class
@@ -326,23 +326,24 @@ enum EUniverse
 #endif // NO_STEAM
 
 
-#ifdef __clang__
-# define CLANG_ATTR(ATTR) __attribute__((annotate( ATTR )))
-#else
-# define CLANG_ATTR(ATTR)
-#endif
+typedef void* (*CreateInterfaceFn)( const char *pName, int *pReturnCode );
+typedef void* (*FactoryFn)( const char *pName );
+typedef void* (*InstantiateInterfaceFn)( void );
 
-#define METHOD_DESC(DESC) CLANG_ATTR( "desc:" #DESC ";" )
-#define IGNOREATTR() CLANG_ATTR( "ignore" )
-#define OUT_STRUCT() CLANG_ATTR( "out_struct: ;" )
-#define OUT_ARRAY_CALL(COUNTER,FUNCTION,PARAMS) CLANG_ATTR( "out_array_call:" #COUNTER "," #FUNCTION "," #PARAMS ";" )
-#define OUT_ARRAY_COUNT(COUNTER, DESC) CLANG_ATTR( "out_array_count:" #COUNTER  ";desc:" #DESC )
-#define ARRAY_COUNT(COUNTER) CLANG_ATTR( "array_count:" #COUNTER ";" )
-#define ARRAY_COUNT_D(COUNTER, DESC) CLANG_ATTR( "array_count:" #COUNTER ";desc:" #DESC )
-#define BUFFER_COUNT(COUNTER) CLANG_ATTR( "buffer_count:" #COUNTER ";" )
-#define OUT_BUFFER_COUNT(COUNTER) CLANG_ATTR( "out_buffer_count:" #COUNTER ";" )
-#define OUT_STRING_COUNT(COUNTER) CLANG_ATTR( "out_string_count:" #COUNTER ";" )
-#define DESC(DESC) CLANG_ATTR("desc:" #DESC ";")
+typedef void  (*SteamAPIWarningMessageHook_t)(int hpipe, const char *message);
+typedef void (*KeyValueIteratorCallback_t)(const char* key, const char* value, void* kv);
+
+typedef void (*SteamNotificationCallback_t)(ESteamNotify eEvent, unsigned int nData);
+
+typedef bool (*SteamBGetCallbackFn)( int hpipe, void *pCallbackMsg );
+typedef void (*SteamFreeLastCallbackFn)( int hpipe );
+typedef bool (*SteamGetAPICallResultFn)( int hpipe, uint64 hSteamAPICall, void* pCallback, int cubCallback, int iCallbackExpected, bool* pbFailed );
+
+//-----------------------------------------------------------------------------
+// Purpose: Passed as argument to SteamAPI_UseBreakpadCrashHandler to enable optional callback
+//  just before minidump file is captured after a crash has occurred.  (Allows app to append additional comment data to the dump, etc.)
+//-----------------------------------------------------------------------------
+typedef void (*PFNPreMinidumpCallback)(void *context);
 
 //-----------------------------------------------------------------------------
 // Purpose: Used by ICrashHandler interfaces to reference particular installed crash handlers
@@ -391,10 +392,8 @@ typedef uint64 GID_t;
 const GID_t k_GIDNil = 0xffffffffffffffffull;
 
 // For convenience, we define a number of types that are just new names for GIDs
-typedef uint64 JobID_t;			// Each Job has a unique ID
+typedef GID_t JobID_t;			// Each Job has a unique ID
 typedef GID_t TxnID_t;			// Each financial transaction has a unique ID
-
-const JobID_t k_JobIDNil = 0xffffffffffffffffull;
 
 const GID_t k_TxnIDNil = k_GIDNil;
 const GID_t k_TxnIDUnknown = 0;
@@ -407,9 +406,6 @@ const PackageId_t k_uPackageIdFreeSub = 0x0;
 const PackageId_t k_uPackageIdInvalid = 0xFFFFFFFF;
 const PackageId_t k_uPackageIdWallet = -2;
 const PackageId_t k_uPackageIdMicroTxn = -3;
-
-typedef uint32 BundleId_t;
-const BundleId_t k_uBundleIdInvalid = 0;
 
 // this is baked into client messages and interfaces as an int, 
 // make sure we never break this.
@@ -535,8 +531,6 @@ typedef uint64 SteamAPICall_t;
 const SteamAPICall_t k_uAPICallInvalid = 0x0;
 
 typedef uint32 AccountID_t;
-
-typedef uint32 PartnerId_t;
 
 // handle to a communication pipe to the Steam client
 typedef int32 HSteamPipe;
@@ -671,27 +665,6 @@ typedef	unsigned short		SteamInstanceID_t;		// MUST be 16 bits
 typedef char SteamPersonalQuestion_t[ STEAM_QUESTION_MAXLEN + 1 ];
 
 
-typedef void* (*CreateInterfaceFn)( const char *pName, int *pReturnCode );
-typedef void* (*FactoryFn)( const char *pName );
-typedef void* (*InstantiateInterfaceFn)( void );
-
-typedef void  (*SteamAPIWarningMessageHook_t)(int hpipe, const char *message);
-typedef void( *SteamAPI_PostAPIResultInProcess_t )(SteamAPICall_t callHandle, void *, uint32 unCallbackSize, int iCallbackNum);
-typedef uint32 ( *SteamAPI_CheckCallbackRegistered_t )( int iCallbackNum );
-typedef void (*KeyValueIteratorCallback_t)(const char* key, const char* value, void* kv);
-
-typedef void (*SteamNotificationCallback_t)(ESteamNotify eEvent, unsigned int nData);
-
-typedef bool (*SteamBGetCallbackFn)( int hpipe, void *pCallbackMsg );
-typedef void (*SteamFreeLastCallbackFn)( int hpipe );
-typedef bool (*SteamGetAPICallResultFn)( int hpipe, uint64 hSteamAPICall, void* pCallback, int cubCallback, int iCallbackExpected, bool* pbFailed );
-
-//-----------------------------------------------------------------------------
-// Purpose: Passed as argument to SteamAPI_UseBreakpadCrashHandler to enable optional callback
-//  just before minidump file is captured after a crash has occurred.  (Allows app to append additional comment data to the dump, etc.)
-//-----------------------------------------------------------------------------
-typedef void (*PFNPreMinidumpCallback)(void *context);
-
 //-----------------------------------------------------------------------------
 // Purpose: Base values for callback identifiers, each callback must
 //			have a unique ID.
@@ -711,8 +684,7 @@ enum ECallbackType
 	k_iSteamUserStatsCallbacks = 1100,
 	k_iSteamNetworkingCallbacks = 1200,
 	k_iClientRemoteStorageCallbacks = 1300,
-	//k_iSteamUserItemsCallbacks = 1400,
-	k_iClientDepotBuilderCallbacks = 1400,
+	k_iSteamUserItemsCallbacks = 1400,
 	k_iSteamGameServerItemsCallbacks = 1500,
 	k_iClientUtilsCallbacks = 1600,
 	k_iSteamGameCoordinatorCallbacks = 1700,
@@ -723,8 +695,8 @@ enum ECallbackType
 	k_iClientScreenshotsCallbacks = 2200,
 	k_iSteamScreenshotsCallbacks = 2300,
 	k_iClientAudioCallbacks = 2400,
-	k_iClientUnifiedMessagesCallbacks = 2500,
-	k_iSteamStreamLauncherCallbacks = 2600,
+	k_iSteamUnifiedMessagesCallbacks = 2500,
+	k_iClientUnifiedMessagesCallbacks = 2600,
 	k_iClientControllerCallbacks = 2700,
 	k_iSteamControllerCallbacks = 2800,
 	k_iClientParentalSettingsCallbacks = 2900,
@@ -745,227 +717,8 @@ enum ECallbackType
 	k_iSteamReservedCallbacks = 4400,
 	k_iSteamHTMLSurfaceCallbacks = 4500,
 	k_iClientVideoCallbacks = 4600,
-	k_iClientInventoryCallbacks = 4700
+	k_iClientInventoryCallbacks = 4700,
 };
-
-
-//-----------------------------------------------------------------------------
-// The CALLBACK macros are for client side callback logging enabled with
-// log_callback <first callnbackID> <last callbackID>
-// Do not change any of these. 
-//-----------------------------------------------------------------------------
-
-struct SteamCallback_t
-{
-public:
-	SteamCallback_t() {}
-};
-
-#ifndef REFERENCE
-#define REFERENCE(arg) ((void)arg)
-#endif
-
-#define DEFINE_CALLBACK( callbackname, callbackid ) \
-struct callbackname : SteamCallback_t { \
-	enum { k_iCallback = callbackid }; \
-	static callbackname *GetNullPointer() { return 0; } \
-	static const char *GetCallbackName() { return #callbackname; } \
-	static uint32  GetCallbackID() { return callbackname::k_iCallback; }
-
-#define CALLBACK_MEMBER( varidx, vartype, varname ) \
-public: vartype varname ; \
-	static void GetMemberVar_##varidx( unsigned int &varOffset, unsigned int &varSize, uint32 &varCount, const char **pszName, const char **pszType ) { \
-	varOffset = (unsigned int)(size_t)&GetNullPointer()->varname; \
-	varSize = sizeof( vartype ); \
-	varCount = 1; \
-	*pszName = #varname; *pszType = #vartype; }
-
-#define CALLBACK_ARRAY( varidx, vartype, varname, varcount ) \
-public: vartype varname [ varcount ]; \
-	static void GetMemberVar_##varidx( unsigned int &varOffset, unsigned int &varSize, uint32 &varCount, const char **pszName, const char **pszType ) { \
-	varOffset = (unsigned int)(size_t)&GetNullPointer()->varname[0]; \
-	varSize = sizeof( vartype ); \
-	varCount = varcount; \
-	*pszName = #varname; *pszType = #vartype; }
-
-
-#define END_CALLBACK_INTERNAL_BEGIN( numvars )  \
-	static uint32  GetNumMemberVariables() { return numvars; } \
-	static bool    GetMemberVariable( uint32 index, uint32 &varOffset, uint32 &varSize,  uint32 &varCount, const char **pszName, const char **pszType ) { \
-	switch ( index ) { default : return false;
-
-
-#define END_CALLBACK_INTERNAL_SWITCH( varidx ) case varidx : GetMemberVar_##varidx( varOffset, varSize, varCount, pszName, pszType ); return true;
-
-#define END_CALLBACK_INTERNAL_END() }; } };
-
-#define END_DEFINE_CALLBACK_0() \
-	static uint32  GetNumMemberVariables() { return 0; } \
-	static bool    GetMemberVariable( uint32 index, uint32 &varOffset, uint32 &varSize,  uint32 &varCount, const char **pszName, const char **pszType ) { REFERENCE( pszType ); REFERENCE( pszName ); REFERENCE( varCount ); REFERENCE( varSize ); REFERENCE( varOffset ); REFERENCE( index ); return false; } \
-	};
-
-
-#define END_DEFINE_CALLBACK_1() \
-	END_CALLBACK_INTERNAL_BEGIN( 1 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
-	END_CALLBACK_INTERNAL_END()
-
-#define END_DEFINE_CALLBACK_2() \
-	END_CALLBACK_INTERNAL_BEGIN( 2 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
-	END_CALLBACK_INTERNAL_END()
-
-#define END_DEFINE_CALLBACK_3() \
-	END_CALLBACK_INTERNAL_BEGIN( 3 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
-	END_CALLBACK_INTERNAL_END()
-
-#define END_DEFINE_CALLBACK_4() \
-	END_CALLBACK_INTERNAL_BEGIN( 4 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
-	END_CALLBACK_INTERNAL_END()
-
-#define END_DEFINE_CALLBACK_5() \
-	END_CALLBACK_INTERNAL_BEGIN( 5 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
-	END_CALLBACK_INTERNAL_END()
-
-
-#define END_DEFINE_CALLBACK_6() \
-	END_CALLBACK_INTERNAL_BEGIN( 6 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
-	END_CALLBACK_INTERNAL_END()
-
-#define END_DEFINE_CALLBACK_7() \
-	END_CALLBACK_INTERNAL_BEGIN( 7 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
-	END_CALLBACK_INTERNAL_END()
-
-#define END_DEFINE_CALLBACK_8() \
-	END_CALLBACK_INTERNAL_BEGIN( 8 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 7 ) \
-	END_CALLBACK_INTERNAL_END()
-
-#define END_DEFINE_CALLBACK_9() \
-	END_CALLBACK_INTERNAL_BEGIN( 9 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 7 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 8 ) \
-	END_CALLBACK_INTERNAL_END()
-
-#define END_DEFINE_CALLBACK_10() \
-	END_CALLBACK_INTERNAL_BEGIN( 10 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 7 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 8 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 9 ) \
-	END_CALLBACK_INTERNAL_END()
-
-#define END_DEFINE_CALLBACK_11() \
-	END_CALLBACK_INTERNAL_BEGIN( 11 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 7 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 8 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 9 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 10 ) \
-	END_CALLBACK_INTERNAL_END()
-
-#define END_DEFINE_CALLBACK_12() \
-	END_CALLBACK_INTERNAL_BEGIN( 12 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 7 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 8 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 9 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 10 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 11 ) \
-	END_CALLBACK_INTERNAL_END()
-
-#define END_DEFINE_CALLBACK_13() \
-	END_CALLBACK_INTERNAL_BEGIN( 13 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 7 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 8 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 9 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 10 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 11 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 12 ) \
-	END_CALLBACK_INTERNAL_END()
-
-#define END_DEFINE_CALLBACK_14() \
-	END_CALLBACK_INTERNAL_BEGIN( 14 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 0 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 1 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 2 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 3 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 4 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 5 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 6 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 7 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 8 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 9 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 10 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 11 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 12 ) \
-	END_CALLBACK_INTERNAL_SWITCH( 13 ) \
-	END_CALLBACK_INTERNAL_END()
 
 
 #ifndef NO_STEAM

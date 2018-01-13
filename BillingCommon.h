@@ -76,15 +76,24 @@ typedef enum EPaymentMethod
 	k_EPaymentMethodHipercard = 27,
 	k_EPaymentMethodMastercardBrazil = 28,
 	k_EPaymentMethodDinerSCardBrazil = 29,
-
+	k_EPaymentMethodAuthorizedDevice = 30,
+	k_EPaymentMethodMOLPoints = 31,
 	k_EPaymentMethodClickAndBuy = 32,
+	k_EPaymentMethodBeeline = 33,
+	k_EPaymentMethodKonbini = 34,
+	k_EPaymentMethodEClubPoints = 35,
+	k_EPaymentMethodCreditCardJapan = 36,
+	k_EPaymentMethodBankTransferJapan = 37,
+	k_EPaymentMethodPayEasyJapan = 38,
+
+	k_EPaymentMethodSteamPressMaster = 130,
+
 	k_EPaymentMethodAutoGrant = 64,
 	k_EPaymentMethodWallet = 128,
 	k_EPaymentMethodValve = 129,
 	k_EPaymentMethodOEMTicket = 256,
 	k_EPaymentMethodSplit = 512,
 	k_EPaymentMethodComplimentary = 1024,
-	k_EPaymentMethodAuthorizedDevice = 30,
 } EPaymentMethod;
 
 typedef enum EPurchaseResultDetail
@@ -179,28 +188,28 @@ enum ELicenseType
 //-----------------------------------------------------------------------------
 struct OBSOLETE_CALLBACK FinalPriceMsg_t
 {
-	enum { k_iCallback = k_iSteamBillingCallbacks + 1 };
+		enum { k_iCallback = k_iSteamBillingCallbacks + 1 };
 
-	uint32 m_bSuccess;
-	uint32 m_nBaseCost;
-	uint32 m_nTotalDiscount;
-	uint32 m_nTax;
-	uint32 m_nShippingCost;
+		uint32 m_bSuccess;
+		uint32 m_nBaseCost;
+		uint32 m_nTotalDiscount;
+		uint32 m_nTax;
+		uint32 m_nShippingCost;
 };
 
 struct OBSOLETE_CALLBACK PurchaseMsg_t
 {
-	enum { k_iCallback = k_iSteamBillingCallbacks + 2 };
+		enum { k_iCallback = k_iSteamBillingCallbacks + 2 };
 
-	uint32 m_bSuccess;
-	int32 m_EPurchaseResultDetail;			// Detailed result information
+		uint32 m_bSuccess;
+		int32 m_EPurchaseResultDetail;			// Detailed result information
 };
 
 // Sent in response to PurchaseWithActivationCode
 struct PurchaseResponse_t
 {
 	enum { k_iCallback = k_iSteamBillingCallbacks + 4 };
-
+	
 	EResult m_EResult;
 	int32 m_EPurchaseResultDetail;
 	int32 m_iReceiptIndex;

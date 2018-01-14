@@ -1,4 +1,4 @@
-//==========================  Open Steamworks  ================================
+ //==========================  Open Steamworks  ================================
 //
 // This file is part of the Open Steamworks project. All individuals associated
 // with this project do not claim ownership of the contents
@@ -14,24 +14,31 @@
 //
 //=============================================================================
 
-#ifndef ISTEAMVIDEO_002_H
-#define ISTEAMVIDEO_002_H
+#ifndef PARENTALSETTINGSCOMMON_H
+#define PARENTALSETTINGSCOMMON_H
 #ifdef _WIN32
 #pragma once
 #endif
 
-#include "SteamTypes.h"
-#include "VideoCommon.h"
-
-abstract_class ISteamVideo002
+enum EParentalFeature
 {
-public:
-
-        virtual unknown_ret GetVideoURL( uint32 ) = 0;
-        virtual unknown_ret IsBroadcasting( int32 * ) = 0;
-		virtual unknown_ret GetOPFSettings( uint32 ) = 0;
-		virtual unknown_ret GetOPFStringForApp( uint32, char *, int32 * ) = 0;
+	k_EParentalFeatureInvalid = 0,	// Invalid
+	k_EParentalFeatureStore,	// Store
+	k_EParentalFeatureCommunity,	// Community
+	k_EParentalFeatureProfile,	// Profile
+	k_EParentalFeatureFriends,	// Friends
+	k_EParentalFeatureNews,	// News
+	k_EParentalFeatureTrading,	// Trading
+	k_EParentalFeatureSettings,	// Settings
+	k_EParentalFeatureConsole,	// Console
+	k_EParentalFeatureBrowser,	// Browser
+	k_EParentalFeatureParentalSetup,	// ParentalSetup
+	k_EParentalFeatureLibrary,	// Library
+	k_EParentalFeatureTest,	// Test
 };
 
-#endif // ISTEAMVIDEO_002_H
+// versions
+#define STEAMPARENTALSETTINGS_INTERFACE_VERSION_001 "SteamParentalSettings001"
 
+
+#endif // PARENTALSETTINGSCOMMON_H

@@ -31,8 +31,8 @@
 #define STEAMUTILS_INTERFACE_VERSION_005 "SteamUtils005"
 #define STEAMUTILS_INTERFACE_VERSION_006 "SteamUtils006"
 #define STEAMUTILS_INTERFACE_VERSION_007 "SteamUtils007"
-
-
+#define STEAMUTILS_INTERFACE_VERSION_008 "SteamUtils008"
+#define STEAMUTILS_INTERFACE_VERSION_009 "SteamUtils009"
 
 // Steam API call failure results
 typedef enum ESteamAPICallFailure

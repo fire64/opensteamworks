@@ -21,7 +21,7 @@
 #endif
 
 #include "SteamTypes.h"
-
+#include "VideoCommon.h"
 
 abstract_class ISteamVideo001
 {

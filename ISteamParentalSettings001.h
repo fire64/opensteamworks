@@ -22,7 +22,7 @@
 #endif
 
 #include "SteamTypes.h"
-#include "NetworkingCommon.h"
+#include "ParentalSettings.h"
 
 //-----------------------------------------------------------------------------
 // Purpose: Functions for making connections and sending data between clients,

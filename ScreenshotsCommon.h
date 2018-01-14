@@ -28,6 +28,7 @@
 #define CLIENTSCREENSHOTS_INTERFACE_VERSION "CLIENTSCREENSHOTS_INTERFACE_VERSION001"
 #define STEAMSCREENSHOTS_INTERFACE_VERSION_001 "STEAMSCREENSHOTS_INTERFACE_VERSION001"
 #define STEAMSCREENSHOTS_INTERFACE_VERSION_002 "STEAMSCREENSHOTS_INTERFACE_VERSION002"
+#define STEAMSCREENSHOTS_INTERFACE_VERSION_003 "STEAMSCREENSHOTS_INTERFACE_VERSION003"
 
 // Handle is valid for the lifetime of your process and no longer
 typedef uint32 ScreenshotHandle;
@@ -41,6 +42,11 @@ const int k_cubUFSTagValueMax = 255;
 // one will be generated.
 const int k_ScreenshotThumbWidth = 200;
 
+
+enum EVRScreenshotType
+{
+
+};
 
 // callbacks
 #pragma pack( push, 8 )

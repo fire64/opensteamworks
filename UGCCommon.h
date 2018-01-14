@@ -28,8 +28,9 @@
 #define STEAMUGC_INTERFACE_VERSION_005 "STEAMUGC_INTERFACE_VERSION005"
 #define STEAMUGC_INTERFACE_VERSION_006 "STEAMUGC_INTERFACE_VERSION006"
 #define STEAMUGC_INTERFACE_VERSION_007 "STEAMUGC_INTERFACE_VERSION007"
-
-
+#define STEAMUGC_INTERFACE_VERSION_008 "STEAMUGC_INTERFACE_VERSION008"
+#define STEAMUGC_INTERFACE_VERSION_009 "STEAMUGC_INTERFACE_VERSION009"
+#define STEAMUGC_INTERFACE_VERSION_010 "STEAMUGC_INTERFACE_VERSION010"
 
 typedef uint64 UGCQueryHandle_t;
 typedef uint64 UGCQueryHandle_t;
@@ -37,6 +38,17 @@ typedef uint64 UGCUpdateHandle_t;
 
 const UGCQueryHandle_t k_UGCQueryHandleInvalid = 0xffffffffffffffffull;
 const UGCUpdateHandle_t k_UGCUpdateHandleInvalid = 0xffffffffffffffffull;
+
+enum EItemPreviewType
+{
+
+};
+
+enum EItemStatistic
+{
+
+};
+
 
 // Combination of sorting and filtering for queries across all UGC
 enum EUGCQuery

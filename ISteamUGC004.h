@@ -27,8 +27,6 @@
 abstract_class ISteamUGC004
 {
 public:
-
-
 	// Query UGC associated with a user. Creator app id or consumer app id must be valid and be set to the current running app. unPage should start at 1.
 	virtual UGCQueryHandle_t CreateQueryUserUGCRequest( AccountID_t unAccountID, EUserUGCList eListType, EUGCMatchingUGCType eMatchingUGCType, EUserUGCListSortOrder eSortOrder, AppId_t nCreatorAppID, AppId_t nConsumerAppID, uint32 unPage ) = 0;
 
@@ -40,7 +38,7 @@ public:
 
 	// Retrieve an individual result after receiving the callback for querying UGC
 	virtual bool GetQueryUGCResult( UGCQueryHandle_t handle, uint32 index, SteamUGCDetails_t *pDetails ) = 0;
-
+	
 	// Release the request to free up memory, after retrieving results
 	virtual bool ReleaseQueryUGCRequest( UGCQueryHandle_t handle ) = 0;
 
@@ -85,10 +83,10 @@ public:
 
 	// Get info about the item on disk.  If you are supporting items published through the legacy RemoteStorage APIs then *pbLegacyItem will be set to true
 	// and pchFolder will contain the full path to the file rather than the containing folder.
-	virtual unknown_ret GetItemState( PublishedFileId_t nPublishedFileID ) = 0;
-	virtual unknown_ret GetItemInstallInfo( PublishedFileId_t nPublishedFileID, uint64 *punSizeOnDisk, char *pchFolder, uint32 cchFolderSize, uint32 * ) = 0;
-	virtual unknown_ret GetItemDownloadInfo( PublishedFileId_t nPublishedFileID, uint64 *, uint64 * ) = 0;
-	virtual unknown_ret DownloadItem( PublishedFileId_t nPublishedFileID, bool ) = 0;
+	virtual uint32 GetItemState( PublishedFileId_t nPublishedFileID ) = 0;
+	virtual bool GetItemInstallInfo( PublishedFileId_t nPublishedFileID, uint64 *punSizeOnDisk, char *pchFolder, uint32 cchFolderSize, uint32 *punTimeStamp ) = 0;
+	virtual bool GetItemDownloadInfo( PublishedFileId_t nPublishedFileID, uint64 *punBytesDownloaded, uint64 *punBytesTotal ) = 0;
+	virtual bool DownloadItem( PublishedFileId_t nPublishedFileID, bool bHighPriority ) = 0;
 };
 
 #endif // ISTEAMUGC004_H

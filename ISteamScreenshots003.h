@@ -57,8 +57,8 @@ public:
 	// Tags a published file as being visible in the screenshot
 	virtual bool TagPublishedFile( ScreenshotHandle hScreenshot, PublishedFileId_t unPublishedFileID ) = 0;
 
-	virtual unknown_ret IsScreenshotsHooked() = 0;
-	virtual unknown_ret AddVRScreenshotToLibrary( EVRScreenshotType, char const*, char const* ) = 0;
+	virtual bool IsScreenshotsHooked() = 0;
+	virtual ScreenshotHandle AddVRScreenshotToLibrary( EVRScreenshotType eType, const char *pchFilename, const char *pchVRFilename ) = 0;
 };
 
 

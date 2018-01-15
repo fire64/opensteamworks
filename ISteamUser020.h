@@ -165,11 +165,11 @@ public:
 	//so it would be a good idea to request and visit a new auth URL every 12 hours.
 	virtual SteamAPICall_t RequestStoreAuthURL(const char *pchRedirectURL) = 0;
 	
-	virtual unknown_ret BIsPhoneVerified() = 0;
-	virtual unknown_ret BIsTwoFactorEnabled() = 0;
+	virtual bool BIsPhoneVerified() = 0;
+	virtual bool BIsTwoFactorEnabled() = 0;
 
-	virtual unknown_ret BIsPhoneIdentifying() = 0;
-	virtual unknown_ret BIsPhoneRequiringVerification() = 0;
+	virtual bool BIsPhoneIdentifying() = 0;
+	virtual bool BIsPhoneRequiringVerification() = 0;
 
 };
 

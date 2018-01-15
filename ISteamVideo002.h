@@ -27,10 +27,17 @@ abstract_class ISteamVideo002
 {
 public:
 
-        virtual unknown_ret GetVideoURL( uint32 ) = 0;
-        virtual unknown_ret IsBroadcasting( int32 * ) = 0;
-		virtual unknown_ret GetOPFSettings( uint32 ) = 0;
-		virtual unknown_ret GetOPFStringForApp( uint32, char *, int32 * ) = 0;
+	// Get a URL suitable for streaming the given Video app ID's video
+	virtual void GetVideoURL( AppId_t unVideoAppID ) = 0;
+
+	// returns true if user is uploading a live broadcast
+	virtual bool IsBroadcasting( int *pnNumViewers ) = 0;
+
+	//Get the OPF details for 360 video playback
+	virtual void GetOPFSettings( AppId_t unVideoAppID ) = 0;
+
+	//Gets the OPF string for the specified video App ID.
+	virtual bool GetOPFStringForApp( AppId_t unVideoAppID, char *pchBuffer, int32 *pnBufferSize ) = 0;
 };
 
 #endif // ISTEAMVIDEO_002_H

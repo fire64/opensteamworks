@@ -136,14 +136,14 @@ public:
 	// returns true if Steam itself is running in VR mode
 	virtual bool IsSteamRunningInVR() = 0;
 
-	virtual unknown_ret SetOverlayNotificationInset( int32, int32 ) = 0;
+	virtual void SetOverlayNotificationInset( int nHorizontalInset, int nVerticalInset ) = 0;
 
-	virtual unknown_ret IsSteamInBigPictureMode() = 0;
+	virtual bool IsSteamInBigPictureMode() = 0;
 
-	virtual unknown_ret StartVRDashboard() = 0;
+	virtual void StartVRDashboard() = 0;
 
-	virtual unknown_ret IsVRHeadsetStreamingEnabled() = 0;
-	virtual unknown_ret SetVRHeadsetStreamingEnabled( bool ) = 0;
+	virtual bool IsVRHeadsetStreamingEnabled() = 0;
+	virtual void SetVRHeadsetStreamingEnabled( bool bEnabled ) = 0;
 };
 
 #endif // ISTEAMUTILS009_H

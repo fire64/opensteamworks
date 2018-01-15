@@ -27,32 +27,29 @@
 abstract_class ISteamUGC010
 {
 public:
-
-
 	// Query UGC associated with a user. Creator app id or consumer app id must be valid and be set to the current running app. unPage should start at 1.
 	virtual UGCQueryHandle_t CreateQueryUserUGCRequest( AccountID_t unAccountID, EUserUGCList eListType, EUGCMatchingUGCType eMatchingUGCType, EUserUGCListSortOrder eSortOrder, AppId_t nCreatorAppID, AppId_t nConsumerAppID, uint32 unPage ) = 0;
 
 	// Query for all matching UGC. Creator app id or consumer app id must be valid and be set to the current running app. unPage should start at 1.
 	virtual UGCQueryHandle_t CreateQueryAllUGCRequest( EUGCQuery eQueryType, EUGCMatchingUGCType eMatchingeMatchingUGCTypeFileType, AppId_t nCreatorAppID, AppId_t nConsumerAppID, uint32 unPage ) = 0;
 
-	virtual unknown_ret CreateQueryUGCDetailsRequest( uint64 *, uint32 ) = 0;
+	virtual UGCQueryHandle_t CreateQueryUGCDetailsRequest( PublishedFileId_t *pvecPublishedFileID, uint32 unNumPublishedFileIDs ) = 0;
 	
 	// Send the query to Steam
 	virtual SteamAPICall_t SendQueryUGCRequest( UGCQueryHandle_t handle ) = 0;
 
 	// Retrieve an individual result after receiving the callback for querying UGC
 	virtual bool GetQueryUGCResult( UGCQueryHandle_t handle, uint32 index, SteamUGCDetails_t *pDetails ) = 0;
-
 	
-	virtual unknown_ret GetQueryUGCPreviewURL( uint64, uint32, char *, uint32 ) = 0;
-	virtual unknown_ret GetQueryUGCMetadata( uint64, uint32, char *, uint32 ) = 0;
-	virtual unknown_ret GetQueryUGCChildren( uint64, uint32, uint64 *, uint32 ) = 0;
-	virtual unknown_ret GetQueryUGCStatistic( uint64, uint32, EItemStatistic, uint64 * ) = 0;
+	virtual bool GetQueryUGCPreviewURL( UGCQueryHandle_t handle, uint32 index, char *pchURL, uint32 cchURLSize ) = 0;
+	virtual bool GetQueryUGCMetadata( UGCQueryHandle_t handle, uint32 index, char *pchMetadata, uint32 cchMetadatasize ) = 0;
+	virtual bool GetQueryUGCChildren( UGCQueryHandle_t handle, uint32 index, PublishedFileId_t *pvecPublishedFileID, uint32 cMaxEntries )= 0;
+	virtual bool GetQueryUGCStatistic( UGCQueryHandle_t handle, uint32 index, EItemStatistic eStatType, uint64 *pStatValue ) = 0;
 
-	virtual unknown_ret GetQueryUGCNumAdditionalPreviews( uint64, uint32 ) = 0;
-	virtual unknown_ret GetQueryUGCAdditionalPreview( uint64, uint32, uint32, char *, uint32, char *, uint32, EItemPreviewType * ) = 0;
-	virtual unknown_ret GetQueryUGCNumKeyValueTags( uint64, uint32 ) = 0;
-	virtual unknown_ret GetQueryUGCKeyValueTag( uint64, uint32, uint32, char *, uint32, char *, uint32 ) = 0;
+	virtual uint32 GetQueryUGCNumAdditionalPreviews( UGCQueryHandle_t handle, uint32 index ) = 0;
+	virtual bool GetQueryUGCAdditionalPreview( UGCQueryHandle_t handle, uint32 index, uint32 previewIndex, char *pchURLOrVideoID, uint32 cchURLSize, char *pchOriginalFileName, uint32 cchOriginalFileNameSize, EItemPreviewType *pPreviewType ) = 0;
+	virtual uint32 GetQueryUGCNumKeyValueTags( UGCQueryHandle_t handle, uint32 index ) = 0;
+	virtual bool GetQueryUGCKeyValueTag( UGCQueryHandle_t handle, uint32 index, uint32 keyValueTagIndex, char *pchKey, uint32 cchKeySize, char *pchValue, uint32 cchValueSize ) = 0;
 	
 	// Release the request to free up memory, after retrieving results
 	virtual bool ReleaseQueryUGCRequest( UGCQueryHandle_t handle ) = 0;
@@ -60,15 +57,15 @@ public:
 	// Options to set for querying UGC
 	virtual bool AddRequiredTag( UGCQueryHandle_t handle, const char *pTagName ) = 0;
 	virtual bool AddExcludedTag( UGCQueryHandle_t handle, const char *pTagName ) = 0;
-	virtual unknown_ret SetReturnOnlyIDs( uint64, bool ) = 0;
-	virtual bool SetReturnKeyValueTags( UGCQueryHandle_t handle, bool ) = 0;
+	virtual bool SetReturnOnlyIDs( UGCQueryHandle_t handle, bool bReturnOnlyIDs ) = 0;
+	virtual bool SetReturnKeyValueTags( UGCQueryHandle_t handle, bool bReturnKeyValueTags ) = 0;
 	virtual bool SetReturnLongDescription( UGCQueryHandle_t handle, bool bReturnLongDescription ) = 0;
-	virtual bool SetReturnMetadata( UGCQueryHandle_t handle, bool ) = 0;
-	virtual bool SetReturnChildren( UGCQueryHandle_t handle, bool ) = 0;
-	virtual bool SetReturnAdditionalPreviews( UGCQueryHandle_t handle, bool ) = 0;
+	virtual bool SetReturnMetadata( UGCQueryHandle_t handle, bool bReturnMetadata  ) = 0;
+	virtual bool SetReturnChildren( UGCQueryHandle_t handle, bool bReturnChildren  ) = 0;
+	virtual bool SetReturnAdditionalPreviews( UGCQueryHandle_t handle, bool bReturnAdditionalPreviews ) = 0;
 	virtual bool SetReturnTotalOnly( UGCQueryHandle_t handle, bool bReturnTotalOnly ) = 0;
-	virtual unknown_ret SetReturnPlaytimeStats( UGCQueryHandle_t handle, uint32 ) = 0;
-	virtual bool SetLanguage( UGCQueryHandle_t handle, const char * ) = 0;
+	virtual bool SetReturnPlaytimeStats( UGCQueryHandle_t handle, uint32 unDays ) = 0;
+	virtual bool SetLanguage( UGCQueryHandle_t handle, const char *pchLanguage ) = 0;
 	virtual bool SetAllowCachedResponse( UGCQueryHandle_t handle, uint32 unMaxAgeSeconds ) = 0;
 
 	// Options only for querying user UGC
@@ -79,7 +76,7 @@ public:
 	virtual bool SetSearchText( UGCQueryHandle_t handle, const char *pSearchText ) = 0;
 	virtual bool SetRankedByTrendDays( UGCQueryHandle_t handle, uint32 unDays ) = 0;
 	
-	 virtual unknown_ret AddRequiredKeyValueTag( uint64, const char *, const char * ) = 0;
+	 virtual bool AddRequiredKeyValueTag( UGCQueryHandle_t handle, const char *pKey, const char *pValue ) = 0;
 
 	// Request full details for one piece of UGC
 	virtual SteamAPICall_t RequestUGCDetails( PublishedFileId_t nPublishedFileID, uint32 unMaxAgeSeconds ) = 0;
@@ -97,24 +94,24 @@ public:
 	virtual bool SetItemTags( UGCUpdateHandle_t updateHandle, const SteamParamStringArray_t *pTags ) = 0; // change the tags of an UGC item
 	virtual bool SetItemContent( UGCUpdateHandle_t handle, const char *pszContentFolder ) = 0; // update item content from this local folder
 	virtual bool SetItemPreview( UGCUpdateHandle_t handle, const char *pszPreviewFile ) = 0; //  change preview image file for this item. pszPreviewFile points to local image file 
-	virtual unknown_ret RemoveItemKeyValueTags( uint64, const char * ) = 0;
-	virtual unknown_ret AddItemKeyValueTag( uint64, const char *, const char * ) = 0;
+	virtual bool RemoveItemKeyValueTags( UGCUpdateHandle_t handle, const char *pchKey ) = 0;
+	virtual bool AddItemKeyValueTag( UGCUpdateHandle_t handle, const char *pchKey, const char *pchValue ) = 0;
 
-	virtual unknown_ret AddItemPreviewFile( uint64, char const*, EItemPreviewType ) = 0;
-	virtual unknown_ret AddItemPreviewVideo( uint64, char const* ) = 0;
-	virtual unknown_ret UpdateItemPreviewFile( uint64, uint32, char const* ) = 0;
-	virtual unknown_ret UpdateItemPreviewVideo( uint64, uint32, char const* ) = 0;
-	virtual unknown_ret RemoveItemPreview( uint64, uint32 ) = 0;
+	virtual bool AddItemPreviewFile( UGCUpdateHandle_t handle, const char *pszPreviewFile, EItemPreviewType type ) = 0;
+	virtual bool AddItemPreviewVideo( UGCUpdateHandle_t handle, const char *pszVideoID ) = 0;
+	virtual bool UpdateItemPreviewFile( UGCUpdateHandle_t handle, uint32 index, const char *pszPreviewFile ) = 0;
+	virtual bool UpdateItemPreviewVideo( UGCUpdateHandle_t handle, uint32 index, const char *pszVideoID ) = 0;
+	virtual bool RemoveItemPreview( UGCUpdateHandle_t handle, uint32 index ) = 0;
 
 	
 	virtual SteamAPICall_t SubmitItemUpdate( UGCUpdateHandle_t handle, const char *pchChangeNote ) = 0; // commit update process started with StartItemUpdate()
 	virtual EItemUpdateStatus GetItemUpdateProgress( UGCUpdateHandle_t handle, uint64 *punBytesProcessed, uint64* punBytesTotal ) = 0;
 
-	virtual unknown_ret SetUserItemVote( uint64, bool ) = 0;
-	virtual unknown_ret GetUserItemVote( uint64 ) = 0;	
+	virtual SteamAPICall_t SetUserItemVote( PublishedFileId_t nPublishedFileID, bool bVoteUp ) = 0;
+	virtual SteamAPICall_t GetUserItemVote( PublishedFileId_t nPublishedFileID ) = 0;	
 	
-	virtual unknown_ret AddItemToFavorites( uint32, uint64 ) = 0;
-	virtual unknown_ret RemoveItemFromFavorites( uint32, uint64 ) = 0;
+	virtual SteamAPICall_t AddItemToFavorites( AppId_t nAppId, PublishedFileId_t nPublishedFileID ) = 0;
+	virtual SteamAPICall_t RemoveItemFromFavorites( AppId_t nAppId, PublishedFileId_t nPublishedFileID ) = 0;
 
 	// Steam Workshop Consumer API
 	virtual SteamAPICall_t SubscribeItem( PublishedFileId_t nPublishedFileID ) = 0; // subscript to this item, will be installed ASAP
@@ -124,23 +121,23 @@ public:
 
 	// Get info about the item on disk.  If you are supporting items published through the legacy RemoteStorage APIs then *pbLegacyItem will be set to true
 	// and pchFolder will contain the full path to the file rather than the containing folder.
-	virtual unknown_ret GetItemState( PublishedFileId_t nPublishedFileID ) = 0;
-	virtual unknown_ret GetItemInstallInfo( PublishedFileId_t nPublishedFileID, uint64 *punSizeOnDisk, char *pchFolder, uint32 cchFolderSize, uint32 * ) = 0;
-	virtual unknown_ret GetItemDownloadInfo( PublishedFileId_t nPublishedFileID, uint64 *, uint64 * ) = 0;
-	virtual unknown_ret DownloadItem( PublishedFileId_t nPublishedFileID, bool ) = 0;
-	virtual unknown_ret BInitWorkshopForGameServer( uint32 a1, const char *a2 ) = 0;
-	virtual unknown_ret SuspendDownloads( bool bSuspend ) = 0;
+	virtual uint32 GetItemState( PublishedFileId_t nPublishedFileID ) = 0;
+	virtual bool GetItemInstallInfo( PublishedFileId_t nPublishedFileID, uint64 *punSizeOnDisk, char *pchFolder, uint32 cchFolderSize, uint32 *punTimeStamp ) = 0;
+	virtual bool GetItemDownloadInfo( PublishedFileId_t nPublishedFileID, uint64 *punBytesDownloaded, uint64 *punBytesTotal ) = 0;
+	virtual bool DownloadItem( PublishedFileId_t nPublishedFileID, bool bHighPriority ) = 0;
+	virtual bool BInitWorkshopForGameServer( DepotId_t unWorkshopDepotID, const char *pszFolder ) = 0;
+	virtual void SuspendDownloads( bool bSuspend ) = 0;
 
-	virtual unknown_ret StartPlaytimeTracking( uint64 *, uint32 ) = 0;
-	virtual unknown_ret StopPlaytimeTracking( uint64 *, uint32 ) = 0;
-	virtual unknown_ret StopPlaytimeTrackingForAllItems() = 0;
+	virtual SteamAPICall_t StartPlaytimeTracking( PublishedFileId_t *pvecPublishedFileID, uint32 unNumPublishedFileIDs ) = 0;
+	virtual SteamAPICall_t StopPlaytimeTracking( PublishedFileId_t *pvecPublishedFileID, uint32 unNumPublishedFileIDs ) = 0;
+	virtual SteamAPICall_t StopPlaytimeTrackingForAllItems() = 0;
 
-	virtual unknown_ret AddDependency( uint64, uint64 ) = 0;
-	virtual unknown_ret RemoveDependency( uint64, uint64 ) = 0;
-	virtual unknown_ret AddAppDependency( uint64, uint32 ) = 0;
-	virtual unknown_ret RemoveAppDependency( uint64, uint32 ) = 0;
-	virtual unknown_ret GetAppDependencies( uint64 ) = 0;
-	virtual unknown_ret DeleteItem( uint64 ) = 0;
+	virtual SteamAPICall_t AddDependency( PublishedFileId_t nParentPublishedFileID, PublishedFileId_t nChildPublishedFileID ) = 0;
+	virtual SteamAPICall_t RemoveDependency( PublishedFileId_t nParentPublishedFileID, PublishedFileId_t nChildPublishedFileID ) = 0;
+	virtual SteamAPICall_t AddAppDependency( PublishedFileId_t nPublishedFileID, AppId_t nAppID ) = 0;
+	virtual SteamAPICall_t RemoveAppDependency( PublishedFileId_t nPublishedFileID, AppId_t nAppID ) = 0;
+	virtual bool GetAppDependencies( PublishedFileId_t nPublishedFileID ) = 0;
+	virtual SteamAPICall_t DeleteItem( PublishedFileId_t nPublishedFileID ) = 0;
 };
 
 #endif // ISTEAMUGC010_H

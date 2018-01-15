@@ -23,12 +23,18 @@
 #include "SteamTypes.h"
 #include "VideoCommon.h"
 
+//-----------------------------------------------------------------------------
+// Purpose: Steam Video API
+//-----------------------------------------------------------------------------
 abstract_class ISteamVideo001
 {
 public:
 
-        virtual unknown_ret GetVideoURL( uint32 ) = 0;
-        virtual unknown_ret IsBroadcasting( int32 * ) = 0;
+	// Get a URL suitable for streaming the given Video app ID's video
+	virtual void GetVideoURL( AppId_t unVideoAppID ) = 0;
+
+	// returns true if user is uploading a live broadcast
+	virtual bool IsBroadcasting( int *pnNumViewers ) = 0;
 };
 
 #endif // ISTEAMVIDEO_001_H

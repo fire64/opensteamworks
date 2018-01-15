@@ -31,12 +31,12 @@
 abstract_class ISteamParentalSettings001
 {
 public:
-	virtual unknown_ret BIsParentalLockEnabled() = 0;
-	virtual unknown_ret BIsParentalLockLocked() = 0;
-	virtual unknown_ret BIsAppBlocked( uint32 ) = 0;
-	virtual unknown_ret BIsAppInBlockList( uint32 ) = 0;
-	virtual unknown_ret BIsFeatureBlocked( EParentalFeature ) = 0;
-	virtual unknown_ret BIsFeatureInBlockList( EParentalFeature ) = 0;
+	virtual bool BIsParentalLockEnabled() = 0;
+	virtual bool BIsParentalLockLocked() = 0;
+	virtual bool BIsAppBlocked( AppId_t nAppID ) = 0;
+	virtual bool BIsAppInBlockList( AppId_t nAppID ) = 0;
+	virtual bool BIsFeatureBlocked( EParentalFeature eFeature ) = 0;
+	virtual bool BIsFeatureInBlockList( EParentalFeature eFeature ) = 0;
 };
 
 #endif // ISTEAMPARENTALSETTINGS001_H

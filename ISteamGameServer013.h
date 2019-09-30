@@ -14,8 +14,8 @@
 //
 //=============================================================================
 
-#ifndef ISTEAMGAMESERVER012_H
-#define ISTEAMGAMESERVER012_H
+#ifndef ISTEAMGAMESERVER013_H
+#define ISTEAMGAMESERVER013_H
 #ifdef _WIN32
 #pragma once
 #endif
@@ -26,7 +26,7 @@
 //-----------------------------------------------------------------------------
 // Purpose: Functions for authenticating users via Steam to play on a game server
 //-----------------------------------------------------------------------------
-abstract_class ISteamGameServer012
+abstract_class ISteamGameServer013
 {
 public:
 
@@ -259,4 +259,4 @@ public:
 
 };
 
-#endif // ISTEAMGAMESERVER012_H
+#endif // ISTEAMGAMESERVER013_H

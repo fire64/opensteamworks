@@ -32,11 +32,11 @@ public:
 	// connection functions
 	virtual void LogOn() = 0;
 	virtual void LogOff() = 0;
-
+	
 	// status functions
 	virtual bool BLoggedOn() = 0;
 	virtual bool BSecure() = 0; 
-	STEAMWORKS_STRUCT_RETURN_0(CSteamID, GetSteamID) /*virtual CSteamID GetSteamID() = 0;*/
+	virtual CSteamID GetSteamID() = 0;
 
 	// Handles receiving a new connection from a Steam user.  This call will ask the Steam
 	// servers to validate the users identity, app ownership, and VAC status.  If the Steam servers 
@@ -53,7 +53,7 @@ public:
 	// 
 	// Return Value: Returns a SteamID for the user to be tracked with, you should call HandleUserDisconnect()
 	// when this user leaves the server just like you would for a real user.
-	STEAMWORKS_STRUCT_RETURN_0(CSteamID, CreateUnauthenticatedUserConnection) /*virtual CSteamID CreateUnauthenticatedUserConnection() = 0;*/
+	virtual CSteamID CreateUnauthenticatedUserConnection() = 0;
 
 	// Should be called whenever a user leaves our game server, this lets Steam internally
 	// track which users are currently on which servers for the purposes of preventing a single
@@ -84,12 +84,12 @@ public:
 	// bugbug jmccaskey - figure out how to remove this from the API and only expose via SteamGameServer_Init... or make this actually used,
 	// and stop calling it in SteamGameServer_Init()?
 	virtual bool BSetServerType( uint32 unServerFlags, uint32 unGameIP, uint16 unGamePort, 
-		uint16 unSpectatorPort, uint16 usQueryPort, const char *pchGameDir, const char *pchVersion, bool bLANMode ) = 0;
+								uint16 unSpectatorPort, uint16 usQueryPort, const char *pchGameDir, const char *pchVersion, bool bLANMode ) = 0;
 
 	// Updates server status values which shows up in the server browser and matchmaking APIs
 	virtual void UpdateServerStatus( int cPlayers, int cPlayersMax, int cBotPlayers, 
-		const char *pchServerName, const char *pSpectatorServerName, 
-		const char *pchMapName ) = 0;
+									 const char *pchServerName, const char *pSpectatorServerName, 
+									 const char *pchMapName ) = 0;
 
 	// This can be called if spectator goes away or comes back (passing 0 means there is no spectator server now).
 	virtual void UpdateSpectatorPort( uint16 unSpectatorPort ) = 0;
@@ -140,6 +140,7 @@ public:
 
 	// Cancel auth ticket from GetAuthSessionTicket, called when no longer playing game with the entity you gave the ticket to
 	virtual void CancelAuthTicket( HAuthTicket hAuthTicket ) = 0;
+
 };
 
 #endif // ISTEAMGAMESERVER010_H

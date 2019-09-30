@@ -33,7 +33,7 @@
 #define STEAMGAMESERVER_INTERFACE_VERSION_010 "SteamGameServer010"
 #define STEAMGAMESERVER_INTERFACE_VERSION_011 "SteamGameServer011"
 #define STEAMGAMESERVER_INTERFACE_VERSION_012 "SteamGameServer012"
-
+#define STEAMGAMESERVER_INTERFACE_VERSION_013 "SteamGameServer013"
 
 // Result codes to GSHandleClientDeny/Kick
 enum EDenyReason

@@ -23,11 +23,13 @@
 
 #define STEAMINVENTORY_INTERFACE_VERSION_001 "STEAMINVENTORY_INTERFACE_V001"
 #define STEAMINVENTORY_INTERFACE_VERSION_002 "STEAMINVENTORY_INTERFACE_V002"
+#define STEAMINVENTORY_INTERFACE_VERSION_003 "STEAMINVENTORY_INTERFACE_V003"
 
 // Every individual instance of an item has a globally-unique ItemInstanceID.
 // This ID is unique to the combination of (player, specific item instance)
 // and will not be transferred to another player or re-used for another item.
 typedef uint64 SteamItemInstanceID_t;
+typedef uint64 SteamInventoryUpdateHandle_t;
 
 static const SteamItemInstanceID_t k_SteamItemInstanceIDInvalid = ~(SteamItemInstanceID_t)0;
 

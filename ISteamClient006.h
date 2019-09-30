@@ -38,9 +38,6 @@ public:
 	// Releases a previously created communications pipe
 	virtual bool BReleaseSteamPipe( HSteamPipe hSteamPipe ) = 0;
 
-	// creates a global instance of a steam user, so that other processes can share it
-	// used by the steam UI, to share it's account info/connection with any games it launches
-	// fails (returns NULL) if an existing instance already exists
 	virtual HSteamUser CreateGlobalUser( HSteamPipe *phSteamPipe ) = 0;
 
 	// connects to an existing global user, failing if none exists
@@ -56,9 +53,7 @@ public:
 	// retrieves the ISteamUser interface associated with the handle
 	virtual ISteamUser *GetISteamUser( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
-	// retrieves the IVac interface associated with the handle
-	// there is normally only one instance of VAC running, but using this connects it to the right user/account
-	virtual OBSOLETE_FUNCTION IVAC *GetIVAC( HSteamUser hSteamUser ) = 0;
+	virtual IVAC *GetIVAC( HSteamUser hSteamUser ) = 0;
 
 	// retrieves the ISteamGameServer interface associated with the handle
 	virtual ISteamGameServer *GetISteamGameServer( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
@@ -67,7 +62,6 @@ public:
 	// this must be set before CreateLocalUser()
 	virtual void SetLocalIPBinding( uint32 unIP, uint16 usPort ) = 0; 
 
-	// returns the name of a universe
 	virtual const char *GetUniverseName( EUniverse eUniverse ) = 0;
 
 	// returns the ISteamFriends interface
@@ -76,17 +70,15 @@ public:
 	// returns the ISteamUtils interface
 	virtual ISteamUtils *GetISteamUtils( HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
-	// returns the ISteamBilling interface
 	virtual ISteamBilling *GetISteamBilling( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
 	// returns the ISteamMatchmaking interface
 	virtual ISteamMatchmaking *GetISteamMatchmaking( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
+	virtual ISteamApps *GetISteamApps( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
+
 	// returns the ISteamContentServer interface
 	virtual ISteamContentServer *GetISteamContentServer( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
-
-	// returns apps interface
-	virtual ISteamApps *GetISteamApps( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
 	// returns the ISteamMasterServerUpdater interface
 	virtual ISteamMasterServerUpdater *GetISteamMasterServerUpdater( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;

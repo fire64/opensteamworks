@@ -59,6 +59,13 @@
 #define CALL_RESULT(RESULT_TYPE) STEAM_CLANG_ATTR("callresult:" #RESULT_TYPE ";")
 #define CALL_BACK(RESULT_TYPE) STEAM_CLANG_ATTR("callback:" #RESULT_TYPE ";")
 
+#if ( defined(STEAM_API_EXPORTS) || defined(STEAM_API_NODLL) ) && !defined(API_GEN)
+#define STEAM_PRIVATE_API( ... ) __VA_ARGS__
+#elif defined(STEAM_API_EXPORTS) && defined(API_GEN)
+#define STEAM_PRIVATE_API( ... )
+#else
+#define STEAM_PRIVATE_API( ... ) protected: __VA_ARGS__ public:
+#endif
 
 
 #if defined(_MSC_VER)

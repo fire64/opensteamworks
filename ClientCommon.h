@@ -50,7 +50,7 @@ class ISteamMusicRemote;
 class ISteamHTMLSurface;
 class ISteamInventory;
 class ISteamVideo;
-class ISteamParental;
+class ISteamParentalSettings;
 class ISteamGameSearch;
 class ISteamInput;
 class ISteamParties;
@@ -79,5 +79,9 @@ struct SteamIPAddress_t
 {
 	void *dummy;
 };
+
+extern "C" typedef void (__cdecl *SteamAPIWarningMessageHook_t)(int, const char *);
+extern "C" typedef void( *SteamAPI_PostAPIResultInProcess_t )(SteamAPICall_t callHandle, void *, uint32 unCallbackSize, int iCallbackNum);
+extern "C" typedef uint32 ( *SteamAPI_CheckCallbackRegistered_t )( int iCallbackNum );
 
 #endif

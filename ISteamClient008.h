@@ -32,7 +32,6 @@
 abstract_class ISteamClient008
 {
 public:
-
 	// Creates a communication pipe to the Steam client
 	virtual HSteamPipe CreateSteamPipe() = 0;
 
@@ -74,7 +73,7 @@ public:
 	// returns the ISteamMatchmakingServers interface
 	virtual ISteamMatchmakingServers *GetISteamMatchmakingServers( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
-	// returns a generic interface
+	// returns the a generic interface
 	virtual void *GetISteamGenericInterface( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
 
 	// returns the ISteamUserStats interface

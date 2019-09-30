@@ -22,6 +22,45 @@
 
 // Compiler checks
 
+#ifdef API_GEN
+# define STEAM_CLANG_ATTR(ATTR) __attribute__((annotate( ATTR )))
+#else
+# define STEAM_CLANG_ATTR(ATTR)
+#endif
+
+#define STEAM_METHOD_DESC(DESC) STEAM_CLANG_ATTR( "desc:" #DESC ";" )
+#define STEAM_IGNOREATTR() STEAM_CLANG_ATTR( "ignore" )
+#define STEAM_OUT_STRUCT() STEAM_CLANG_ATTR( "out_struct: ;" )
+#define STEAM_OUT_STRING() STEAM_CLANG_ATTR( "out_string: ;" )
+#define STEAM_OUT_ARRAY_CALL(COUNTER,FUNCTION,PARAMS) STEAM_CLANG_ATTR( "out_array_call:" #COUNTER "," #FUNCTION "," #PARAMS ";" )
+#define STEAM_OUT_ARRAY_COUNT(COUNTER, DESC) STEAM_CLANG_ATTR( "out_array_count:" #COUNTER  ";desc:" #DESC )
+#define STEAM_ARRAY_COUNT(COUNTER) STEAM_CLANG_ATTR( "array_count:" #COUNTER ";" )
+#define STEAM_ARRAY_COUNT_D(COUNTER, DESC) STEAM_CLANG_ATTR( "array_count:" #COUNTER ";desc:" #DESC )
+#define STEAM_BUFFER_COUNT(COUNTER) STEAM_CLANG_ATTR( "buffer_count:" #COUNTER ";" )
+#define STEAM_OUT_BUFFER_COUNT(COUNTER) STEAM_CLANG_ATTR( "out_buffer_count:" #COUNTER ";" )
+#define STEAM_OUT_STRING_COUNT(COUNTER) STEAM_CLANG_ATTR( "out_string_count:" #COUNTER ";" )
+#define STEAM_DESC(DESC) STEAM_CLANG_ATTR("desc:" #DESC ";")
+#define STEAM_CALL_RESULT(RESULT_TYPE) STEAM_CLANG_ATTR("callresult:" #RESULT_TYPE ";")
+#define STEAM_CALL_BACK(RESULT_TYPE) STEAM_CLANG_ATTR("callback:" #RESULT_TYPE ";")
+
+
+#define METHOD_DESC(DESC) STEAM_CLANG_ATTR( "desc:" #DESC ";" )
+#define IGNOREATTR() STEAM_CLANG_ATTR( "ignore" )
+#define OUT_STRUCT() STEAM_CLANG_ATTR( "out_struct: ;" )
+#define OUT_STRING() STEAM_CLANG_ATTR( "out_string: ;" )
+#define OUT_ARRAY_CALL(COUNTER,FUNCTION,PARAMS) STEAM_CLANG_ATTR( "out_array_call:" #COUNTER "," #FUNCTION "," #PARAMS ";" )
+#define OUT_ARRAY_COUNT(COUNTER, DESC) STEAM_CLANG_ATTR( "out_array_count:" #COUNTER  ";desc:" #DESC )
+#define ARRAY_COUNT(COUNTER) STEAM_CLANG_ATTR( "array_count:" #COUNTER ";" )
+#define ARRAY_COUNT_D(COUNTER, DESC) STEAM_CLANG_ATTR( "array_count:" #COUNTER ";desc:" #DESC )
+#define BUFFER_COUNT(COUNTER) STEAM_CLANG_ATTR( "buffer_count:" #COUNTER ";" )
+#define OUT_BUFFER_COUNT(COUNTER) STEAM_CLANG_ATTR( "out_buffer_count:" #COUNTER ";" )
+#define OUT_STRING_COUNT(COUNTER) STEAM_CLANG_ATTR( "out_string_count:" #COUNTER ";" )
+#define DESC(DESC) STEAM_CLANG_ATTR("desc:" #DESC ";")
+#define CALL_RESULT(RESULT_TYPE) STEAM_CLANG_ATTR("callresult:" #RESULT_TYPE ";")
+#define CALL_BACK(RESULT_TYPE) STEAM_CLANG_ATTR("callback:" #RESULT_TYPE ";")
+
+
+
 #if defined(_MSC_VER)
 
 	#if _MSC_VER < 1400
@@ -31,7 +70,7 @@
 #elif defined(__GNUC__)
 
 	#if defined(_WIN32)
-		#if (__GNUC__ < 4 || __GNUC_MINOR__ < 6) && !defined(_S4N_)
+		#if (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ < 6)) && !defined(_S4N_)
 			#error "OpenSteamworks requires GCC 4.6 or better on windows"
 		#endif
 	#elif defined(__linux__) || defined(__APPLE_CC__)
@@ -83,7 +122,7 @@
 
 
 #ifdef __GNUC__
-	typedef unsigned int errno_t;
+	typedef int errno_t;
 	
 	#ifdef _S4N_
 		typedef unsigned int size_t;
@@ -326,9 +365,9 @@ enum EUniverse
 #endif // NO_STEAM
 
 
-typedef void* (*CreateInterfaceFn)( const char *pName, int *pReturnCode );
+//typedef void* (*CreateInterfaceFn)( const char *pName, int *pReturnCode );
 typedef void* (*FactoryFn)( const char *pName );
-typedef void* (*InstantiateInterfaceFn)( void );
+//typedef void* (*InstantiateInterfaceFn)( void );
 
 typedef void  (*SteamAPIWarningMessageHook_t)(int hpipe, const char *message);
 typedef void (*KeyValueIteratorCallback_t)(const char* key, const char* value, void* kv);
@@ -539,6 +578,8 @@ typedef int32 HSteamUser;
 // reference to a steam call, to filter results by
 typedef int32 HSteamCall;
 
+typedef int16 FriendsGroupID_t;
+
 //-----------------------------------------------------------------------------
 // Typedef for handle type you will receive when requesting server list.
 //-----------------------------------------------------------------------------
@@ -552,6 +593,7 @@ typedef int HNewItemRequest;
 typedef uint64 ItemID;
 
 typedef uint32 HTTPRequestHandle;
+typedef uint32 HTTPCookieContainerHandle;
 
 typedef int unknown_ret; // unknown return value
 

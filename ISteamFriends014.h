@@ -239,6 +239,4 @@ public:
 	virtual SteamAPICall_t EnumerateFollowingList( uint32 unStartIndex ) = 0;
 };
 
-
-
 #endif // ISTEAMFRIENDS014_H

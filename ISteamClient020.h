@@ -14,8 +14,8 @@
 //
 //=============================================================================
 
-#ifndef ISTEAMCLIENT017_H
-#define ISTEAMCLIENT017_H
+#ifndef ISTEAMCLIENT020_H
+#define ISTEAMCLIENT020_H
 #ifdef _WIN32
 #pragma once
 #endif
@@ -33,7 +33,7 @@
 //			You'll only need to use these interfaces if you have a more complex versioning scheme,
 //			where you want to get different versions of the same interface in different dll's in your project.
 //-----------------------------------------------------------------------------
-abstract_class ISteamClient017
+abstract_class ISteamClient020
 {
 public:
 	// Creates a communication pipe to the Steam client
@@ -60,7 +60,7 @@ public:
 
 	// set the local IP and Port to bind to
 	// this must be set before CreateLocalUser()
-	virtual void SetLocalIPBinding(uint32 unIP, uint16 usPort) = 0;
+	virtual void SetLocalIPBinding(const SteamIPAddress_t *unIP, uint16 usPort) = 0;
 
 	// returns the ISteamFriends interface
 	virtual ISteamFriends *GetISteamFriends(HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion) = 0;
@@ -94,6 +94,9 @@ public:
 
 	// user screenshots
 	virtual ISteamScreenshots *GetISteamScreenshots(HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion) = 0;
+
+	virtual ISteamGameSearch *GetISteamGameSearch(HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion) = 0;
+
 
 	// this needs to be called every frame to process matchmaking results
 	// redundant if you're already calling SteamAPI_RunCallbacks()
@@ -150,7 +153,15 @@ public:
 	virtual ISteamVideo *GetISteamVideo(HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion) = 0;
 
 	virtual ISteamParental *GetISteamParentalSettings(HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion) = 0;
+
+	virtual ISteamInput *GetISteamInput(HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion) = 0;
+
+	virtual ISteamParties *GetISteamParties(HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion) = 0;
+
+	virtual ISteamRemotePlay *GetISteamRemotePlay(HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion) = 0;
+
+	virtual void DestroyAllInterfaces() = 0;
 };
 
 
-#endif // ISTEAMCLIENT017_H	
+#endif // ISTEAMCLIENT020_H	

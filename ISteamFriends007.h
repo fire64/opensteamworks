@@ -47,13 +47,13 @@ public:
 	// friend iteration
 	// takes a set of k_EFriendFlags, and returns the number of users the client knows about who meet that criteria
 	// then GetFriendByIndex() can then be used to return the id's of each of those users
-	virtual int GetFriendCount( EFriendFlags eFriendFlags ) = 0;
+	virtual int GetFriendCount( int iFriendFlags ) = 0;
 
 	// returns the steamID of a user
 	// iFriend is a index of range [0, GetFriendCount())
 	// iFriendsFlags must be the same value as used in GetFriendCount()
 	// the returned CSteamID can then be used by all the functions below to access details about the user
-	STEAMWORKS_STRUCT_RETURN_2(CSteamID, GetFriendByIndex, int, iFriend, int, iFriendFlags) /*virtual CSteamID GetFriendByIndex( int iFriend, int iFriendFlags ) = 0;*/
+	virtual CSteamID GetFriendByIndex( int iFriend, int iFriendFlags ) = 0;
 
 	// returns a relationship to a user
 	virtual EFriendRelationship GetFriendRelationship( CSteamID steamIDFriend ) = 0;
@@ -65,6 +65,7 @@ public:
 	// returns the name another user - guaranteed to not be NULL.
 	// same rules as GetFriendPersonaState() apply as to whether or not the user knowns the name of the other user
 	// note that on first joining a lobby, chat room or game server the local user will not known the name of the other users automatically; that information will arrive asyncronously
+	// 
 	virtual const char *GetFriendPersonaName( CSteamID steamIDFriend ) = 0;
 
 	// returns true if the friend is actually in a game, and fills in pFriendGameInfo with an extra details 
@@ -74,11 +75,11 @@ public:
 
 	// returns true if the specified user meets any of the criteria specified in iFriendFlags
 	// iFriendFlags can be the union (binary or, |) of one or more k_EFriendFlags values
-	virtual bool HasFriend( CSteamID steamIDFriend, EFriendFlags eFriendFlags ) = 0;
+	virtual bool HasFriend( CSteamID steamIDFriend, int iFriendFlags ) = 0;
 
 	// clan (group) iteration and access functions
 	virtual int GetClanCount() = 0;
-	STEAMWORKS_STRUCT_RETURN_1(CSteamID, GetClanByIndex, int, iClan) /*virtual CSteamID GetClanByIndex( int iClan ) = 0;*/
+	virtual CSteamID GetClanByIndex( int iClan ) = 0;
 	virtual const char *GetClanName( CSteamID steamIDClan ) = 0;
 	virtual const char *GetClanTag( CSteamID steamIDClan ) = 0;
 
@@ -86,7 +87,7 @@ public:
 	// note that large clans that cannot be iterated by the local user
 	// steamIDSource can be the steamID of a group, game server, lobby or chat room
 	virtual int GetFriendCountFromSource( CSteamID steamIDSource ) = 0;
-	STEAMWORKS_STRUCT_RETURN_2(CSteamID, GetFriendFromSourceByIndex, CSteamID, steamIDSource, int, iFriend) /*virtual CSteamID GetFriendFromSourceByIndex( CSteamID steamIDSource, int iFriend ) = 0;*/
+	virtual CSteamID GetFriendFromSourceByIndex( CSteamID steamIDSource, int iFriend ) = 0;
 
 	// returns true if the local user can see that steamIDUser is a member or in steamIDSource
 	virtual bool IsUserInSource( CSteamID steamIDUser, CSteamID steamIDSource ) = 0;
@@ -95,13 +96,15 @@ public:
 	virtual void SetInGameVoiceSpeaking( CSteamID steamIDUser, bool bSpeaking ) = 0;
 
 	// activates the game overlay, with an optional dialog to open 
-	// valid options are "Friends", "Community", "Players", "Settings", "LobbyInvite", "OfficialGameGroup"
+	// valid options are "Friends", "Community", "Players", "Settings", "LobbyInvite", "OfficialGameGroup", "Stats", "Achievements"
 	virtual void ActivateGameOverlay( const char *pchDialog ) = 0;
 
 	// activates game overlay to a specific place
 	// valid options are
 	//		"steamid" - opens the overlay web browser to the specified user or groups profile
 	//		"chat" - opens a chat window to the specified user, or joins the group chat 
+	//		"stats" - opens the overlay web browser to the specified user's stats
+	//		"achievements" - opens the overlay web browser to the specified user's achievements
 	virtual void ActivateGameOverlayToUser( const char *pchDialog, CSteamID steamID ) = 0;
 
 	// activates game overlay web browser directly to the specified URL
@@ -119,18 +122,22 @@ public:
 	// You can also use ActivateGameOverlay( "LobbyInvite" ) to allow the user to create invitations for their current public lobby.
 	virtual void ActivateGameOverlayInviteDialog( CSteamID steamIDLobby ) = 0;
 
-	// gets the avatar of the current user, which is a handle to be used in IClientUtils::GetImageRGBA(), or 0 if none set
+	// gets the small (32x32) avatar of the current user, which is a handle to be used in IClientUtils::GetImageRGBA(), or 0 if none set
 	virtual int GetSmallFriendAvatar( CSteamID steamIDFriend ) = 0;
-	virtual int GetMediumFriendAvatar( CSteamID steamIDFriend ) = 0;
-	virtual int GetLargeFriendAvatar( CSteamID steamIDFriend ) = 0;
 
+	// gets the medium (64x64) avatar of the current user, which is a handle to be used in IClientUtils::GetImageRGBA(), or 0 if none set
+	virtual int GetMediumFriendAvatar( CSteamID steamIDFriend ) = 0;
+
+	// gets the large (184x184) avatar of the current user, which is a handle to be used in IClientUtils::GetImageRGBA(), or 0 if none set
+	// returns -1 if this image has yet to be loaded, in this case wait for a AvatarImageLoaded_t callback and then call this again
+	virtual int GetLargeFriendAvatar( CSteamID steamIDFriend ) = 0;
+    
 	// requests information about a user - persona name & avatar
 	// if bRequireNameOnly is set, then the avatar of a user isn't downloaded 
 	// - it's a lot slower to download avatars and churns the local cache, so if you don't need avatars, don't request them
 	// if returns true, it means that data is being requested, and a PersonaStateChanged_t callback will be posted when it's retrieved
 	// if returns false, it means that we already have all the details about that user, and functions can be called immediately
 	virtual bool RequestUserInformation( CSteamID steamIDUser, bool bRequireNameOnly ) = 0;
-
 };
 
 

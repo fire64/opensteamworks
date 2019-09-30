@@ -50,7 +50,11 @@ class ISteamMusicRemote;
 class ISteamHTMLSurface;
 class ISteamInventory;
 class ISteamVideo;
-
+class ISteamParental;
+class ISteamGameSearch;
+class ISteamInput;
+class ISteamParties;
+class ISteamRemotePlay;
 
 #define CLIENTENGINE_INTERFACE_VERSION "CLIENTENGINE_INTERFACE_VERSION003"
 
@@ -67,5 +71,13 @@ class ISteamVideo;
 #define STEAMCLIENT_INTERFACE_VERSION_015		"SteamClient015"
 #define STEAMCLIENT_INTERFACE_VERSION_016		"SteamClient016"
 #define STEAMCLIENT_INTERFACE_VERSION_017		"SteamClient017"
+#define STEAMCLIENT_INTERFACE_VERSION_018		"SteamClient018"
+#define STEAMCLIENT_INTERFACE_VERSION_019		"SteamClient019"
+#define STEAMCLIENT_INTERFACE_VERSION_020		"SteamClient020"
+
+struct SteamIPAddress_t
+{
+	void *dummy;
+};
 
 #endif

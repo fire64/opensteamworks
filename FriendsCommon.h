@@ -39,6 +39,8 @@
 #define STEAMFRIENDS_INTERFACE_VERSION_013 "SteamFriends013"
 #define STEAMFRIENDS_INTERFACE_VERSION_014 "SteamFriends014"
 #define STEAMFRIENDS_INTERFACE_VERSION_015 "SteamFriends015"
+#define STEAMFRIENDS_INTERFACE_VERSION_016 "SteamFriends016"
+#define STEAMFRIENDS_INTERFACE_VERSION_017 "SteamFriends017"
 
 //-----------------------------------------------------------------------------
 // Purpose: avatar sizes, used in ISteamFriends::GetFriendAvatar()
@@ -290,6 +292,20 @@ enum EOverlayToStoreFlag
 {
 	k_EOverlayToStoreFlagNone		= 0,
 	k_EOverlayToStoreFlagAddToCart	= 1,
+};
+
+
+//-----------------------------------------------------------------------------
+// Purpose: Tells Steam where to place the browser window inside the overlay
+//-----------------------------------------------------------------------------
+enum EActivateGameOverlayToWebPageMode
+{
+	k_EActivateGameOverlayToWebPageMode_Default = 0,		// Browser will open next to all other windows that the user has open in the overlay.
+															// The window will remain open, even if the user closes then re-opens the overlay.
+
+	k_EActivateGameOverlayToWebPageMode_Modal = 1			// Browser will be opened in a special overlay configuration which hides all other windows
+															// that the user has open in the overlay. When the user closes the overlay, the browser window
+															// will also close. When the user closes the browser window, the overlay will automatically close.
 };
 
 

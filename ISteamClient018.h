@@ -14,8 +14,8 @@
 //
 //=============================================================================
 
-#ifndef ISTEAMCLIENT017_H
-#define ISTEAMCLIENT017_H
+#ifndef ISTEAMCLIENT018_H
+#define ISTEAMCLIENT018_H
 #ifdef _WIN32
 #pragma once
 #endif
@@ -33,7 +33,7 @@
 //			You'll only need to use these interfaces if you have a more complex versioning scheme,
 //			where you want to get different versions of the same interface in different dll's in your project.
 //-----------------------------------------------------------------------------
-abstract_class ISteamClient017
+abstract_class ISteamClient018
 {
 public:
 	// Creates a communication pipe to the Steam client
@@ -95,6 +95,9 @@ public:
 	// user screenshots
 	virtual ISteamScreenshots *GetISteamScreenshots(HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion) = 0;
 
+	virtual ISteamGameSearch *GetISteamGameSearch(HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion) = 0;
+
+
 	// this needs to be called every frame to process matchmaking results
 	// redundant if you're already calling SteamAPI_RunCallbacks()
 	virtual void RunFrame() = 0;
@@ -150,7 +153,11 @@ public:
 	virtual ISteamVideo *GetISteamVideo(HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion) = 0;
 
 	virtual ISteamParental *GetISteamParentalSettings(HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion) = 0;
+
+	virtual ISteamInput *GetISteamInput(HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion) = 0;
+
+	virtual ISteamParties *GetISteamParties(HSteamUser hSteamuser, HSteamPipe hSteamPipe, const char *pchVersion) = 0;
 };
 
 
-#endif // ISTEAMCLIENT017_H	
+#endif // ISTEAMCLIENT018_H	

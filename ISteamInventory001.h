@@ -258,6 +258,7 @@ public:
 	virtual SteamAPICall_t RequestEligiblePromoItemDefinitionsIDs( CSteamID steamID ) = 0;
 	virtual bool GetEligiblePromoItemDefinitionIDs( CSteamID steamID, int32 *ItemDefIDs, uint32 *ItemDefIDsArraySize ) = 0;
 
+
 };
 
 #endif // ISTEAMINVENTORY001_H

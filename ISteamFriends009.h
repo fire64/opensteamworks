@@ -37,7 +37,7 @@ public:
 	// like all the other interface functions that return a char *, it's important that this pointer is not saved
 	// off; it will eventually be free'd or re-allocated
 	virtual const char *GetPersonaName() = 0;
-
+	
 	// sets the player name, stores it on the server and publishes the changes to all friends who are online
 	virtual void SetPersonaName( const char *pchPersonaName ) = 0;
 
@@ -53,7 +53,7 @@ public:
 	// iFriend is a index of range [0, GetFriendCount())
 	// iFriendsFlags must be the same value as used in GetFriendCount()
 	// the returned CSteamID can then be used by all the functions below to access details about the user
-	STEAMWORKS_STRUCT_RETURN_2(CSteamID, GetFriendByIndex, int, iFriend, int, iFriendFlags) /*virtual CSteamID GetFriendByIndex( int iFriend, int iFriendFlags ) = 0;*/
+	virtual CSteamID GetFriendByIndex( int iFriend, int iFriendFlags ) = 0;
 
 	// returns a relationship to a user
 	virtual EFriendRelationship GetFriendRelationship( CSteamID steamIDFriend ) = 0;
@@ -79,15 +79,16 @@ public:
 
 	// clan (group) iteration and access functions
 	virtual int GetClanCount() = 0;
-	STEAMWORKS_STRUCT_RETURN_1(CSteamID, GetClanByIndex, int, iClan) /*virtual CSteamID GetClanByIndex( int iClan ) = 0;*/
+	virtual CSteamID GetClanByIndex( int iClan ) = 0;
 	virtual const char *GetClanName( CSteamID steamIDClan ) = 0;
 	virtual const char *GetClanTag( CSteamID steamIDClan ) = 0;
 
 	// iterators for getting users in a chat room, lobby, game server or clan
 	// note that large clans that cannot be iterated by the local user
+	// note that the current user must be in a lobby to retrieve CSteamIDs of other users in that lobby
 	// steamIDSource can be the steamID of a group, game server, lobby or chat room
 	virtual int GetFriendCountFromSource( CSteamID steamIDSource ) = 0;
-	STEAMWORKS_STRUCT_RETURN_2(CSteamID, GetFriendFromSourceByIndex, CSteamID, steamIDSource, int, iFriend) /*virtual CSteamID GetFriendFromSourceByIndex( CSteamID steamIDSource, int iFriend ) = 0;*/
+	virtual CSteamID GetFriendFromSourceByIndex( CSteamID steamIDSource, int iFriend ) = 0;
 
 	// returns true if the local user can see that steamIDUser is a member or in steamIDSource
 	virtual bool IsUserInSource( CSteamID steamIDUser, CSteamID steamIDSource ) = 0;
@@ -148,17 +149,17 @@ public:
 	virtual SteamAPICall_t RequestClanOfficerList( CSteamID steamIDClan ) = 0;
 
 	// iteration of clan officers - can only be done when a RequestClanOfficerList() call has completed
-
+	
 	// returns the steamID of the clan owner
-	STEAMWORKS_STRUCT_RETURN_1(CSteamID, GetClanOwner, CSteamID, steamIDClan) /*virtual CSteamID GetClanOwner( CSteamID steamIDClan ) = 0;*/
+	virtual CSteamID GetClanOwner( CSteamID steamIDClan ) = 0;
 	// returns the number of officers in a clan (including the owner)
 	virtual int GetClanOfficerCount( CSteamID steamIDClan ) = 0;
 	// returns the steamID of a clan officer, by index, of range [0,GetClanOfficerCount)
-	STEAMWORKS_STRUCT_RETURN_2(CSteamID, GetClanOfficerByIndex, CSteamID, steamIDClan, int, iOfficer) /*virtual CSteamID GetClanOfficerByIndex( CSteamID steamIDClan, int iOfficer ) = 0;*/
+	virtual CSteamID GetClanOfficerByIndex( CSteamID steamIDClan, int iOfficer ) = 0;
 	// if current user is chat restricted, he can't send or receive any text/voice chat messages.
 	// the user can't see custom avatars. But the user can be online and send/recv game invites.
 	// a chat restricted user can't add friends or join any groups.
-	virtual EUserRestriction GetUserRestrictions() = 0;
+	virtual uint32 GetUserRestrictions() = 0;
 
 	// Rich Presence data is automatically shared between friends who are in the same game
 	// Each user has a set of Key/Value pairs
@@ -186,12 +187,10 @@ public:
 	// this iterates the entire list of users recently played with, across games
 	// GetFriendCoplayTime() returns as a unix time
 	virtual int GetCoplayFriendCount() = 0;
-	STEAMWORKS_STRUCT_RETURN_1(CSteamID, GetCoplayFriend, int, iCoplayFriend) /*virtual CSteamID GetCoplayFriend( int iCoplayFriend ) = 0;*/
+	virtual CSteamID GetCoplayFriend( int iCoplayFriend ) = 0;
 	virtual int GetFriendCoplayTime( CSteamID steamIDFriend ) = 0;
 	virtual AppId_t GetFriendCoplayGame( CSteamID steamIDFriend ) = 0;
-
 };
-
 
 
 #endif // ISTEAMFRIENDS009_H

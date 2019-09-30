@@ -14,8 +14,8 @@
 //
 //=============================================================================
 
-#ifndef ISTEAMFRIENDS015_H
-#define ISTEAMFRIENDS015_H
+#ifndef ISTEAMFRIENDS017_H
+#define ISTEAMFRIENDS017_H
 #ifdef _WIN32
 #pragma once
 #endif
@@ -28,7 +28,7 @@
 // Purpose: interface to accessing information about individual users,
 //			that can be a friend, in a group, on a game server or in a lobby with the local user
 //-----------------------------------------------------------------------------
-abstract_class ISteamFriends015
+abstract_class ISteamFriends017
 {
 public:
 	// returns the local players name - guaranteed to not be NULL.
@@ -45,7 +45,7 @@ public:
 	//
 	// If the name change fails to happen on the server, then an additional global PersonaStateChange_t will be posted
 	// to change the name back, in addition to the SetPersonaNameResponse_t callback.
-	CALL_RESULT( SetPersonaNameResponse_t )
+	STEAM_CALL_RESULT( SetPersonaNameResponse_t )
 	virtual SteamAPICall_t SetPersonaName( const char *pchPersonaName ) = 0;
 
 	// gets the status of the current user
@@ -76,13 +76,14 @@ public:
 	virtual const char *GetFriendPersonaName( CSteamID steamIDFriend ) = 0;
 
 	// returns true if the friend is actually in a game, and fills in pFriendGameInfo with an extra details 
-	virtual bool GetFriendGamePlayed( CSteamID steamIDFriend, OUT_STRUCT() FriendGameInfo_t *pFriendGameInfo ) = 0;
+	virtual bool GetFriendGamePlayed( CSteamID steamIDFriend, STEAM_OUT_STRUCT() FriendGameInfo_t *pFriendGameInfo ) = 0;
 	// accesses old friends names - returns an empty string when their are no more items in the history
 	virtual const char *GetFriendPersonaNameHistory( CSteamID steamIDFriend, int iPersonaName ) = 0;
 	// friends steam level
 	virtual int GetFriendSteamLevel( CSteamID steamIDFriend ) = 0;
 
 	// Returns nickname the current user has set for the specified player. Returns NULL if the no nickname has been set for that player.
+	// DEPRECATED: GetPersonaName follows the Steam nickname preferences, so apps shouldn't need to care about nicknames explicitly.
 	virtual const char *GetPlayerNickname( CSteamID steamIDPlayer ) = 0;
 
 	// friend grouping (tag) apis
@@ -95,7 +96,7 @@ public:
 	// returns the number of members in a given friends group
 	virtual int GetFriendsGroupMembersCount( FriendsGroupID_t friendsGroupID ) = 0;
 	// gets up to nMembersCount members of the given friends group, if fewer exist than requested those positions' SteamIDs will be invalid
-	virtual void GetFriendsGroupMembersList( FriendsGroupID_t friendsGroupID, OUT_ARRAY_CALL(nMembersCount, GetFriendsGroupMembersCount, friendsGroupID ) CSteamID *pOutSteamIDMembers, int nMembersCount ) = 0;
+	virtual void GetFriendsGroupMembersList( FriendsGroupID_t friendsGroupID, STEAM_OUT_ARRAY_CALL(nMembersCount, GetFriendsGroupMembersCount, friendsGroupID ) CSteamID *pOutSteamIDMembers, int nMembersCount ) = 0;
 
 	// returns true if the specified user meets any of the criteria specified in iFriendFlags
 	// iFriendFlags can be the union (binary or, |) of one or more k_EFriendFlags values
@@ -109,7 +110,7 @@ public:
 	// returns the most recent information we have about what's happening in a clan
 	virtual bool GetClanActivityCounts( CSteamID steamIDClan, int *pnOnline, int *pnInGame, int *pnChatting ) = 0;
 	// for clans a user is a member of, they will have reasonably up-to-date information, but for others you'll have to download the info to have the latest
-	virtual SteamAPICall_t DownloadClanActivityCounts( ARRAY_COUNT(cClansToRequest) CSteamID *psteamIDClans, int cClansToRequest ) = 0;
+	virtual SteamAPICall_t DownloadClanActivityCounts( STEAM_ARRAY_COUNT(cClansToRequest) CSteamID *psteamIDClans, int cClansToRequest ) = 0;
 
 	// iterators for getting users in a chat room, lobby, game server or clan
 	// note that large clans that cannot be iterated by the local user
@@ -125,7 +126,8 @@ public:
 	virtual void SetInGameVoiceSpeaking( CSteamID steamIDUser, bool bSpeaking ) = 0;
 
 	// activates the game overlay, with an optional dialog to open 
-	// valid options are "Friends", "Community", "Players", "Settings", "OfficialGameGroup", "Stats", "Achievements"
+	// valid options include "Friends", "Community", "Players", "Settings", "OfficialGameGroup", "Stats", "Achievements",
+	// "chatroomgroup/nnnn"
 	virtual void ActivateGameOverlay( const char *pchDialog ) = 0;
 
 	// activates game overlay to a specific place
@@ -143,7 +145,7 @@ public:
 
 	// activates game overlay web browser directly to the specified URL
 	// full address with protocol type is required, e.g. http://www.steamgames.com/
-	virtual void ActivateGameOverlayToWebPage( const char *pchURL ) = 0;
+	virtual void ActivateGameOverlayToWebPage( const char *pchURL, EActivateGameOverlayToWebPageMode eMode = k_EActivateGameOverlayToWebPageMode_Default ) = 0;
 
 	// activates game overlay to store page for app
 	virtual void ActivateGameOverlayToStore( AppId_t nAppID, EOverlayToStoreFlag eFlag ) = 0;
@@ -178,7 +180,7 @@ public:
 	// you can only ask about clans that a user is a member of
 	// note that this won't download avatars automatically; if you get an officer,
 	// and no avatar image is available, call RequestUserInformation( steamID, false ) to download the avatar
-	CALL_RESULT( ClanOfficerListResponse_t )
+	STEAM_CALL_RESULT( ClanOfficerListResponse_t )
 	virtual SteamAPICall_t RequestClanOfficerList( CSteamID steamIDClan ) = 0;
 
 	// iteration of clan officers - can only be done when a RequestClanOfficerList() call has completed
@@ -212,10 +214,10 @@ public:
 	// Requests rich presence for a specific user.
 	virtual void RequestFriendRichPresence( CSteamID steamIDFriend ) = 0;
 
-	// rich invite support
-	// if the target accepts the invite, the pchConnectString gets added to the command-line for launching the game
-	// if the game is already running, a GameRichPresenceJoinRequested_t callback is posted containing the connect string
-	// invites can only be sent to friends
+	// Rich invite support.
+	// If the target accepts the invite, a GameRichPresenceJoinRequested_t callback is posted containing the connect string.
+	// (Or you can configure yout game so that it is passed on the command line instead.  This is a deprecated path; ask us if you really need this.)
+	// Invites can only be sent to friends.
 	virtual bool InviteUserToGame( CSteamID steamIDFriend, const char *pchConnectString ) = 0;
 
 	// recently-played-with friends iteration
@@ -230,13 +232,13 @@ public:
 	// this allows in-game access to group (clan) chats from in the game
 	// the behavior is somewhat sophisticated, because the user may or may not be already in the group chat from outside the game or in the overlay
 	// use ActivateGameOverlayToUser( "chat", steamIDClan ) to open the in-game overlay version of the chat
-	CALL_RESULT( JoinClanChatRoomCompletionResult_t )
+	STEAM_CALL_RESULT( JoinClanChatRoomCompletionResult_t )
 	virtual SteamAPICall_t JoinClanChatRoom( CSteamID steamIDClan ) = 0;
 	virtual bool LeaveClanChatRoom( CSteamID steamIDClan ) = 0;
 	virtual int GetClanChatMemberCount( CSteamID steamIDClan ) = 0;
 	virtual CSteamID GetChatMemberByIndex( CSteamID steamIDClan, int iUser ) = 0;
 	virtual bool SendClanChatMessage( CSteamID steamIDClanChat, const char *pchText ) = 0;
-	virtual int GetClanChatMessage( CSteamID steamIDClanChat, int iMessage, void *prgchText, int cchTextMax, EChatEntryType *peChatEntryType, OUT_STRUCT() CSteamID *psteamidChatter ) = 0;
+	virtual int GetClanChatMessage( CSteamID steamIDClanChat, int iMessage, void *prgchText, int cchTextMax, EChatEntryType *peChatEntryType, STEAM_OUT_STRUCT() CSteamID *psteamidChatter ) = 0;
 	virtual bool IsClanChatAdmin( CSteamID steamIDClanChat, CSteamID steamIDUser ) = 0;
 
 	// interact with the Steam (game overlay / desktop)
@@ -251,16 +253,24 @@ public:
 	virtual int GetFriendMessage( CSteamID steamIDFriend, int iMessageID, void *pvData, int cubData, EChatEntryType *peChatEntryType ) = 0;
 
 	// following apis
-	CALL_RESULT( FriendsGetFollowerCount_t )
+	STEAM_CALL_RESULT( FriendsGetFollowerCount_t )
 	virtual SteamAPICall_t GetFollowerCount( CSteamID steamID ) = 0;
-	CALL_RESULT( FriendsIsFollowing_t )
+	STEAM_CALL_RESULT( FriendsIsFollowing_t )
 	virtual SteamAPICall_t IsFollowing( CSteamID steamID ) = 0;
-	CALL_RESULT( FriendsEnumerateFollowingList_t )
+	STEAM_CALL_RESULT( FriendsEnumerateFollowingList_t )
 	virtual SteamAPICall_t EnumerateFollowingList( uint32 unStartIndex ) = 0;
 
 	virtual bool IsClanPublic( CSteamID steamIDClan ) = 0;
 	virtual bool IsClanOfficialGameGroup( CSteamID steamIDClan ) = 0;
+
+	/// Return the number of chats (friends or chat rooms) with unread messages.
+	/// A "priority" message is one that would generate some sort of toast or
+	/// notification, and depends on user settings.
+	///
+	/// You can register for UnreadChatMessagesChanged_t callbacks to know when this
+	/// has potentially changed.
+	virtual int GetNumChatsWithUnreadPriorityMessages() = 0;
 };
 
 
-#endif // ISTEAMFRIENDS015_H
+#endif // ISTEAMFRIENDS017_H

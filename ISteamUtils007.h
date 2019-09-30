@@ -70,9 +70,8 @@ public:
 	virtual ESteamAPICallFailure GetAPICallFailureReason( SteamAPICall_t hSteamAPICall ) = 0;
 	virtual bool GetAPICallResult( SteamAPICall_t hSteamAPICall, void *pCallback, int cubCallback, int iCallbackExpected, bool *pbFailed ) = 0;
 
-	// this needs to be called every frame to process matchmaking results
-	// redundant if you're already calling SteamAPI_RunCallbacks()
-	virtual void RunFrame() = 0;
+	// Deprecated. Applications should use SteamAPI_RunCallbacks() instead. Game servers do not need to call this function.
+	STEAM_PRIVATE_API( virtual void RunFrame() = 0; )
 
 	// returns the number of IPC calls made since the last time this function was called
 	// Used for perf debugging so you can understand how many IPC calls your game makes per frame
@@ -101,7 +100,6 @@ public:
 	// refresh the screen with Present or SwapBuffers to allow the overlay to do it's work.
 	virtual bool BOverlayNeedsPresent() = 0;
 
-#ifndef _PS3
 	// Asynchronous call to check if an executable file has been signed using the public key set on the signing tab
 	// of the partner site, for example to refuse to load modified executable files.  
 	// The result is returned in CheckFileSignature_t.
@@ -110,18 +108,8 @@ public:
 	//   k_ECheckFileSignatureFileNotFound - The file does not exist on disk.
 	//   k_ECheckFileSignatureInvalidSignature - The file exists, and the signing tab has been set for this file, but the file is either not signed or the signature does not match.
 	//   k_ECheckFileSignatureValidSignature - The file is signed and the signature is valid.
+	CALL_RESULT( CheckFileSignature_t )
 	virtual SteamAPICall_t CheckFileSignature( const char *szFileName ) = 0;
-#endif
-
-#ifdef _PS3
-	virtual void PostPS3SysutilCallback( uint64_t status, uint64_t param, void* userdata ) = 0;
-	virtual bool BIsReadyToShutdown() = 0;
-	virtual bool BIsPSNOnline() = 0;
-
-	// Call this with localized strings for the language the game is running in, otherwise default english
-	// strings will be used by Steam.
-	virtual void SetPSNGameBootInviteStrings( const char *pchSubject, const char *pchBody ) = 0;
-#endif
 
 	// Activates the Big Picture text input dialog which only supports gamepad input
 	virtual bool ShowGamepadTextInput( EGamepadTextInputMode eInputMode, EGamepadTextInputLineMode eLineInputMode, const char *pchDescription, uint32 unCharMax, const char *pchExistingText ) = 0;
@@ -135,9 +123,13 @@ public:
 
 	// returns true if Steam itself is running in VR mode
 	virtual bool IsSteamRunningInVR() = 0;
-
+	
+	// Sets the inset of the overlay notification from the corner specified by SetOverlayNotificationPosition.
 	virtual void SetOverlayNotificationInset( int nHorizontalInset, int nVerticalInset ) = 0;
 
+	// returns true if Steam & the Steam Overlay are running in Big Picture mode
+	// Games much be launched through the Steam client to enable the Big Picture overlay. During development,
+	// a game can be added as a non-steam game to the developers library to test this feature
 	virtual bool IsSteamInBigPictureMode() = 0;
 };
 

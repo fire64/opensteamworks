@@ -36,7 +36,7 @@ public:
 	// the universe this client is connecting to
 	virtual EUniverse GetConnectedUniverse() = 0;
 
-	// server time - in PST, number of seconds since January 1, 1970 (i.e unix time)
+	// Steam server time - in PST, number of seconds since January 1, 1970 (i.e unix time)
 	virtual uint32 GetServerRealTime() = 0;
 
 	// returns the 2 digit ISO 3166-1-alpha-2 format country code this client is running in (as looked up via an IP-to-location database)
@@ -50,7 +50,6 @@ public:
 	// results are returned in RGBA format
 	// the destination buffer size should be 4 * height * width * sizeof(char)
 	virtual bool GetImageRGBA( int iImage, uint8 *pubDest, int nDestBufferSize ) = 0;
-
 
 };
 

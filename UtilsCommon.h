@@ -34,6 +34,11 @@
 #define STEAMUTILS_INTERFACE_VERSION_008 "SteamUtils008"
 #define STEAMUTILS_INTERFACE_VERSION_009 "SteamUtils009"
 
+typedef enum ESteamIPv6ConnectivityProtocol
+{
+	kEUnknown = 0,
+} ESteamIPv6ConnectivityProtocol;
+
 // Steam API call failure results
 typedef enum ESteamAPICallFailure
 {

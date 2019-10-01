@@ -43,11 +43,6 @@ const int k_cubUFSTagValueMax = 255;
 const int k_ScreenshotThumbWidth = 200;
 
 
-enum EVRScreenshotType
-{
-
-};
-
 // callbacks
 #pragma pack( push, 8 )
 
@@ -141,5 +136,14 @@ struct ScreenshotTriggered_t
 
 #pragma pack( pop )
 
+enum EVRScreenshotType
+{
+	k_EVRScreenshotType_None			= 0,
+	k_EVRScreenshotType_Mono			= 1,
+	k_EVRScreenshotType_Stereo			= 2,
+	k_EVRScreenshotType_MonoCubemap		= 3,
+	k_EVRScreenshotType_MonoPanorama	= 4,
+	k_EVRScreenshotType_StereoPanorama	= 5
+};
 
 #endif // SCREENSHOTSCOMMON_H

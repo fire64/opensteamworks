@@ -33,22 +33,12 @@ public:
 	virtual bool RequestCurrentStats() = 0;
 
 	// Data accessors
-#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual bool GetStat( const char *pchName, int32 *pData ) = 0;
 	virtual bool GetStat( const char *pchName, float *pData ) = 0;
-#else
-	virtual bool GetStat( const char *pchName, float *pData ) = 0;
-	virtual bool GetStat( const char *pchName, int32 *pData ) = 0;
-#endif
 
 	// Set / update data
-#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual bool SetStat( const char *pchName, int32 nData ) = 0;
 	virtual bool SetStat( const char *pchName, float fData ) = 0;
-#else
-	virtual bool SetStat( const char *pchName, float fData ) = 0;
-	virtual bool SetStat( const char *pchName, int32 nData ) = 0;
-#endif
 	virtual bool UpdateAvgRateStat( const char *pchName, float flCountThisSession, double dSessionLength ) = 0;
 
 	// Achievement flag accessors
@@ -56,14 +46,26 @@ public:
 	virtual bool SetAchievement( const char *pchName ) = 0;
 	virtual bool ClearAchievement( const char *pchName ) = 0;
 
-	// most likely a bool return here
-	virtual bool GetAchievementAndUnlockTime( const char *pchName, bool *pbAchieved, RTime32 *prtTime ) = 0;
+	// Get the achievement status, and the time it was unlocked if unlocked.
+	// If the return value is true, but the unlock time is zero, that means it was unlocked before Steam 
+	// began tracking achievement unlock times (December 2009). Time is seconds since January 1, 1970.
+	virtual bool GetAchievementAndUnlockTime( const char *pchName, bool *pbAchieved, uint32 *punUnlockTime ) = 0;
 
 	// Store the current data on the server, will get a callback when set
 	// And one callback for every new achievement
+	//
+	// If the callback has a result of k_EResultInvalidParam, one or more stats 
+	// uploaded has been rejected, either because they broke constraints
+	// or were out of date. In this case the server sends back updated values.
+	// The stats should be re-iterated to keep in sync.
 	virtual bool StoreStats() = 0;
 
-	// Gets the icon of the achievement, which is a handle to be used in IClientUtils::GetImageRGBA(), or 0 if none set
+	// Achievement / GroupAchievement metadata
+
+	// Gets the icon of the achievement, which is a handle to be used in IClientUtils::GetImageRGBA(), or 0 if none set. 
+	// A return value of 0 may indicate we are still fetching data, and you can wait for the UserAchievementIconReady_t callback
+	// which will notify you when the bits are actually read.  If the callback still returns zero, then there is no image set
+	// and there never will be.
 	virtual int GetAchievementIcon( const char *pchName ) = 0;
 	// Get general attributes (display name / text, etc) for an Achievement
 	virtual const char *GetAchievementDisplayAttribute( const char *pchName, const char *pchKey ) = 0;
@@ -80,21 +82,15 @@ public:
 	// these stats won't be auto-updated; you'll need to call RequestUserStats() again to refresh any data
 	virtual SteamAPICall_t RequestUserStats( CSteamID steamIDUser ) = 0;
 
-
 	// requests stat information for a user, usable after a successful call to RequestUserStats()
-#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, int32 *pData ) = 0;
 	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, float *pData ) = 0;
-#else
-	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, float *pData ) = 0;
-	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, int32 *pData ) = 0;
-#endif
 	virtual bool GetUserAchievement( CSteamID steamIDUser, const char *pchName, bool *pbAchieved ) = 0;
-	virtual bool GetUserAchievementAndUnlockTime( CSteamID steamIDUser, const char *pchName, bool *pbAchieved, RTime32 *prtTime ) = 0;
+	// See notes for GetAchievementAndUnlockTime above
+	virtual bool GetUserAchievementAndUnlockTime( CSteamID steamIDUser, const char *pchName, bool *pbAchieved, uint32 *punUnlockTime ) = 0;
 
 	// Reset stats 
 	virtual bool ResetAllStats( bool bAchievementsToo ) = 0;
-
 
 	// Leaderboard functions
 
@@ -105,7 +101,6 @@ public:
 	// as above, but won't create the leaderboard if it's not found
 	// This call is asynchronous, with the result returned in LeaderboardFindResult_t
 	virtual SteamAPICall_t FindLeaderboard( const char *pchLeaderboardName ) = 0;
-
 
 	// returns the name of a leaderboard
 	virtual const char *GetLeaderboardName( SteamLeaderboard_t hSteamLeaderboard ) = 0;
@@ -147,11 +142,13 @@ public:
 
 	// Uploads a user score to the Steam back-end.
 	// This call is asynchronous, with the result returned in LeaderboardScoreUploaded_t
-	// If the score passed in is no better than the existing score this user has in the leaderboard, then the leaderboard will not be updated.
 	// Details are extra game-defined information regarding how the user got that score
 	// pScoreDetails points to an array of int32's, cScoreDetailsCount is the number of int32's in the list
-	virtual SteamAPICall_t UploadLeaderboardScore( SteamLeaderboard_t hSteamLeaderboard, ELeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod, int32 nScore, int32 *pScoreDetails, int cScoreDetailsCount ) = 0;
+	virtual SteamAPICall_t UploadLeaderboardScore( SteamLeaderboard_t hSteamLeaderboard, ELeaderboardUploadScoreMethod eLeaderboardUploadScoreMethod, int32 nScore, const int32 *pScoreDetails, int cScoreDetailsCount ) = 0;
 
+	// Attaches a piece of user generated content the user's entry on a leaderboard.
+	// hContent is a handle to a piece of user generated content that was shared using ISteamUserRemoteStorage::FileShare().
+	// This call is asynchronous, with the result returned in LeaderboardUGCSet_t.
 	virtual SteamAPICall_t AttachLeaderboardUGC( SteamLeaderboard_t hSteamLeaderboard, UGCHandle_t hUGC ) = 0;
 
 	// Retrieves the number of players currently playing your game (online + offline)

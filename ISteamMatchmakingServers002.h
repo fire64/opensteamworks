@@ -34,18 +34,19 @@ public:
 	// Request a new list of servers of a particular type.  These calls each correspond to one of the EMatchMakingType values.
 	// Each call allocates a new asynchronous request object.
 	// Request object must be released by calling ReleaseRequest( hServerListRequest )
-	virtual HServerListRequest RequestInternetServerList( AppId_t iApp, MatchMakingKeyValuePair_t **ppchFilters, uint32 nFilters, ISteamMatchmakingServerListResponse *pRequestServersResponse ) = 0;
+	virtual HServerListRequest RequestInternetServerList( AppId_t iApp, STEAM_ARRAY_COUNT(nFilters) MatchMakingKeyValuePair_t **ppchFilters, uint32 nFilters, ISteamMatchmakingServerListResponse *pRequestServersResponse ) = 0;
 	virtual HServerListRequest RequestLANServerList( AppId_t iApp, ISteamMatchmakingServerListResponse *pRequestServersResponse ) = 0;
-	virtual HServerListRequest RequestFriendsServerList( AppId_t iApp, MatchMakingKeyValuePair_t **ppchFilters, uint32 nFilters, ISteamMatchmakingServerListResponse *pRequestServersResponse ) = 0;
-	virtual HServerListRequest RequestFavoritesServerList( AppId_t iApp, MatchMakingKeyValuePair_t **ppchFilters, uint32 nFilters, ISteamMatchmakingServerListResponse *pRequestServersResponse ) = 0;
-	virtual HServerListRequest RequestHistoryServerList( AppId_t iApp, MatchMakingKeyValuePair_t **ppchFilters, uint32 nFilters, ISteamMatchmakingServerListResponse *pRequestServersResponse ) = 0;
-	virtual HServerListRequest RequestSpectatorServerList( AppId_t iApp, MatchMakingKeyValuePair_t **ppchFilters, uint32 nFilters, ISteamMatchmakingServerListResponse *pRequestServersResponse ) = 0;
+	virtual HServerListRequest RequestFriendsServerList( AppId_t iApp, STEAM_ARRAY_COUNT(nFilters) MatchMakingKeyValuePair_t **ppchFilters, uint32 nFilters, ISteamMatchmakingServerListResponse *pRequestServersResponse ) = 0;
+	virtual HServerListRequest RequestFavoritesServerList( AppId_t iApp, STEAM_ARRAY_COUNT(nFilters) MatchMakingKeyValuePair_t **ppchFilters, uint32 nFilters, ISteamMatchmakingServerListResponse *pRequestServersResponse ) = 0;
+	virtual HServerListRequest RequestHistoryServerList( AppId_t iApp, STEAM_ARRAY_COUNT(nFilters) MatchMakingKeyValuePair_t **ppchFilters, uint32 nFilters, ISteamMatchmakingServerListResponse *pRequestServersResponse ) = 0;
+	virtual HServerListRequest RequestSpectatorServerList( AppId_t iApp, STEAM_ARRAY_COUNT(nFilters) MatchMakingKeyValuePair_t **ppchFilters, uint32 nFilters, ISteamMatchmakingServerListResponse *pRequestServersResponse ) = 0;
 
 	// Releases the asynchronous request object and cancels any pending query on it if there's a pending query in progress.
 	// RefreshComplete callback is not posted when request is released.
 	virtual void ReleaseRequest( HServerListRequest hServerListRequest ) = 0;
 
 	/* the filter operation codes that go in the key part of MatchMakingKeyValuePair_t should be one of these:
+
 		"map"
 			- Server passes the filter if the server is playing the specified map.
 		"gamedataand"
@@ -72,26 +73,34 @@ public:
 			pairs must immediately follow, i.e. this is a prefix logical operator notation.)
 			In the simplest case where Boolean expressions are not nested, this is simply
 			the number of operands.
+
 			For example, to match servers on a particular map or with a particular tag, would would
 			use these filters.
+
 				( server.map == "cp_dustbowl" || server.gametags.contains("payload") )
 				"or", "2"
 				"map", "cp_dustbowl"
 				"gametagsand", "payload"
+
 			If logical inputs are nested, then the operand specifies the size of the entire
 			"length" of its operands, not the number of immediate children.
+
 				( server.map == "cp_dustbowl" || ( server.gametags.contains("payload") && !server.gametags.contains("payloadrace") ) )
 				"or", "4"
 				"map", "cp_dustbowl"
 				"and", "2"
 				"gametagsand", "payload"
 				"gametagsnor", "payloadrace"
+
 			Unary NOT can be achieved using either "nand" or "nor" with a single operand.
+
 		"addr"
 			- Server passes the filter if the server's query address matches the specified IP or IP:port.
 		"gameaddr"
 			- Server passes the filter if the server's game address matches the specified IP or IP:port.
+
 		The following filter operations ignore the "value" part of MatchMakingKeyValuePair_t
+
 		"dedicated"
 			- Server passes the filter if it passed true to SetDedicatedServer.
 		"secure"
@@ -154,6 +163,5 @@ public:
 	// to one of the above calls to avoid crashing when callbacks occur.
 	virtual void CancelServerQuery( HServerQuery hServerQuery ) = 0; 
 };
-
 
 #endif // ISTEAMMATCHMAKINGSERVERS002_H

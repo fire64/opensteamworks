@@ -57,7 +57,14 @@ public:
 	// Tags a published file as being visible in the screenshot
 	virtual bool TagPublishedFile( ScreenshotHandle hScreenshot, PublishedFileId_t unPublishedFileID ) = 0;
 
+	// Returns true if the app has hooked the screenshot
 	virtual bool IsScreenshotsHooked() = 0;
+
+	// Adds a VR screenshot to the user's screenshot library from disk in the supported type.
+	// pchFilename should be the normal 2D image used in the library view
+	// pchVRFilename should contain the image that matches the correct type
+	// The return value is a handle that is valid for the duration of the game process and can be used to apply tags.
+	// JPEG, TGA, and PNG formats are supported.
 	virtual ScreenshotHandle AddVRScreenshotToLibrary( EVRScreenshotType eType, const char *pchFilename, const char *pchVRFilename ) = 0;
 };
 

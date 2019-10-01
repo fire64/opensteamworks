@@ -36,29 +36,20 @@ public:
 	// if the user has no stats, GSStatsReceived_t.m_eResult will be set to k_EResultFail
 	// these stats will only be auto-updated for clients playing on the server. For other
 	// users you'll need to call RequestUserStats() again to refresh any data
+	STEAM_CALL_RESULT( GSStatsReceived_t )
 	virtual SteamAPICall_t RequestUserStats( CSteamID steamIDUser ) = 0;
 
 	// requests stat information for a user, usable after a successful call to RequestUserStats()
-#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, int32 *pData ) = 0;
 	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, float *pData ) = 0;
-#else
-	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, float *pData ) = 0;
-	virtual bool GetUserStat( CSteamID steamIDUser, const char *pchName, int32 *pData ) = 0;
-#endif
 	virtual bool GetUserAchievement( CSteamID steamIDUser, const char *pchName, bool *pbAchieved ) = 0;
 
 	// Set / update stats and achievements. 
 	// Note: These updates will work only on stats game servers are allowed to edit and only for 
 	// game servers that have been declared as officially controlled by the game creators. 
 	// Set the IP range of your official servers on the Steamworks page
-#if !(defined(_WIN32) && defined(__GNUC__))
 	virtual bool SetUserStat( CSteamID steamIDUser, const char *pchName, int32 nData ) = 0;
 	virtual bool SetUserStat( CSteamID steamIDUser, const char *pchName, float fData ) = 0;
-#else
-	virtual bool SetUserStat( CSteamID steamIDUser, const char *pchName, float fData ) = 0;
-	virtual bool SetUserStat( CSteamID steamIDUser, const char *pchName, int32 nData ) = 0;
-#endif
 	virtual bool UpdateUserAvgRateStat( CSteamID steamIDUser, const char *pchName, float flCountThisSession, double dSessionLength ) = 0;
 
 	virtual bool SetUserAchievement( CSteamID steamIDUser, const char *pchName ) = 0;
@@ -70,6 +61,7 @@ public:
 	// uploaded has been rejected, either because they broke constraints
 	// or were out of date. In this case the server sends back updated values.
 	// The stats should be re-iterated to keep in sync.
+	STEAM_CALL_RESULT( GSStatsStored_t )
 	virtual SteamAPICall_t StoreUserStats( CSteamID steamIDUser ) = 0;
 };
 

@@ -110,7 +110,7 @@ enum EGetAchievementIcon
 #pragma pack( push, 8 )
 
 // a single entry in a leaderboard, as returned by GetDownloadedLeaderboardEntry()
-struct LeaderboardEntry001_t
+struct LeaderboardEntryOld_t
 {
 	CSteamID m_steamIDUser; // user with the entry - use SteamFriends()->GetFriendPersonaName() & SteamFriends()->GetFriendAvatar() to get more info
 	int32 m_nGlobalRank;	// [1..N], where N is the number of users with an entry in the leaderboard

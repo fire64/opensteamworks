@@ -42,8 +42,10 @@ public:
 
 	// returns the CSteamID of the account currently logged into the Steam client
 	// a CSteamID is a unique identifier for an account, and used to differentiate users in all parts of the Steamworks API
-	STEAMWORKS_STRUCT_RETURN_0(CSteamID, GetSteamID) /*virtual CSteamID GetSteamID() = 0;*/
+	virtual CSteamID GetSteamID() = 0;
 
+	// Multiplayer Authentication functions
+	
 	// InitiateGameConnection() starts the state machine for authenticating the game client with the game server
 	// It is the client portion of a three-way handshake between the client, the game server, and the steam servers
 	//
@@ -54,21 +56,22 @@ public:
 	// CGameID gameID - the ID of the current game. For games without mods, this is just CGameID( <appID> )
 	// uint32 unIPServer, uint16 usPortServer - the IP address of the game server
 	// bool bSecure - whether or not the client thinks that the game server is reporting itself as secure (i.e. VAC is running)
-	// void pvSteam2GetEncryptionKey - unknown
-	// int cbSteam2GetEncryptionKey - unknown
 	//
 	// return value - returns the number of bytes written to pBlob. If the return is 0, then the buffer passed in was too small, and the call has failed
 	// The contents of pBlob should then be sent to the game server, for it to use to complete the authentication process.
-	virtual int InitiateGameConnection( void *pBlob, int cbMaxBlob, CSteamID steamID, CGameID gameID, uint32 unIPServer, uint16 usPortServer, bool bSecure ) = 0;
+	virtual int InitiateGameConnection( void *pAuthBlob, int cbMaxAuthBlob, CSteamID steamIDGameServer, CGameID gameID, uint32 unIPServer, uint16 usPortServer, bool bSecure ) = 0;
 
 	// notify of disconnect
 	// needs to occur when the game client leaves the specified game server, needs to match with the InitiateGameConnection() call
 	virtual void TerminateGameConnection( uint32 unIPServer, uint16 usPortServer ) = 0;
 
+	// Legacy functions
+
 	// used by only a few games to track usage events
-	virtual void TrackAppUsageEvent( CGameID gameID, EAppUsageEvent eAppUsageEvent, const char *pchExtraInfo = "" ) = 0;
+	virtual void TrackAppUsageEvent( CGameID gameID, int eAppUsageEvent, const char *pchExtraInfo = "" ) = 0;
 
 	// legacy authentication support - need to be called if the game server rejects the user with a 'bad ticket' error
+	// this is only needed under very specific circumstances
 	virtual void RefreshSteam2Login() = 0;
 };
 

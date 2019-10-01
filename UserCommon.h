@@ -43,6 +43,10 @@
 #define STEAMUSER_INTERFACE_VERSION_019 "SteamUser019"
 #define STEAMUSER_INTERFACE_VERSION_020 "SteamUser020"
 
+enum EConfigSubTree {
+    stub
+};
+
 // Callback values for callback ValidateAuthTicketResponse_t which is a response to BeginAuthSession
 typedef enum EAuthSessionResponse
 {

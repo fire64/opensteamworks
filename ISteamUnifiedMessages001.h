@@ -23,13 +23,9 @@
 #include "SteamTypes.h"
 #include "UnifiedMessagesCommon.h"
 
-typedef uint64 ClientUnifiedMessageHandle;
-
 abstract_class ISteamUnifiedMessages001
 {
 public:
-	static const ClientUnifiedMessageHandle k_InvalidUnifiedMessageHandle = 0;
-
 	// Sends a service method (in binary serialized form) using the Steam Client.
 	// Returns a unified message handle (k_InvalidUnifiedMessageHandle if could not send the message).
 	virtual ClientUnifiedMessageHandle SendMethod( const char *pchServiceMethod, const void *pRequestBuffer, uint32 unRequestBufferSize, uint64 unContext ) = 0;
@@ -47,6 +43,5 @@ public:
 	// Returns true if the notification was sent successfully.
 	virtual bool SendNotification( const char *pchServiceNotification, const void *pNotificationBuffer, uint32 unNotificationBufferSize ) = 0;
 };
-
 
 #endif // ISTEAMUNIFIEDMESSAGES001_H

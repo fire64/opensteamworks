@@ -26,12 +26,13 @@
 abstract_class ISteamController001
 {
 public:
+
 	//
 	// Native controller support API
 	//
 
 	// Must call init and shutdown when starting/ending use of the interface
-	virtual bool Init(const char *pchAbsolutePathToControllerConfigVDF) = 0;
+	virtual bool Init( const char *pchAbsolutePathToControllerConfigVDF ) = 0;
 	virtual bool Shutdown() = 0;
 
 	// Pump callback/callresult events, SteamAPI_RunCallbacks will do this for you, 
@@ -39,14 +40,13 @@ public:
 	virtual void RunFrame() = 0;
 
 	// Get the state of the specified controller, returns false if that controller is not connected
-	virtual bool GetControllerState(uint32 unControllerIndex, SteamControllerState001_t *pState) = 0;
+	virtual bool GetControllerState( uint32 unControllerIndex, SteamControllerState001_t *pState ) = 0;
 
 	// Trigger a haptic pulse on the controller
-	virtual void TriggerHapticPulse(uint32 unControllerIndex, ESteamControllerPad eTargetPad, unsigned short usDurationMicroSec) = 0;
+	virtual void TriggerHapticPulse( uint32 unControllerIndex, ESteamControllerPad eTargetPad, unsigned short usDurationMicroSec ) = 0;
 
 	// Set the override mode which is used to choose to use different base/legacy bindings from your config file
-	virtual void SetOverrideMode(const char *pchMode) = 0;
-
+	virtual void SetOverrideMode( const char *pchMode ) = 0;
 };
 
-#endif
+#endif //ISTEAMCONTROLLER001_H

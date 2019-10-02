@@ -41,10 +41,10 @@ public:
 	// *pnIP, *pnConnPort are filled in the with IP:port of the game server
 	// *punFlags specify whether the game server was stored as an explicit favorite or in the history of connections
 	// *pRTime32LastPlayedOnServer is filled in the with the Unix time the favorite was added
-	virtual bool GetFavoriteGame( int iGame, AppId_t *pnAppID, uint32 *pnIP, uint16 *pnConnPort, uint16 *pnQueryPort, uint32 *punFlags, RTime32 *pRTime32LastPlayedOnServer ) = 0;
+	virtual bool GetFavoriteGame( int iGame, AppId_t *pnAppID, uint32 *pnIP, uint16 *pnConnPort, uint16 *pnQueryPort, uint32 *punFlags, uint32 *pRTime32LastPlayedOnServer ) = 0;
 
 	// adds the game server to the local list; updates the time played of the server if it already exists in the list
-	virtual int AddFavoriteGame( AppId_t nAppID, uint32 nIP, uint16 nConnPort, uint16 nQueryPort, uint32 unFlags, RTime32 rTime32LastPlayedOnServer ) =0;
+	virtual int AddFavoriteGame( AppId_t nAppID, uint32 nIP, uint16 nConnPort, uint16 nQueryPort, uint32 unFlags, uint32 rTime32LastPlayedOnServer ) =0;
 	
 	// removes the game server from the local storage; returns true if one was removed
     virtual bool RemoveFavoriteGame( AppId_t nAppID, uint32 nIP, uint16 nConnPort, uint16 nQueryPort, uint32 unFlags ) = 0;
@@ -76,15 +76,14 @@ public:
 		}
 	*/
 	// 
-	virtual SteamAPICall_t RequestLobbyList() = 0;
+	virtual void RequestLobbyList() = 0;
 	// filters for lobbies
 	// this needs to be called before RequestLobbyList() to take effect
 	// these are cleared on each call to RequestLobbyList()
 	virtual void AddRequestLobbyListFilter( const char *pchKeyToMatch, const char *pchValueToMatch ) = 0;
 	// numerical comparison
 	virtual void AddRequestLobbyListNumericalFilter( const char *pchKeyToMatch, int nValueToMatch, int nComparisonType ) = 0;
-	// slots available filter
-	virtual OBSOLETE_FUNCTION void AddRequestLobbyListSlotsAvailableFilter() = 0;
+	virtual void AddRequestLobbyListSlotsAvailableFilter() = 0;
 	// returns results closest to the specified value. Multiple near filters can be added, with early filters taking precedence
 	virtual void AddRequestLobbyListNearValueFilter( const char *pchKeyToMatch, int nValueToBeCloseTo ) = 0;
 
@@ -92,7 +91,7 @@ public:
 	// should only be called after a LobbyMatchList_t callback is received
 	// iLobby is of the range [0, LobbyMatchList_t::m_nLobbiesMatching)
 	// the returned CSteamID::IsValid() will be false if iLobby is out of range
-	STEAMWORKS_STRUCT_RETURN_1(CSteamID, GetLobbyByIndex, int, iLobby) /*virtual CSteamID GetLobbyByIndex( int iLobby ) = 0;*/
+	virtual CSteamID GetLobbyByIndex( int iLobby ) = 0;
 
 	// Create a lobby on the Steam servers.
 	// If private, then the lobby will not be returned by any RequestLobbyList() call; the CSteamID
@@ -100,13 +99,13 @@ public:
 	// this is an asynchronous request
 	// results will be returned by LobbyCreated_t callback and call result; lobby is joined & ready to use at this pointer
 	// a LobbyEnter_t callback will also be received (since the local user is joining their own lobby)
-	virtual SteamAPICall_t CreateLobby( ELobbyType eLobbyType ) = 0;
+	virtual void CreateLobby( ELobbyType eLobbyType ) = 0;
 
 	// Joins an existing lobby
 	// this is an asynchronous request
 	// results will be returned by LobbyEnter_t callback & call result, check m_EChatRoomEnterResponse to see if was successful
 	// lobby metadata is available to use immediately on this call completing
-	virtual SteamAPICall_t JoinLobby( CSteamID steamIDLobby ) = 0;
+	virtual void JoinLobby( CSteamID steamIDLobby ) = 0;
 
 	// Leave a lobby; this will take effect immediately on the client side
 	// other users in the lobby will be notified by a LobbyChatUpdate_t callback
@@ -127,7 +126,7 @@ public:
 	virtual int GetNumLobbyMembers( CSteamID steamIDLobby ) = 0;
 	// returns the CSteamID of a user in the lobby
 	// iMember is of range [0,GetNumLobbyMembers())
-	STEAMWORKS_STRUCT_RETURN_2(CSteamID, GetLobbyMemberByIndex, CSteamID, steamIDLobby, int, iMember) /*virtual CSteamID GetLobbyMemberByIndex( CSteamID steamIDLobby, int iMember ) = 0;*/
+	virtual CSteamID GetLobbyMemberByIndex( CSteamID steamIDLobby, int iMember ) = 0;
 
 	// Get data associated with this lobby
 	// takes a simple key, and returns the string associated with it
@@ -188,9 +187,9 @@ public:
 	// you must be a member of the lobby to access this
 	// there always one lobby owner - if the current owner leaves, another user will become the owner
 	// it is possible (bur rare) to join a lobby just as the owner is leaving, thus entering a lobby with self as the owner
-	STEAMWORKS_STRUCT_RETURN_1(CSteamID, GetLobbyOwner, CSteamID, steamIDLobby) /*virtual CSteamID GetLobbyOwner( CSteamID steamIDLobby ) = 0;*/
+	virtual CSteamID GetLobbyOwner( CSteamID steamIDLobby ) = 0;
 
-	virtual OBSOLETE_FUNCTION double GetLobbyDistance( CSteamID steamIDLobby ) = 0;
+	virtual float GetLobbyDistance( CSteamID steamIDLobby ) = 0;
 };
 
 #endif // ISTEAMMATCHMAKING005_H

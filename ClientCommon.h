@@ -75,11 +75,6 @@ class ISteamRemotePlay;
 #define STEAMCLIENT_INTERFACE_VERSION_019		"SteamClient019"
 #define STEAMCLIENT_INTERFACE_VERSION_020		"SteamClient020"
 
-struct SteamIPAddress_t
-{
-	void *dummy;
-};
-
 extern "C" typedef void (__cdecl *SteamAPIWarningMessageHook_t)(int, const char *);
 extern "C" typedef void( *SteamAPI_PostAPIResultInProcess_t )(SteamAPICall_t callHandle, void *, uint32 unCallbackSize, int iCallbackNum);
 extern "C" typedef uint32 ( *SteamAPI_CheckCallbackRegistered_t )( int iCallbackNum );

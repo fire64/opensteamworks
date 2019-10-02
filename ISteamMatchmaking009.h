@@ -68,6 +68,7 @@ public:
 				SteamAPICall_t hSteamAPICall = SteamMatchmaking()->RequestLobbyList();
 				m_CallResultLobbyMatchList.Set( hSteamAPICall, this, &CMyLobbyListManager::OnLobbyMatchList );
 			}
+
 			void OnLobbyMatchList( LobbyMatchList_t *pLobbyMatchList, bool bIOFailure )
 			{
 				// lobby list has be retrieved from Steam back-end, use results
@@ -75,6 +76,7 @@ public:
 		}
 	*/
 	// 
+	STEAM_CALL_RESULT( LobbyMatchList_t )
 	virtual SteamAPICall_t RequestLobbyList() = 0;
 	// filters for lobbies
 	// this needs to be called before RequestLobbyList() to take effect
@@ -105,12 +107,14 @@ public:
 	// this is an asynchronous request
 	// results will be returned by LobbyCreated_t callback and call result; lobby is joined & ready to use at this point
 	// a LobbyEnter_t callback will also be received (since the local user is joining their own lobby)
+	STEAM_CALL_RESULT( LobbyCreated_t )
 	virtual SteamAPICall_t CreateLobby( ELobbyType eLobbyType, int cMaxMembers ) = 0;
 
 	// Joins an existing lobby
 	// this is an asynchronous request
 	// results will be returned by LobbyEnter_t callback & call result, check m_EChatRoomEnterResponse to see if was successful
 	// lobby metadata is available to use immediately on this call completing
+	STEAM_CALL_RESULT( LobbyEnter_t )
 	virtual SteamAPICall_t JoinLobby( CSteamID steamIDLobby ) = 0;
 
 	// Leave a lobby; this will take effect immediately on the client side
@@ -173,7 +177,7 @@ public:
 	// *pSteamIDUser is filled in with the CSteamID of the member
 	// *pvData is filled in with the message itself
 	// return value is the number of bytes written into the buffer
-	virtual int GetLobbyChatEntry( CSteamID steamIDLobby, int iChatID, CSteamID *pSteamIDUser, void *pvData, int cubData, EChatEntryType *peChatEntryType ) = 0;
+	virtual int GetLobbyChatEntry( CSteamID steamIDLobby, int iChatID, STEAM_OUT_STRUCT() CSteamID *pSteamIDUser, void *pvData, int cubData, EChatEntryType *peChatEntryType ) = 0;
 
 	// Refreshes metadata for a lobby you're not necessarily in right now
 	// you never do this for lobbies you're a member of, only if your
@@ -189,7 +193,7 @@ public:
 	// either the IP/Port or the steamID of the game server has to be valid, depending on how you want the clients to be able to connect
 	virtual void SetLobbyGameServer( CSteamID steamIDLobby, uint32 unGameServerIP, uint16 unGameServerPort, CSteamID steamIDGameServer ) = 0;
 	// returns the details of a game server set in a lobby - returns false if there is no game server set, or that lobby doesn't exist
-	virtual bool GetLobbyGameServer( CSteamID steamIDLobby, uint32 *punGameServerIP, uint16 *punGameServerPort, CSteamID *psteamIDGameServer ) = 0;
+	virtual bool GetLobbyGameServer( CSteamID steamIDLobby, uint32 *punGameServerIP, uint16 *punGameServerPort, STEAM_OUT_STRUCT() CSteamID *psteamIDGameServer ) = 0;
 
 	// set the limit on the # of users who can join the lobby
 	virtual bool SetLobbyMemberLimit( CSteamID steamIDLobby, int cMaxMembers ) = 0;
@@ -225,6 +229,7 @@ public:
 	// after completion, the local user will no longer be the owner
 	virtual void CheckForPSNGameBootInvite( unsigned int iGameBootAttributes  ) = 0;
 #endif
+	STEAM_CALL_BACK( LobbyChatUpdate_t )
 };
 
 #endif // ISTEAMMATCHMAKING009_H

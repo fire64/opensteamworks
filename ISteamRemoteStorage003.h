@@ -25,15 +25,21 @@
 
 //-----------------------------------------------------------------------------
 // Purpose: Functions for accessing, reading and writing files stored remotely 
-//			and cached locally
+//   and cached locally
 //-----------------------------------------------------------------------------
 abstract_class ISteamRemoteStorage003
 {
-public:
+	public:
+	// NOTE
+	//
+	// Filenames are case-insensitive, and will be converted to lowercase automatically.
+	// So "foo.bar" and "Foo.bar" are the same file, and if you write "Foo.bar" then
+	// iterate the files, the filename returned will be "foo.bar".
+	//
+
 	// file operations
 	virtual bool FileWrite( const char *pchFile, const void *pvData, int32 cubData ) = 0;
 	virtual int32 FileRead( const char *pchFile, void *pvData, int32 cubDataToRead ) = 0;
-
 	virtual bool FileForget( const char *pchFile ) = 0;
 	virtual bool FileDelete( const char *pchFile ) = 0;
 	virtual SteamAPICall_t FileShare( const char *pchFile ) = 0;
@@ -51,17 +57,17 @@ public:
 	// configuration management
 	virtual bool GetQuota( int32 *pnTotalBytes, int32 *puAvailableBytes ) = 0;
 	virtual bool IsCloudEnabledForAccount() = 0;
-	virtual bool IsCloudEnabledThisApp() = 0;
-	virtual bool SetCloudEnabledThisApp( bool bEnable ) = 0;
+	virtual bool IsCloudEnabledForApp() = 0;
+	virtual void SetCloudEnabledForApp( bool bEnabled ) = 0;
 
 	// user generated content
-	virtual SteamAPICall_t UGCDownload( UGCHandle_t hContent ) = 0; // Returns a Deprecated_RemoteStorageDownloadUGCResult_t callback
-	virtual bool	GetUGCDetails( UGCHandle_t hContent, AppId_t *pnAppID, char **ppchName, int32 *pnFileSizeInBytes, CSteamID *pSteamIDOwner ) = 0;
-	virtual int32	UGCRead( UGCHandle_t hContent, void *pvData, int32 cubDataToRead ) = 0;
+	virtual SteamAPICall_t UGCDownload( UGCHandle_t hContent ) = 0;
+	virtual bool GetUGCDetails( UGCHandle_t hContent, AppId_t *pnAppID, char **ppchName, int32 *pnFileSizeInBytes, CSteamID *pSteamIDOwner ) = 0;
+	virtual int32 UGCRead( UGCHandle_t hContent, void *pvData, int32 cubDataToRead ) = 0;
 
 	// user generated content iteration
-	virtual int32	GetCachedUGCCount() = 0;
-	virtual	UGCHandle_t GetCachedUGCHandle( int32 iCachedContent ) = 0;
+	virtual int32 GetCachedUGCCount() = 0;
+	virtual UGCHandle_t GetCachedUGCHandle( int32 iCachedContent ) = 0;
 };
 
 #endif // ISTEAMREMOTESTORAGE003_H

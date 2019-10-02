@@ -26,20 +26,26 @@
 abstract_class ISteamRemoteStorage001
 {
 public:
-	virtual bool FileWrite( const char *filename, void  const *data, int ) = 0;
+	// NOTE
+	//
+	// Filenames are case-insensitive, and will be converted to lowercase automatically.
+	// So "foo.bar" and "Foo.bar" are the same file, and if you write "Foo.bar" then
+	// iterate the files, the filename returned will be "foo.bar".
+	//
 
-	virtual uint32 GetFileSize( const char *filename ) = 0;
+	// file operations
+	virtual bool FileWrite( const char *pchFile, const void *pvData, int32 cubData ) = 0;
+	virtual int32 GetFileSize( const char *pchFile ) = 0;
+	virtual int32 FileRead( const char *pchFile, void *pvData, int32 cubDataToRead ) = 0;
+	virtual bool FileExists( const char *pchFile ) = 0;
+	virtual bool FileDelete( const char *pchFile ) = 0;
 
-	virtual bool FileRead( const char *filename, void *buffer, int size ) = 0;
+	// iteration
+	virtual int32 GetFileCount() = 0;
+	virtual const char *GetFileNameAndSize( int iFile, int32 *pnFileSizeInBytes ) = 0;
 
-	virtual bool FileExists( const char *filename ) = 0;
-	virtual OBSOLETE_FUNCTION bool FileDelete( const char *filename ) = 0;
-
-	virtual uint32 GetFileCount() = 0;
-
-	virtual const char *GetFileNameAndSize( int index, int *size ) = 0;
-
-	virtual bool GetQuota( int *current, int *maximum ) = 0;
+	// quota management
+	virtual bool GetQuota( int32 *pnTotalBytes, int32 *puAvailableBytes ) = 0;
 };
 
 #endif // ISTEAMREMOTESTORAGE001_H

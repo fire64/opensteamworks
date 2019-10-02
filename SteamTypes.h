@@ -587,6 +587,10 @@ typedef int32 HSteamCall;
 
 typedef int16 FriendsGroupID_t;
 
+typedef uint32 SteamIPAddress_t;
+
+typedef uint64 UGCFileWriteStreamHandle_t;
+
 //-----------------------------------------------------------------------------
 // Typedef for handle type you will receive when requesting server list.
 //-----------------------------------------------------------------------------

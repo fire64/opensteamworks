@@ -80,7 +80,7 @@ public:
 	// if *pcubMsgSize < cubDest, only partial data is written
 	// returns false if no data is available
 	// fills out *phSocket with the socket that data is available on
-	virtual bool RetrieveData( SNetListenSocket_t hListenSocket, void *pubDest, uint32 cubDest, uint32 *pcubMsgSize ) = 0;
+	virtual bool RetrieveData( SNetListenSocket_t hListenSocket, void *pubDest, uint32 cubDest, uint32 *pcubMsgSize, SNetSocket_t *phSocket ) = 0;
 
 	// returns information about the specified socket, filling out the contents of the pointers
 	virtual bool GetSocketInfo( SNetSocket_t hSocket, CSteamID *pSteamIDRemote, int *peSocketStatus, uint32 *punIPRemote, uint16 *punPortRemote ) = 0;
@@ -88,8 +88,7 @@ public:
 	// returns which local port the listen socket is bound to
 	// *pnIP and *pnPort will be 0 if the socket is set to listen for P2P connections only
 	virtual bool GetListenSocketInfo( SNetListenSocket_t hListenSocket, uint32 *pnIP, uint16 *pnPort ) = 0;
-
+	
 };
-
 
 #endif // ISTEAMNETWORKING001_H

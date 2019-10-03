@@ -31,6 +31,10 @@
 #define STEAMUGC_INTERFACE_VERSION_008 "STEAMUGC_INTERFACE_VERSION008"
 #define STEAMUGC_INTERFACE_VERSION_009 "STEAMUGC_INTERFACE_VERSION009"
 #define STEAMUGC_INTERFACE_VERSION_010 "STEAMUGC_INTERFACE_VERSION010"
+#define STEAMUGC_INTERFACE_VERSION_011 "STEAMUGC_INTERFACE_VERSION011"
+#define STEAMUGC_INTERFACE_VERSION_012 "STEAMUGC_INTERFACE_VERSION012"
+#define STEAMUGC_INTERFACE_VERSION_013 "STEAMUGC_INTERFACE_VERSION013"
+
 
 typedef uint64 UGCQueryHandle_t;
 typedef uint64 UGCQueryHandle_t;
@@ -39,33 +43,28 @@ typedef uint64 UGCUpdateHandle_t;
 const UGCQueryHandle_t k_UGCQueryHandleInvalid = 0xffffffffffffffffull;
 const UGCUpdateHandle_t k_UGCUpdateHandleInvalid = 0xffffffffffffffffull;
 
-enum EItemPreviewType
-{
-
-};
-
-enum EItemStatistic
-{
-
-};
-
-
 // Combination of sorting and filtering for queries across all UGC
 enum EUGCQuery
 {
-	k_EUGCQuery_RankedByVote = 0,
-	k_EUGCQuery_RankedByPublicationDate = 1,
-	k_EUGCQuery_AcceptedForGameRankedByAcceptanceDate = 2,
-	k_EUGCQuery_RankedByTrend = 3,
-	k_EUGCQuery_FavoritedByFriendsRankedByPublicationDate = 4,
-	k_EUGCQuery_CreatedByFriendsRankedByPublicationDate = 5,
-	k_EUGCQuery_RankedByNumTimesReported = 6,
+	k_EUGCQuery_RankedByVote								  = 0,
+	k_EUGCQuery_RankedByPublicationDate						  = 1,
+	k_EUGCQuery_AcceptedForGameRankedByAcceptanceDate		  = 2,
+	k_EUGCQuery_RankedByTrend								  = 3,
+	k_EUGCQuery_FavoritedByFriendsRankedByPublicationDate	  = 4,
+	k_EUGCQuery_CreatedByFriendsRankedByPublicationDate		  = 5,
+	k_EUGCQuery_RankedByNumTimesReported					  = 6,
 	k_EUGCQuery_CreatedByFollowedUsersRankedByPublicationDate = 7,
-	k_EUGCQuery_NotYetRated = 8,
-	k_EUGCQuery_RankedByTotalVotesAsc = 9,
-	k_EUGCQuery_RankedByVotesUp = 10,
-	k_EUGCQuery_RankedByTextSearch = 11,
-	k_EUGCQuery_RankedByTotalUniqueSubscriptions = 12,
+	k_EUGCQuery_NotYetRated									  = 8,
+	k_EUGCQuery_RankedByTotalVotesAsc						  = 9,
+	k_EUGCQuery_RankedByVotesUp								  = 10,
+	k_EUGCQuery_RankedByTextSearch							  = 11,
+	k_EUGCQuery_RankedByTotalUniqueSubscriptions			  = 12,
+	k_EUGCQuery_RankedByPlaytimeTrend						  = 13,
+	k_EUGCQuery_RankedByTotalPlaytime						  = 14,
+	k_EUGCQuery_RankedByAveragePlaytimeTrend				  = 15,
+	k_EUGCQuery_RankedByLifetimeAveragePlaytime				  = 16,
+	k_EUGCQuery_RankedByPlaytimeSessionsTrend				  = 17,
+	k_EUGCQuery_RankedByLifetimePlaytimeSessions			  = 18,
 };
 
 // Different lists of published UGC for a user.
@@ -86,18 +85,20 @@ enum EUserUGCList
 // Matching UGC types for queries
 enum EUGCMatchingUGCType
 {
-	k_EUGCMatchingUGCType_Items = 0,		// both mtx items and ready-to-use items
-	k_EUGCMatchingUGCType_Items_Mtx = 1,
-	k_EUGCMatchingUGCType_Items_ReadyToUse = 2,
-	k_EUGCMatchingUGCType_Collections = 3,
-	k_EUGCMatchingUGCType_Artwork = 4,
-	k_EUGCMatchingUGCType_Videos = 5,
-	k_EUGCMatchingUGCType_Screenshots = 6,
-	k_EUGCMatchingUGCType_AllGuides = 7,		// both web guides and integrated guides
-	k_EUGCMatchingUGCType_WebGuides = 8,
-	k_EUGCMatchingUGCType_IntegratedGuides = 9,
-	k_EUGCMatchingUGCType_UsableInGame = 10,		// ready-to-use items and integrated guides
+	k_EUGCMatchingUGCType_Items				 = 0,		// both mtx items and ready-to-use items
+	k_EUGCMatchingUGCType_Items_Mtx			 = 1,
+	k_EUGCMatchingUGCType_Items_ReadyToUse	 = 2,
+	k_EUGCMatchingUGCType_Collections		 = 3,
+	k_EUGCMatchingUGCType_Artwork			 = 4,
+	k_EUGCMatchingUGCType_Videos			 = 5,
+	k_EUGCMatchingUGCType_Screenshots		 = 6,
+	k_EUGCMatchingUGCType_AllGuides			 = 7,		// both web guides and integrated guides
+	k_EUGCMatchingUGCType_WebGuides			 = 8,
+	k_EUGCMatchingUGCType_IntegratedGuides	 = 9,
+	k_EUGCMatchingUGCType_UsableInGame		 = 10,		// ready-to-use items and integrated guides
 	k_EUGCMatchingUGCType_ControllerBindings = 11,
+	k_EUGCMatchingUGCType_GameManagedItems	 = 12,		// game managed items (not managed by users)
+	k_EUGCMatchingUGCType_All				 = ~0,		// return everything
 };
 
 // Sort order for user published UGC lists (defaults to creation order descending)
@@ -110,6 +111,40 @@ enum EUserUGCListSortOrder
 	k_EUserUGCListSortOrder_SubscriptionDateDesc,
 	k_EUserUGCListSortOrder_VoteScoreDesc,
 	k_EUserUGCListSortOrder_ForModeration,
+};
+
+enum EItemStatistic
+{
+	k_EItemStatistic_NumSubscriptions					 = 0,
+	k_EItemStatistic_NumFavorites						 = 1,
+	k_EItemStatistic_NumFollowers						 = 2,
+	k_EItemStatistic_NumUniqueSubscriptions				 = 3,
+	k_EItemStatistic_NumUniqueFavorites					 = 4,
+	k_EItemStatistic_NumUniqueFollowers					 = 5,
+	k_EItemStatistic_NumUniqueWebsiteViews				 = 6,
+	k_EItemStatistic_ReportScore						 = 7,
+	k_EItemStatistic_NumSecondsPlayed					 = 8,
+	k_EItemStatistic_NumPlaytimeSessions				 = 9,
+	k_EItemStatistic_NumComments						 = 10,
+	k_EItemStatistic_NumSecondsPlayedDuringTimePeriod	 = 11,
+	k_EItemStatistic_NumPlaytimeSessionsDuringTimePeriod = 12,
+};
+
+enum EItemPreviewType
+{
+	k_EItemPreviewType_Image							= 0,	// standard image file expected (e.g. jpg, png, gif, etc.)
+	k_EItemPreviewType_YouTubeVideo						= 1,	// video id is stored
+	k_EItemPreviewType_Sketchfab						= 2,	// model id is stored
+	k_EItemPreviewType_EnvironmentMap_HorizontalCross	= 3,	// standard image file expected - cube map in the layout
+																// +---+---+-------+
+																// |   |Up |       |
+																// +---+---+---+---+
+																// | L | F | R | B |
+																// +---+---+---+---+
+																// |   |Dn |       |
+																// +---+---+---+---+
+	k_EItemPreviewType_EnvironmentMap_LatLong			= 4,	// standard image file expected
+	k_EItemPreviewType_ReservedMax						= 255,	// you can specify your own types above this value
 };
 
 // Details for a single published file/UGC

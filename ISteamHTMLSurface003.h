@@ -72,13 +72,6 @@ public:
 	// run this javascript script in the currently loaded page
 	virtual void ExecuteJavascript( HHTMLBrowser unBrowserHandle, const char *pchScript ) = 0;
 
-	enum EHTMLMouseButton
-	{
-		eHTMLMouseButton_Left = 0,
-		eHTMLMouseButton_Right = 1,
-		eHTMLMouseButton_Middle = 2,
-	};
-
 	// Mouse click and mouse movement commands
 	virtual void MouseUp( HHTMLBrowser unBrowserHandle, EHTMLMouseButton eMouseButton ) = 0;
 	virtual void MouseDown( HHTMLBrowser unBrowserHandle, EHTMLMouseButton eMouseButton ) = 0;
@@ -87,61 +80,6 @@ public:
 	virtual void MouseMove( HHTMLBrowser unBrowserHandle, int x, int y ) = 0;
 	// nDelta is pixels of scroll
 	virtual void MouseWheel( HHTMLBrowser unBrowserHandle, int32 nDelta ) = 0;
-
-	enum EMouseCursor
-	{
-		dc_user = 0,
-		dc_none,
-		dc_arrow,
-		dc_ibeam,
-		dc_hourglass,
-		dc_waitarrow,
-		dc_crosshair,
-		dc_up,
-		dc_sizenw,
-		dc_sizese,
-		dc_sizene,
-		dc_sizesw,
-		dc_sizew,
-		dc_sizee,
-		dc_sizen,
-		dc_sizes,
-		dc_sizewe,
-		dc_sizens,
-		dc_sizeall,
-		dc_no,
-		dc_hand,
-		dc_blank, // don't show any custom cursor, just use your default
-		dc_middle_pan,
-		dc_north_pan,
-		dc_north_east_pan,
-		dc_east_pan,
-		dc_south_east_pan,
-		dc_south_pan,
-		dc_south_west_pan,
-		dc_west_pan,
-		dc_north_west_pan,
-		dc_alias,
-		dc_cell,
-		dc_colresize,
-		dc_copycur,
-		dc_verticaltext,
-		dc_rowresize,
-		dc_zoomin,
-		dc_zoomout,
-		dc_help,
-		dc_custom,
-
-		dc_last, // custom cursors start from this value and up
-	};
-
-	enum EHTMLKeyModifiers
-	{
-		k_eHTMLKeyModifier_None = 0,
-		k_eHTMLKeyModifier_AltDown = 1 << 0,
-		k_eHTMLKeyModifier_CtrlDown = 1 << 1,
-		k_eHTMLKeyModifier_ShiftDown = 1 << 2,
-	};
 
 	// keyboard interactions, native keycode is the virtual key code value from your OS
 	virtual void KeyDown( HHTMLBrowser unBrowserHandle, uint32 nNativeKeyCode, EHTMLKeyModifiers eHTMLKeyModifiers ) = 0;

@@ -27,27 +27,27 @@ abstract_class ISteamController002
 {
 public:
 
-	//
-	// Native controller support API
-	//
-
-	// Must call init and shutdown when starting/ending use of the interface
+	// Init and Shutdown must be called when starting/ending use of this interface
 	virtual bool Init() = 0;
 	virtual bool Shutdown() = 0;
-
-	// Pump callback/callresult events, SteamAPI_RunCallbacks will do this for you, 
-	// normally never need to call directly.
+	
+	// Synchronize API state with the latest Steam Controller inputs available. This
+	// is performed automatically by SteamAPI_RunCallbacks, but for the absolute lowest
+	// possible latency, you call this directly before reading controller state.
 	virtual void RunFrame() = 0;
 
-	virtual unknown_ret GetConnectedControllers( uint64 * ) = 0;
- 
+	// Enumerate currently connected controllers
+	// handlesOut should point to a STEAM_CONTROLLER_MAX_COUNT sized array of ControllerHandle_t handles
+	// Returns the number of handles written to handlesOut
+	virtual int GetConnectedControllers( ControllerHandle_t *handlesOut ) = 0;
+
 	// Trigger a haptic pulse on the controller
 	virtual void TriggerHapticPulse( uint32 unControllerIndex, ESteamControllerPad eTargetPad, unsigned short usDurationMicroSec ) = 0;
 
-	virtual unknown_ret ActivateMode( uint64, int32 ) = 0;
-	virtual unknown_ret GetJoystickForHandle( uint64 ) = 0;
-	virtual unknown_ret GetHandleForJoystick( int32 ) = 0;
-	virtual unknown_ret GetModeAnalogOutputData( uint64, int32 ) = 0;
+	virtual unknown_ret ActivateMode( ControllerHandle_t handle, int32 unControllerIndex ) = 0;
+	virtual unknown_ret GetJoystickForHandle( ControllerHandle_t handle ) = 0;
+	virtual unknown_ret GetHandleForJoystick( int32 unControllerIndex ) = 0;
+	virtual unknown_ret GetModeAnalogOutputData( ControllerHandle_t handle, int32 unControllerIndex ) = 0;
 
 };
 

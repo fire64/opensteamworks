@@ -1,24 +1,35 @@
-//============ Copyright (c) Valve Corporation, All rights reserved. ============
+//==========================  Open Steamworks  ================================
+//
+// This file is part of the Open Steamworks project. All individuals associated
+// with this project do not claim ownership of the contents
+// 
+// The code, comments, and all related files, projects, resources,
+// redistributables included with this project are Copyright Valve Corporation.
+// Additionally, Valve, the Valve logo, Half-Life, the Half-Life logo, the
+// Lambda logo, Steam, the Steam logo, Team Fortress, the Team Fortress logo,
+// Opposing Force, Day of Defeat, the Day of Defeat logo, Counter-Strike, the
+// Counter-Strike logo, Source, the Source logo, and Counter-Strike Condition
+// Zero are trademarks and or registered trademarks of Valve Corporation.
+// All other trademarks are property of their respective owners.
+//
+//=============================================================================
 
-#ifndef ISTEAMMUSICREMOTE_H
-#define ISTEAMMUSICREMOTE_H
+#ifndef ISTEAMMUSICREMOTE001_H
+#define ISTEAMMUSICREMOTE001_H
 #ifdef _WIN32
 #pragma once
 #endif
 
 #include "SteamTypes.h"
 #include "MusicCommon.h"
-
-#define k_SteamMusicNameMaxLength 255
-#define k_SteamMusicPNGMaxLength 65535
- 
+#include "MusicRemoteCommon.h"
 
 abstract_class ISteamMusicRemote001
 {
 public: 
 	// Service Definition
- 	virtual bool RegisterSteamMusicRemote( const char *pchName ) = 0;
- 	virtual bool DeregisterSteamMusicRemote() = 0;
+	virtual bool RegisterSteamMusicRemote( const char *pchName ) = 0;
+	virtual bool DeregisterSteamMusicRemote() = 0;
 	virtual bool BIsCurrentMusicRemote() = 0;
 	virtual bool BActivationSuccess( bool bValue ) = 0;
 
@@ -34,7 +45,7 @@ public:
 	virtual bool EnablePlaylists( bool bValue ) = 0;
 
 	// Status
- 	virtual bool UpdatePlaybackStatus( AudioPlayback_Status nStatus ) = 0;
+	virtual bool UpdatePlaybackStatus( AudioPlayback_Status nStatus ) = 0;
 	virtual bool UpdateShuffled( bool bValue ) = 0;
 	virtual bool UpdateLooped( bool bValue ) = 0;
 	virtual bool UpdateVolume( float flValue ) = 0; // volume is between 0.0 and 1.0
@@ -62,6 +73,4 @@ public:
 	virtual bool PlaylistDidChange() = 0;
 };
 
-
-
-#endif // #define ISTEAMMUSICREMOTE_H
+#endif // ISTEAMMUSICREMOTE001_H

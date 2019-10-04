@@ -29,7 +29,7 @@
 abstract_class ISteamAppDisableUpdate001
 {
 public:
-	virtual unknown_ret SetAppUpdateDisabledSecondsRemaining( uint32 ) = 0;
+	virtual void SetAppUpdateDisabledSecondsRemaining( uint32 seconds ) = 0;
 };
 
 #endif // ISTEAMAPPDISABLEUPDATE001_H

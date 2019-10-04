@@ -14,8 +14,8 @@
 //
 //=============================================================================
 
-#ifndef ISTEAMVIDEO_001_H
-#define ISTEAMVIDEO_001_H
+#ifndef ISTEAMVIDEO001_H
+#define ISTEAMVIDEO001_H
 #ifdef _WIN32
 #pragma once
 #endif
@@ -36,6 +36,4 @@ public:
 	// returns true if user is uploading a live broadcast
 	virtual bool IsBroadcasting( int *pnNumViewers ) = 0;
 };
-
-#endif // ISTEAMVIDEO_001_H
-
+#endif //ISTEAMVIDEO001_H

@@ -14,8 +14,8 @@
 //
 //=============================================================================
 
-#ifndef ISTEAMVIDEO_002_H
-#define ISTEAMVIDEO_002_H
+#ifndef ISTEAMVIDEO002_H
+#define ISTEAMVIDEO002_H
 #ifdef _WIN32
 #pragma once
 #endif
@@ -33,12 +33,11 @@ public:
 	// returns true if user is uploading a live broadcast
 	virtual bool IsBroadcasting( int *pnNumViewers ) = 0;
 
-	//Get the OPF details for 360 video playback
+	// Get the OPF Details for 360 Video Playback
+	STEAM_CALL_BACK( GetOPFSettingsResult_t )
 	virtual void GetOPFSettings( AppId_t unVideoAppID ) = 0;
-
-	//Gets the OPF string for the specified video App ID.
 	virtual bool GetOPFStringForApp( AppId_t unVideoAppID, char *pchBuffer, int32 *pnBufferSize ) = 0;
 };
 
-#endif // ISTEAMVIDEO_002_H
+#endif // ISTEAMVIDEO002_H
 

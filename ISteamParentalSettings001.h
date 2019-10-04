@@ -22,7 +22,7 @@
 #endif
 
 #include "SteamTypes.h"
-#include "ParentalSettings.h"
+#include "ParentalSettingsCommon.h"
 
 //-----------------------------------------------------------------------------
 // Purpose: Functions for making connections and sending data between clients,
@@ -33,8 +33,10 @@ abstract_class ISteamParentalSettings001
 public:
 	virtual bool BIsParentalLockEnabled() = 0;
 	virtual bool BIsParentalLockLocked() = 0;
+
 	virtual bool BIsAppBlocked( AppId_t nAppID ) = 0;
 	virtual bool BIsAppInBlockList( AppId_t nAppID ) = 0;
+
 	virtual bool BIsFeatureBlocked( EParentalFeature eFeature ) = 0;
 	virtual bool BIsFeatureInBlockList( EParentalFeature eFeature ) = 0;
 };

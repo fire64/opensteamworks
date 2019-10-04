@@ -20,25 +20,36 @@
 #pragma once
 #endif
 
+// Feature types for parental settings
 enum EParentalFeature
 {
-	k_EParentalFeatureInvalid = 0,	// Invalid
-	k_EParentalFeatureStore,	// Store
-	k_EParentalFeatureCommunity,	// Community
-	k_EParentalFeatureProfile,	// Profile
-	k_EParentalFeatureFriends,	// Friends
-	k_EParentalFeatureNews,	// News
-	k_EParentalFeatureTrading,	// Trading
-	k_EParentalFeatureSettings,	// Settings
-	k_EParentalFeatureConsole,	// Console
-	k_EParentalFeatureBrowser,	// Browser
-	k_EParentalFeatureParentalSetup,	// ParentalSetup
-	k_EParentalFeatureLibrary,	// Library
-	k_EParentalFeatureTest,	// Test
+	k_EFeatureInvalid = 0,
+	k_EFeatureStore = 1,
+	k_EFeatureCommunity = 2,
+	k_EFeatureProfile = 3,
+	k_EFeatureFriends = 4,
+	k_EFeatureNews = 5,
+	k_EFeatureTrading = 6,
+	k_EFeatureSettings = 7,
+	k_EFeatureConsole = 8,
+	k_EFeatureBrowser = 9,
+	k_EFeatureParentalSetup = 10,
+	k_EFeatureLibrary = 11,
+	k_EFeatureTest = 12,
+	k_EFeatureMax
 };
 
+//-----------------------------------------------------------------------------
+// Purpose: Callback for querying UGC
+//-----------------------------------------------------------------------------
+struct SteamParentalSettingsChanged_t
+{
+	enum { k_iCallback = k_ISteamParentalSettingsCallbacks + 1 };
+};
+
+
 // versions
-#define STEAMPARENTALSETTINGS_INTERFACE_VERSION_001 "SteamParentalSettings001"
+#define STEAMPARENTALSETTINGS_INTERFACE_VERSION_001 "STEAMPARENTALSETTINGS_INTERFACE_VERSION001"
 
 
 #endif // PARENTALSETTINGSCOMMON_H

@@ -73,7 +73,6 @@ public:
 	// nDelta is pixels of scroll
 	virtual void MouseWheel( HHTMLBrowser unBrowserHandle, int32 nDelta ) = 0;
 
-
 	// keyboard interactions, native keycode is the virtual key code value from your OS
 	virtual void KeyDown( HHTMLBrowser unBrowserHandle, uint32 nNativeKeyCode, EHTMLKeyModifiers eHTMLKeyModifiers ) = 0;
 	virtual void KeyUp( HHTMLBrowser unBrowserHandle, uint32 nNativeKeyCode, EHTMLKeyModifiers eHTMLKeyModifiers ) = 0;

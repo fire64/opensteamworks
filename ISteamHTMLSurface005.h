@@ -14,8 +14,8 @@
 //
 //=============================================================================
 
-#ifndef ISTEAMHTMLSURFACE003_H
-#define ISTEAMHTMLSURFACE003_H
+#ifndef ISTEAMHTMLSURFACE005_H
+#define ISTEAMHTMLSURFACE005_H
 #ifdef _WIN32
 #pragma once
 #endif
@@ -24,10 +24,10 @@
 #include "SteamHTMLSurfaceComon.h"
 
 
-abstract_class ISteamHTMLSurface003
+abstract_class ISteamHTMLSurface005
 {
 public:
-	virtual ~ISteamHTMLSurface003() {}
+	virtual ~ISteamHTMLSurface005() {}
 
 	// Must call init and shutdown when starting/ending use of the interface
 	virtual bool Init() = 0;
@@ -46,7 +46,7 @@ public:
 	// not implement these callback handlers, the browser may appear to hang instead of
 	// navigating to new pages or triggering javascript popups.
 	//
-	CALL_RESULT( HTML_BrowserReady_t )
+	STEAM_CALL_RESULT( HTML_BrowserReady_t )
 	virtual SteamAPICall_t CreateBrowser( const char *pchUserAgent, const char *pchUserCSS ) = 0;
 
 	// Call this when you are done with a html surface, this lets us free the resources being used by it
@@ -72,13 +72,6 @@ public:
 	// run this javascript script in the currently loaded page
 	virtual void ExecuteJavascript( HHTMLBrowser unBrowserHandle, const char *pchScript ) = 0;
 
-	enum EHTMLMouseButton
-	{
-		eHTMLMouseButton_Left = 0,
-		eHTMLMouseButton_Right = 1,
-		eHTMLMouseButton_Middle = 2,
-	};
-
 	// Mouse click and mouse movement commands
 	virtual void MouseUp( HHTMLBrowser unBrowserHandle, EHTMLMouseButton eMouseButton ) = 0;
 	virtual void MouseDown( HHTMLBrowser unBrowserHandle, EHTMLMouseButton eMouseButton ) = 0;
@@ -88,63 +81,9 @@ public:
 	// nDelta is pixels of scroll
 	virtual void MouseWheel( HHTMLBrowser unBrowserHandle, int32 nDelta ) = 0;
 
-	enum EMouseCursor
-	{
-		dc_user = 0,
-		dc_none,
-		dc_arrow,
-		dc_ibeam,
-		dc_hourglass,
-		dc_waitarrow,
-		dc_crosshair,
-		dc_up,
-		dc_sizenw,
-		dc_sizese,
-		dc_sizene,
-		dc_sizesw,
-		dc_sizew,
-		dc_sizee,
-		dc_sizen,
-		dc_sizes,
-		dc_sizewe,
-		dc_sizens,
-		dc_sizeall,
-		dc_no,
-		dc_hand,
-		dc_blank, // don't show any custom cursor, just use your default
-		dc_middle_pan,
-		dc_north_pan,
-		dc_north_east_pan,
-		dc_east_pan,
-		dc_south_east_pan,
-		dc_south_pan,
-		dc_south_west_pan,
-		dc_west_pan,
-		dc_north_west_pan,
-		dc_alias,
-		dc_cell,
-		dc_colresize,
-		dc_copycur,
-		dc_verticaltext,
-		dc_rowresize,
-		dc_zoomin,
-		dc_zoomout,
-		dc_help,
-		dc_custom,
-
-		dc_last, // custom cursors start from this value and up
-	};
-
-	enum EHTMLKeyModifiers
-	{
-		k_eHTMLKeyModifier_None = 0,
-		k_eHTMLKeyModifier_AltDown = 1 << 0,
-		k_eHTMLKeyModifier_CtrlDown = 1 << 1,
-		k_eHTMLKeyModifier_ShiftDown = 1 << 2,
-	};
-
-	// keyboard interactions, native keycode is the virtual key code value from your OS
-	virtual void KeyDown( HHTMLBrowser unBrowserHandle, uint32 nNativeKeyCode, EHTMLKeyModifiers eHTMLKeyModifiers ) = 0;
+	// keyboard interactions, native keycode is the virtual key code value from your OS, system key flags the key to not
+	// be sent as a typed character as well as a key down
+	virtual void KeyDown( HHTMLBrowser unBrowserHandle, uint32 nNativeKeyCode, EHTMLKeyModifiers eHTMLKeyModifiers, bool bIsSystemKey = false ) = 0;
 	virtual void KeyUp( HHTMLBrowser unBrowserHandle, uint32 nNativeKeyCode, EHTMLKeyModifiers eHTMLKeyModifiers ) = 0;
 	// cUnicodeChar is the unicode character point for this keypress (and potentially multiple chars per press)
 	virtual void KeyChar( HHTMLBrowser unBrowserHandle, uint32 cUnicodeChar, EHTMLKeyModifiers eHTMLKeyModifiers ) = 0;
@@ -183,6 +122,13 @@ public:
 	// When background mode is disabled, any video or audio objects with that property will resume with ".play()".
 	virtual void SetBackgroundMode( HHTMLBrowser unBrowserHandle, bool bBackgroundMode ) = 0;
 
+	// Scale the output display space by this factor, this is useful when displaying content on high dpi devices.
+	// Specifies the ratio between physical and logical pixels.
+	virtual void SetDPIScalingFactor( HHTMLBrowser unBrowserHandle, float flDPIScaling ) = 0;
+
+	// Open HTML/JS developer tools
+	virtual void OpenDeveloperTools( HHTMLBrowser unBrowserHandle ) = 0;
+
 	// CALLBACKS
 	//
 	//  These set of functions are used as responses to callback requests
@@ -199,9 +145,10 @@ public:
 	virtual void JSDialogResponse( HHTMLBrowser unBrowserHandle, bool bResult ) = 0;
 
 	// You MUST call this in response to a HTML_FileOpenDialog_t callback
-	IGNOREATTR()
+	STEAM_IGNOREATTR()
 	virtual void FileLoadDialogResponse( HHTMLBrowser unBrowserHandle, const char **pchSelectedFiles ) = 0;
 };
 
-#endif // ISTEAMHTMLSURFACE003_H
+
+#endif // ISTEAMHTMLSURFACE005_H
 

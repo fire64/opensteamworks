@@ -39,6 +39,14 @@ public:
 	// identify your client on web servers.
 	//   The userCSS string lets you apply a CSS style sheet to every displayed page, leave null if
 	// you do not require this functionality.
+	//
+	// YOU MUST HAVE IMPLEMENTED HANDLERS FOR HTML_BrowserReady_t, HTML_StartRequest_t,
+	// HTML_JSAlert_t, HTML_JSConfirm_t, and HTML_FileOpenDialog_t! See the CALLBACKS
+	// section of this interface (AllowStartRequest, etc) for more details. If you do
+	// not implement these callback handlers, the browser may appear to hang instead of
+	// navigating to new pages or triggering javascript popups.
+	//
+	CALL_RESULT( HTML_BrowserReady_t )
 	virtual SteamAPICall_t CreateBrowser( const char *pchUserAgent, const char *pchUserCSS ) = 0;
 
 	// Call this when you are done with a html surface, this lets us free the resources being used by it
@@ -73,7 +81,6 @@ public:
 	// nDelta is pixels of scroll
 	virtual void MouseWheel( HHTMLBrowser unBrowserHandle, int32 nDelta ) = 0;
 
-
 	// keyboard interactions, native keycode is the virtual key code value from your OS
 	virtual void KeyDown( HHTMLBrowser unBrowserHandle, uint32 nNativeKeyCode, EHTMLKeyModifiers eHTMLKeyModifiers ) = 0;
 	virtual void KeyUp( HHTMLBrowser unBrowserHandle, uint32 nNativeKeyCode, EHTMLKeyModifiers eHTMLKeyModifiers ) = 0;
@@ -101,17 +108,22 @@ public:
 
 	// return details about the link at position x,y on the current page
 	virtual void GetLinkAtPosition(  HHTMLBrowser unBrowserHandle, int x, int y ) = 0;
-	
+
 	// set a webcookie for the hostname in question
 	virtual void SetCookie( const char *pchHostname, const char *pchKey, const char *pchValue, const char *pchPath = "/", RTime32 nExpires = 0, bool bSecure = false, bool bHTTPOnly = false ) = 0;
 
-	// Zoom the current page by flZoom ( from 0.0 to 4.0, so to zoom to 120% use 1.2 ), zooming around point X,Y in the page (use 0,0 if you don't care)
+	// Zoom the current page by flZoom ( from 0.0 to 2.0, so to zoom to 120% use 1.2 ), zooming around point X,Y in the page (use 0,0 if you don't care)
 	virtual void SetPageScaleFactor( HHTMLBrowser unBrowserHandle, float flZoom, int nPointX, int nPointY ) = 0;
-	
-	virtual void SetBackgroundMode( HHTMLBrowser unBrowserHandle, bool bAllowed ) = 0;
 
+	// Enable/disable low-resource background mode, where javascript and repaint timers are throttled, resources are
+	// more aggressively purged from memory, and audio/video elements are paused. When background mode is enabled,
+	// all HTML5 video and audio objects will execute ".pause()" and gain the property "._steam_background_paused = 1".
+	// When background mode is disabled, any video or audio objects with that property will resume with ".play()".
+	virtual void SetBackgroundMode( HHTMLBrowser unBrowserHandle, bool bBackgroundMode ) = 0;
+
+	// Scale the output display space by this factor, this is useful when displaying content on high dpi devices.
+	// Specifies the ratio between physical and logical pixels.
 	virtual void SetDPIScalingFactor( HHTMLBrowser unBrowserHandle, float flDPIScaling ) = 0;
-
 
 	// CALLBACKS
 	//
@@ -129,6 +141,7 @@ public:
 	virtual void JSDialogResponse( HHTMLBrowser unBrowserHandle, bool bResult ) = 0;
 
 	// You MUST call this in response to a HTML_FileOpenDialog_t callback
+	IGNOREATTR()
 	virtual void FileLoadDialogResponse( HHTMLBrowser unBrowserHandle, const char **pchSelectedFiles ) = 0;
 };
 

@@ -63,6 +63,25 @@ class IClientShortcuts;
 class IClientStreamClient;
 class IClientUGC;
 class IClientVR;
+class IClientGameSearch;
+class IClientInventory;
+class IClientGameNotifications;
+class IClientHTMLSurface;
+class IClientVideo;
+class IClientControllerSerialized;
+class IClientAppDisableUpdate;
+class IClientBluetoothManager;
+class IClientSharedConnection;
+class IClientShader;
+class IClientNetworkingSocketsSerialize;
+class IClientCompat;
+class IClientParties;
+class IClientNetworkingMessages;
+class IClientNetworkingSockets;
+class IClientNetworkingUtils;
+class IClientNetworkingUtilsSerialized;
+class IClientSTARInternal;
+class IClientRemotePlay;
 
 abstract_class UNSAFE_INTERFACE IClientEngine
 {
@@ -81,71 +100,95 @@ public:
 
 	virtual bool IsValidHSteamUserPipe( HSteamPipe hSteamPipe, HSteamUser hUser ) = 0;
 
-	virtual IClientUser *GetIClientUser( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientGameServer *GetIClientGameServer( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
+	virtual IClientUser *GetIClientUser( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientGameServer *GetIClientGameServer( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
 
-	virtual void SetLocalIPBinding( uint32 unIP, uint16 usPort ) = 0;
+	virtual void SetLocalIPBinding( uint32 unIP, uint16 usPort ) = 0; //const SteamIPAddress_t *pIp
 	virtual char const *GetUniverseName( EUniverse eUniverse ) = 0;
 
-	virtual IClientFriends *GetIClientFriends( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientUtils *GetIClientUtils( HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientBilling *GetIClientBilling( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientMatchmaking *GetIClientMatchmaking( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientApps *GetIClientApps( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientMatchmakingServers *GetIClientMatchmakingServers( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
+	virtual IClientFriends *GetIClientFriends( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientUtils *GetIClientUtils( HSteamPipe hSteamPipe ) = 0;
+	virtual IClientBilling *GetIClientBilling( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientMatchmaking *GetIClientMatchmaking( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientApps *GetIClientApps( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientMatchmakingServers *GetIClientMatchmakingServers( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientGameSearch *GetIClientGameSearch( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
 
 	virtual void RunFrame() = 0;
 	virtual uint32 GetIPCCallCount() = 0;
 
-	virtual IClientUserStats *GetIClientUserStats( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientGameServerStats *GetIClientGameServerStats( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientNetworking *GetIClientNetworking( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientRemoteStorage *GetIClientRemoteStorage( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientScreenshots *GetIClientScreenshots( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
+	virtual IClientUserStats *GetIClientUserStats( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientGameServerStats *GetIClientGameServerStats( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientNetworking *GetIClientNetworking( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientRemoteStorage *GetIClientRemoteStorage( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientScreenshots *GetIClientScreenshots( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
 
 	virtual void SetWarningMessageHook( SteamAPIWarningMessageHook_t pFunction ) = 0;
 
-	virtual IClientGameCoordinator *GetIClientGameCoordinator( HSteamUser hSteamUser, HSteamPipe hSteamPipe, const char *pchVersion ) = 0;
+	virtual IClientGameCoordinator *GetIClientGameCoordinator( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
 
 	virtual void SetOverlayNotificationPosition( ENotificationPosition eNotificationPosition ) = 0;
+
+	virtual void SetOverlayNotificationInset( int nHorizontalInset, int nVerticalInset ) = 0;
+
 	virtual bool HookScreenshots( bool bHook ) = 0;
+	virtual bool IsScreenshotsHooked() = 0;
 	virtual bool IsOverlayEnabled() = 0;
 
 	virtual bool GetAPICallResult( HSteamPipe hSteamPipe, SteamAPICall_t hSteamAPICall, void* pCallback, int cubCallback, int iCallbackExpected, bool* pbFailed ) = 0;
 	
-	virtual IClientProductBuilder *GetIClientProductBuilder( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientDepotBuilder *GetIClientDepotBuilder( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientNetworkDeviceManager *GetIClientNetworkDeviceManager( HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
+	virtual IClientProductBuilder *GetIClientProductBuilder( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientDepotBuilder *GetIClientDepotBuilder( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientNetworkDeviceManager *GetIClientNetworkDeviceManager( HSteamPipe hSteamPipe ) = 0;
 
 	virtual void ConCommandInit( IConCommandBaseAccessor *pAccessor ) = 0;
 
-	virtual IClientAppManager *GetIClientAppManager( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientConfigStore *GetIClientConfigStore( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
+	virtual IClientAppManager *GetIClientAppManager( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientConfigStore *GetIClientConfigStore( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
 	
 	virtual bool BOverlayNeedsPresent() = 0;
 
-	virtual IClientGameStats *GetIClientGameStats( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientHTTP *GetIClientHTTP( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
+	virtual IClientGameStats *GetIClientGameStats( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientHTTP *GetIClientHTTP( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
 
+	virtual unknown_ret FlushBeforeValidate() = 0;
 	virtual bool BShutdownIfAllPipesClosed() = 0;
 	
-	virtual IClientAudio *GetIClientAudio( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientMusic *GetIClientMusic( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientUnifiedMessages *GetIClientUnifiedMessages( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientController *GetIClientController( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientParentalSettings *GetIClientParentalSettings( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientStreamLauncher *GetIClientStreamLauncher( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientDeviceAuth *GetIClientDeviceAuth( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
+	virtual IClientAudio *GetIClientAudio( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientMusic *GetIClientMusic( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientUnifiedMessages *GetIClientUnifiedMessages( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientController *GetIClientController( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientParentalSettings *GetIClientParentalSettings( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientStreamLauncher *GetIClientStreamLauncher( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientDeviceAuth *GetIClientDeviceAuth( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
 
-	virtual IClientRemoteClientManager *GetIClientRemoteClientManager( HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientStreamClient *GetIClientStreamClient( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientShortcuts *GetIClientShortcuts( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientRemoteControlManager *GetIClientRemoteControlManager( HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
+	virtual IClientRemoteClientManager *GetIClientRemoteClientManager( HSteamPipe hSteamPipe ) = 0;
+	virtual IClientStreamClient *GetIClientStreamClient( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
+	virtual IClientShortcuts *GetIClientShortcuts( HSteamUser hSteamUser, HSteamPipe hSteamPipe ) = 0;
 
-	virtual unknown_ret Set_ClientAPI_CPostAPIResultInProcess( void(*)(uint64 ulUnk, void * pUnk, uint32 uUnk, int32 iUnk) ) = 0;
-	virtual unknown_ret Remove_ClientAPI_CPostAPIResultInProcess( void(*)(uint64 ulUnk, void * pUnk, uint32 uUnk, int32 iUnk) ) = 0;
-	virtual IClientUGC *GetIClientUGC( HSteamUser hSteamUser, HSteamPipe hSteamPipe, char const* pchVersion ) = 0;
-	virtual IClientVR *GetIClientVR( char const * pchVersion ) = 0;
+    virtual IClientUGC *GetIClientUGC(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
+    virtual IClientInventory *GetIClientInventory(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
+    virtual IClientVR *GetIClientVR(HSteamPipe hSteamPipe) = 0;
+    virtual IClientGameNotifications *GetIClientGameNotifications(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
+    virtual IClientHTMLSurface *GetIClientHTMLSurface(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
+    virtual IClientVideo *GetIClientVideo(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
+    virtual IClientControllerSerialized *GetIClientControllerSerialized(HSteamPipe hSteamPipe) = 0;
+    virtual IClientAppDisableUpdate *GetIClientAppDisableUpdate(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
+
+    virtual void Set_Client_API_CCheckCallbackRegisteredInProcess( SteamAPI_CheckCallbackRegistered_t func ) = 0;
+    virtual IClientBluetoothManager *GetIClientBluetoothManager(HSteamPipe hSteamPipe) = 0;
+    virtual IClientSharedConnection *GetIClientSharedConnection(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
+    virtual IClientShader *GetIClientShader(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
+    virtual IClientNetworkingSocketsSerialize *GetIClientNetworkingSocketsSerialized(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
+    virtual IClientCompat *GetIClientCompat(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
+    virtual unknown_ret SetClientCommandLine(int a1, char** a2) = 0;
+    virtual IClientParties *GetIClientParties(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
+    virtual IClientNetworkingMessages *GetIClientNetworkingMessages(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
+    virtual IClientNetworkingSockets *GetIClientNetworkingSockets(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
+    virtual IClientNetworkingUtils *GetIClientNetworkingUtils(HSteamPipe hSteamPipe) = 0;
+    virtual IClientNetworkingUtilsSerialized *GetIClientNetworkingUtilsSerialized(HSteamPipe hSteamPipe) = 0;
+    virtual IClientSTARInternal *GetIClientSTARInternal(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
+    virtual IClientRemotePlay *GetIClientRemotePlay(HSteamUser hSteamUser, HSteamPipe hSteamPipe) = 0;
 };
 
 #endif // ICLIENTENGINE_H

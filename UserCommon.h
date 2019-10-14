@@ -248,6 +248,7 @@ enum EUserConnect
 };
 
 #pragma pack( push, 8 )
+
 //-----------------------------------------------------------------------------
 // Purpose: called when a connections to the Steam back-end has been established
 //			this means the Steam client now has a working connection to the Steam servers
@@ -268,9 +269,10 @@ struct SteamServersConnected_t
 struct SteamServerConnectFailure_t
 {
 	enum { k_iCallback = k_iSteamUserCallbacks + 2 };
-
 	EResult m_eResult;
+	bool m_bStillRetrying;
 };
+
 
 //-----------------------------------------------------------------------------
 // Purpose: called if the client has lost connection to the Steam servers
@@ -279,7 +281,6 @@ struct SteamServerConnectFailure_t
 struct SteamServersDisconnected_t
 {
 	enum { k_iCallback = k_iSteamUserCallbacks + 3 };
-
 	EResult m_eResult;
 };
 

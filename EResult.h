@@ -1,141 +1,123 @@
-//==========================  Open Steamworks  ================================
-//
-// This file is part of the Open Steamworks project. All individuals associated
-// with this project do not claim ownership of the contents
-// 
-// The code, comments, and all related files, projects, resources,
-// redistributables included with this project are Copyright Valve Corporation.
-// Additionally, Valve, the Valve logo, Half-Life, the Half-Life logo, the
-// Lambda logo, Steam, the Steam logo, Team Fortress, the Team Fortress logo,
-// Opposing Force, Day of Defeat, the Day of Defeat logo, Counter-Strike, the
-// Counter-Strike logo, Source, the Source logo, and Counter-Strike Condition
-// Zero are trademarks and or registered trademarks of Valve Corporation.
-// All other trademarks are property of their respective owners.
-//
-//=============================================================================
-
-#ifndef ERESULT_H
-#define ERESULT_H
-#ifdef _WIN32
-#pragma once
-#endif
-
-
-// General result codes
-enum EResult
+typedef enum EResult
 {
-	k_EResultOK = 1,
-	k_EResultFail = 2,
-	k_EResultNoConnection = 3,
-	k_EResultInvalidPassword = 5,
-	k_EResultLoggedInElsewhere = 6,
-	k_EResultInvalidProtocolVer = 7,
-	k_EResultInvalidParam = 8,
-	k_EResultFileNotFound = 9,
-	k_EResultBusy = 10,
-	k_EResultInvalidState = 11,
-	k_EResultInvalidName = 12,
-	k_EResultInvalidEmail = 13,
-	k_EResultDuplicateName = 14,
-	k_EResultAccessDenied = 15,
-	k_EResultTimeout = 16,
-	k_EResultBanned = 17,
-	k_EResultAccountNotFound = 18,
-	k_EResultInvalidSteamID = 19,
-	k_EResultServiceUnavailable = 20,
-	k_EResultNotLoggedOn = 21,
-	k_EResultPending = 22,
-	k_EResultEncryptionFailure = 23,
-	k_EResultInsufficientPrivilege = 24,
-	k_EResultLimitExceeded = 25,
-	k_EResultRevoked = 26,
-	k_EResultExpired = 27,
-	k_EResultAlreadyRedeemed = 28,
-	k_EResultDuplicateRequest = 29,
-	k_EResultAlreadyOwned = 30,
-	k_EResultIPNotFound = 31,
-	k_EResultPersistFailed = 32,
-	k_EResultLockingFailed = 33,
-	k_EResultLogonSessionReplaced = 34,
-	k_EResultConnectFailed = 35,
-	k_EResultHandshakeFailed = 36,
-	k_EResultIOFailure = 37,
-	k_EResultRemoteDisconnect = 38,
-	k_EResultShoppingCartNotFound = 39,
-	k_EResultBlocked = 40,
-	k_EResultIgnored = 41,
-	k_EResultNoMatch = 42,
-	k_EResultAccountDisabled = 43,
-	k_EResultServiceReadOnly = 44,
-	k_EResultAccountNotFeatured = 45,
-	k_EResultAdministratorOK = 46,
-	k_EResultContentVersion = 47,
-	k_EResultTryAnotherCM = 48,
-	k_EResultPasswordRequiredToKickSession = 49,
-	k_EResultAlreadyLoggedInElsewhere = 50,
-	k_EResultSuspended = 51,
-	k_EResultCancelled = 52,
-	k_EResultDataCorruption = 53,
-	k_EResultDiskFull = 54,
-	k_EResultRemoteCallFailed = 55,
-	k_EResultPasswordUnset = 56,
-	k_EResultExternalAccountUnlinked = 57,
-	k_EResultPSNTicketInvalid = 58,
-	k_EResultExternalAccountAlreadyLinked = 59,
-	k_EResultRemoteFileConflict = 60,
-	k_EResultIllegalPassword = 61,
-	k_EResultSameAsPreviousValue = 62,
-	k_EResultAccountLogonDenied = 63,
-	k_EResultCannotUseOldPassword = 64,
-	k_EResultInvalidLoginAuthCode = 65,
-	k_EResultAccountLogonDeniedNoMail = 66,
-	k_EResultHardwareNotCapableOfIPT = 67,
-	k_EResultIPTInitError = 68,
-	k_EResultParentalControlRestricted = 69,
-	k_EResultFacebookQueryError = 70,
-	k_EResultExpiredLoginAuthCode = 71,
-	k_EResultIPLoginRestrictionFailed = 72,
-	k_EResultAccountLockedDown = 73,
-	k_EResultAccountLogonDeniedVerifiedEmailRequired = 74,
-	k_EResultNoMatchingURL = 75,
-	k_EResultBadResponse = 76,
-	k_EResultRequirePasswordReEntry = 77,
-	k_EResultValueOutOfRange = 78,
-	k_EResultUnexpectedError = 79,
-	k_EResultDisabled = 80,
-	k_EResultInvalidCEGSubmission = 81,
-	k_EResultRestrictedDevice = 82,
-	k_EResultRegionLocked = 83,
-	k_EResultRateLimitExceeded = 84,
-	k_EResultAccountLoginDeniedNeedTwoFactor = 85,
-	k_EResultItemDeleted = 86,
-	k_EResultAccountLoginDeniedThrottle = 87,
-	k_EResultTwoFactorCodeMismatch = 88,
-	k_EResultTwoFactorActivationCodeMismatch = 89,
-	k_EResultAccountAssociatedToMultiplePartners = 90,
-	k_EResultNotModified = 91,
-	k_EResultNoMobileDevice = 92,
-	k_EResultTimeNotSynced = 93,
-	k_EResultSmsCodeFailed = 94,
-	k_EResultAccountLimitExceeded = 95,
-	k_EResultAccountActivityLimitExceeded = 96,
-	k_EResultPhoneActivityLimitExceeded = 97,
-	k_EResultRefundToWallet = 98,
-	k_EResultEmailSendFailure = 99,
-	k_EResultNotSettled = 100,
-	k_EResultNeedCaptcha = 101,
-	k_EResultGSLTDenied = 102,
-	k_EResultGSOwnerDenied = 103,
-	k_EResultInvalidItemType = 104,
-	k_EResultIPBanned = 105,
-	k_EResultGSLTExpired = 106,
-	k_EResultInsufficientFunds = 107,
-	k_EResultTooManyPending = 108,
-	k_EResultNoSiteLicensesFound = 109,
-	k_EResultWGNetworkSendExceeded = 110,
-	k_EResultAccountNotFriends = 111,
-	k_EResultLimitedUserAccount = 112,
-	k_EResultCantRemoveItem = 113,
-};
-
-#endif // ERESULT_H
+    k_EResultOK = 1, // OK
+    k_EResultFailure, // Failure
+    k_EResultNoConnection, // No Connection
+    k_EResultInvalidPassword = 5, // Invalid Password
+    k_EResultLoggedInElsewhere, // Logged In Elsewhere
+    k_EResultInvalidProtocol, // Invalid Protocol
+    k_EResultInvalidParameter, // Invalid Parameter
+    k_EResultFileNotFound, // File Not Found
+    k_EResultBusy, // Busy
+    k_EResultInvalidState, // Invalid State
+    k_EResultInvalidName, // Invalid Name
+    k_EResultInvalidEmail, // Invalid Email
+    k_EResultDuplicateName, // Duplicate Name
+    k_EResultAccessDenied, // Access Denied
+    k_EResultTimeout, // Timeout
+    k_EResultBanned, // Banned
+    k_EResultAccountNotFound, // Account Not Found
+    k_EResultInvalidSteamID, // Invalid Steam ID
+    k_EResultServiceUnavailable, // Service Unavailable
+    k_EResultNotLoggedOn, // Not Logged On
+    k_EResultPending, // Pending
+    k_EResultEncryptionFailure, // Encryption Failure
+    k_EResultInsufficientPrivilege, // Insufficient Privilege
+    k_EResultLimitExceeded, // Limit exceeded
+    k_EResultRequestRevoked, // Request revoked
+    k_EResultLicenseExpired, // License expired
+    k_EResultAlreadyRedeemed, // Already Redeemed
+    k_EResultDuplicatedRequest, // Duplicated Request
+    k_EResultAlreadyOwned, // Already Owned
+    k_EResultIPAddressNotFound, // IP Address Not Found
+    k_EResultPersistenceFailed, // Persistence Failed
+    k_EResultLockingFailed, // Locking Failed
+    k_EResultSessionReplaced, // Session Replaced
+    k_EResultConnectionFailed, // Connection Failed
+    k_EResultHandshakeFailed, // Handshake Failed
+    k_EResultIOOperationFailed, // I/O Operation Failed
+    k_EResultDisconnectedByRemoteHost, // Disconnected By Remote Host
+    k_EResultShoppingCartNotFound, // Shopping Cart Not Found
+    k_EResultBlocked, // Blocked
+    k_EResultIgnored, // Ignored
+    k_EResultNoMatch, // No match
+    k_EResultAccountDisabled, // Account Disabled
+    k_EResultServiceReadOnly, // Service Read Only
+    k_EResultAccountNotFeatured, // Account Not Featured
+    k_EResultAdministratorOK, // Administrator OK
+    k_EResultContentVersion, // Content Version
+    k_EResultTryAnotherCM, // Try another CM
+    k_EResultPasswordRequiredToKickSession, // Password required to kick session
+    k_EResultAlreadyLoggedInElsewhere, // Already Logged In Elsewhere
+    k_EResultRequestSuspendedpaused, // Request suspended/paused
+    k_EResultRequestHasBeenCanceled, // Request has been canceled
+    k_EResultCorruptedOrUnrecoverableDataError, // Corrupted or unrecoverable data error
+    k_EResultNotEnoughFreeDiskSpace, // Not enough free disk space
+    k_EResultRemoteCallFailed, // Remote call failed
+    k_EResultPasswordIsNotSet, // Password is not set
+    k_EResultExternalAccountIsNotLinkedToASteamAccount, // External Account is not linked to a Steam account
+    k_EResultPSNTicketIsInvalid, // PSN Ticket is invalid
+    k_EResultExternalAccountLinkedToAnotherSteamAccount, // External Account linked to another Steam account
+    k_EResultRemoteFileConflict, // Remote File Conflict
+    k_EResultIllegalPassword, // Illegal password
+    k_EResultSameAsPreviousValue, // Same as previous value
+    k_EResultAccountLogonDenied, // Account Logon Denied
+    k_EResultCannotUseOldPassword, // Cannot Use Old Password
+    k_EResultInvalidLoginAuthCode, // Invalid Login Auth Code
+    k_EResultAccountLogonDeniedNoMailSent, // Account Logon Denied no mail sent
+    k_EResultHardwareNotCapableOfIPT, // Hardware not capable of IPT
+    k_EResultIPTInitError, // IPT init error
+    k_EResultOperationFailedDueToParentalControlRestrictionsForCurrentUser, // Operation failed due to parental control restrictions for current user
+    k_EResultFacebookQueryReturnedAnError, // Facebook query returned an error
+    k_EResultExpiredLoginAuthCode, // Expired Login Auth Code
+    k_EResultIPLoginRestrictionFailed, // IP Login Restriction Failed
+    k_EResultAccountLockedDown, // Account Locked Down
+    k_EResultAccountLogonDeniedVerifiedEmailRequired, // Account Logon Denied Verified Email Required
+    k_EResultNoMatchingURL, // No matching URL
+    k_EResultBadResponse, // Bad response
+    k_EResultPasswordReentryRequired, // Password reentry required
+    k_EResultValueIsOutOfRange, // Value is out of range
+    k_EResultUnexpectedError, // Unexpected error
+    k_EResultFeatureDisabled, // Feature Disabled
+    k_EResultInvalidCEGSubmission, // Invalid CEG Submission
+    k_EResultRestrictedDevice, // Restricted device
+    k_EResultRegionLocked, // Region Locked
+    k_EResultRateLimitExceeded, // Rate Limit Exceeded
+    k_EResultAccountLogonDeniedNeedTwofactorCode, // Account logon denied, need two-factor code
+    k_EResultItemOrEntryHasBeenDeleted, // Item or entry has been deleted
+    k_EResultTooManyLogonAttempts, // Too many logon attempts
+    k_EResultTwofactorCodeMismatch, // Two-factor code mismatch
+    k_EResultTwofactorActivationCodeMismatch, // Two-factor activation code mismatch
+    k_EResultAccountAssociatedWithMultiplePlayers, // Account associated with multiple players
+    k_EResultNotModified, // Not Modified
+    k_EResultNoMobileDeviceAvailable, // No mobile device available
+    k_EResultTimeIsOutOfSync, // Time is out of sync
+    k_EResultSMSCodeFailed, // SMS code failed
+    k_EResultTooManyAccountsAccessThisResource, // Too many accounts access this resource
+    k_EResultTooManyChangesToThisAccount, // Too many changes to this account
+    k_EResultTooManyChangesToThisPhoneNumber, // Too many changes to this phone number
+    k_EResultYouMustRefundThisTransactionToWallet, // You must refund this transaction to wallet
+    k_EResultSendingOfAnEmailFailed, // Sending of an email failed
+    k_EResultPurchaseNotYetSettled, // Purchase not yet settled
+    k_EResultNeedsCaptcha, // Needs captcha
+    k_EResultGameserverLoginTokenDenied, // Gameserver login token denied
+    k_EResultGameserverLoginTokenOwnerDenied, // Gameserver login token owner denied
+    k_EResultInvalidItemType, // Invalid item type
+    k_EResultIPAddressBanned, // IP Address Banned
+    k_EResultGameserverLoginTokenExpired, // Gameserver login token expired
+    k_EResultInsufficientFunds, // Insufficient funds
+    k_EResultTooManyPending, // Too many pending
+    k_EResultNoSiteLicensesFound, // No site licenses found
+    k_EResultNetworkSendExceeded, // Network send exceeded
+    k_EResultAccountsNotFriends, // Accounts not friends
+    k_EResultLimitedUserAccount, // Limited user account
+    k_EResultCantRemoveItem, // Cant remove item
+    k_EResultAccountHasBeenDeleted, // Account has been deleted
+    k_EResultAccountHasAnExistingUserCancelledLicense, // Account has an existing user cancelled license
+    k_EResultDeniedDueToCommunityCooldown, // Denied due to community cooldown
+    k_EResultNoLauncherSpecified, // No launcher specified
+    k_EResultMustAgreeToSSA, // Must agree to SSA
+    k_EResultClientNoLongerSupported, // Client no longer supported
+    k_EResultTheCurrentSteamRealmDoesNotMatchTheRequestedResource, // The current Steam realm does not match the requested resource
+    k_EResultSignatureCheckFailed, // Signature check failed
+} EResult;

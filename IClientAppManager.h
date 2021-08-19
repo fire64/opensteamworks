@@ -1,124 +1,101 @@
-//==========================  Open Steamworks  ================================
-//
-// This file is part of the Open Steamworks project. All individuals associated
-// with this project do not claim ownership of the contents
-// 
-// The code, comments, and all related files, projects, resources,
-// redistributables included with this project are Copyright Valve Corporation.
-// Additionally, Valve, the Valve logo, Half-Life, the Half-Life logo, the
-// Lambda logo, Steam, the Steam logo, Team Fortress, the Team Fortress logo,
-// Opposing Force, Day of Defeat, the Day of Defeat logo, Counter-Strike, the
-// Counter-Strike logo, Source, the Source logo, and Counter-Strike Condition
-// Zero are trademarks and or registered trademarks of Valve Corporation.
-// All other trademarks are property of their respective owners.
-//
-//=============================================================================
-
-#ifndef ICLIENTAPPMANAGER_H
-#define ICLIENTAPPMANAGER_H
-#ifdef _WIN32
-#pragma once
-#endif
-
-#include "SteamTypes.h"
-#include "AppsCommon.h"
-
-
-
-abstract_class UNSAFE_INTERFACE IClientAppManager
+class IClientAppManager
 {
 public:
-	virtual EAppUpdateError InstallApp( AppId_t unAppID, const char *cszAppDir, int32 iBaseFolder, bool bLegacy ) = 0;
-	virtual EAppUpdateError UninstallApp( AppId_t unAppID, bool bComplete ) = 0;
-
-	virtual EAppUpdateError LaunchApp( AppId_t unAppID, uint32 uLaunchOption, const char *pszUserArgs ) = 0;
-	virtual bool ShutdownApp( AppId_t unAppID, bool bForce ) = 0;
-
-	virtual EAppState GetAppInstallState( AppId_t unAppID ) = 0;
-	virtual uint32 GetAppBuildID( AppId_t unAppID ) = 0;
-
-	// /!\ IPC is broken for this function
-	virtual bool GetAppSizeOnDisk( AppId_t unAppID, uint64 *pullAppSize, uint64 *pullUnk ) = 0;
-	
-	virtual uint32 GetAppInstallDir( AppId_t unAppID, char *pchPath, uint32 cchPath ) = 0;
-	
-	virtual bool IsAppDlcInstalled( AppId_t unAppID, AppId_t unDLCAppID ) = 0;
-	virtual uint32 GetNumInstalledApps() = 0;
-	virtual uint32 GetInstalledApps( uint32 *punAppIDs, uint32 cAppIDsMax ) = 0;
-
-	virtual uint32 GetAppDependency( AppId_t unAppID ) = 0;
-	virtual uint32 GetDependentApps( AppId_t unAppID, AppId_t *punAppIDs, int32 cAppIDsMax ) = 0;
-
-	virtual uint32 GetUpdateInfo( AppId_t unAppID, AppUpdateInfo_s *pUpdateInfo ) = 0;
-
-	virtual bool SetContentLocked( AppId_t unAppID, bool bLockContent ) = 0;
-
-	virtual int32 GetAppConfigValue( AppId_t unAppID, const char *pchKey, char *pchValue, int32 cchValueMax ) = 0;
-	virtual bool SetAppConfigValue( AppId_t unAppID, const char *pchKey, const char *pchValue ) = 0;
-
-	virtual bool BIsAppUpToDate( AppId_t unAppID ) = 0;
-	
-	virtual uint32 GetAvailableLaunchOptions( AppId_t unAppID, uint32 puOptions[], uint32 cuOptionsMax ) = 0;
-	virtual uint32 GetAvailableLanguages( AppId_t unAppID, bool, char *pchLanguages, uint32 cchLanguagesMax ) = 0;
-	
-	virtual bool StartValidatingApp( AppId_t unAppID ) = 0;
-	virtual bool CancelValidation( AppId_t unAppID ) = 0;
-	virtual bool MarkContentCorrupt( AppId_t unAppID, bool bCorrupt ) = 0;
-	
-	virtual uint32 GetInstalledDepots( AppId_t unAppID, AppId_t puDepots[], uint32 cuDepotsMax ) = 0;
-	
-	virtual bool BCacheBetaPassword( AppId_t unAppID, const char *cszBetaKey, const char *cszBetaPassword ) = 0;
-	virtual bool BRequestBetaPasswords( AppId_t unAppID ) = 0;
-	virtual bool BIsCachedBetaPasswordValid( AppId_t unAppID, const char *cszBetaKey ) = 0;
-
-	virtual bool SetDownloadingEnabled( bool bState ) = 0;
-	virtual bool BIsDownloadingEnabled() = 0;
-
-	virtual bool GetDownloadStats( DownloadStats_s *pDownloadStats ) = 0;
-
-	virtual AppId_t GetDownloadingAppID() = 0;
-
-	virtual bool SetAutoUpdateTimeRestriction( bool bUnk, int32 iUnk1, int32 iUnk2 ) = 0;
-	virtual bool GetAutoUpdateTimeRestriction( int32 * piUnk1, int32 * piUnk2 ) = 0;
-	virtual EAppAutoUpdateBehavior GetAppAutoUpdateBehavior( AppId_t unAppID ) = 0;
-	virtual bool SetAppAutoUpdateBehavior( AppId_t unAppID, EAppAutoUpdateBehavior eAppAutoUpdateBehavior ) = 0;
-	virtual bool SetAppAllowDownloadsWhileRunningBehavior( AppId_t unAppID, EAppAllowDownloadsWhileRunningBehavior eAppAllowDownloadsWhileRunningBehavior ) =0 ;
-	virtual EAppAllowDownloadsWhileRunningBehavior GetAppAllowDownloadsWhileRunningBehavior( AppId_t unAppID ) = 0;
-	virtual void SetAllowDownloadsWhileAnyAppRunning( bool bAllowDownloadsWhileAnyAppRunning ) = 0;
-	virtual bool BAllowDownloadsWhileAnyAppRunning() = 0;
-	virtual bool ChangeAppDownloadQueuePlacement( AppId_t unAppID, EAppDownloadQueuePlacement eAppDownloadQueuePlacement ) = 0;
-	virtual int32 GetAppDownloadQueueIndex( AppId_t unAppID ) = 0;
-
-	virtual bool BHasLocalContentServer() = 0;
-
-	virtual bool BuildBackup( AppId_t unAppID, uint64 ullMaxFileSize, const char *cszBackupPath ) = 0;
-	virtual bool BuildInstaller( const char *cszProjectFile, const char *cszBackupPath, const char * ) = 0;
-	virtual bool CancelBackup() = 0;
-	virtual EAppUpdateError RestoreApp( AppId_t unAppID, int32 iBaseFolder, char const *cszBackupPath ) = 0;
-	virtual bool BNeedsFile( AppId_t unAppID, char const *cszFilePath, uint64 ullFileSize, uint32 uUnk ) = 0;
-	virtual bool BAddFileOnDisk( AppId_t unAppID, char const *cszFilePath, uint64 ullFileSize, uint32 uUnk, SHADigestWrapper_t ubSha1 ) = 0;
-	virtual uint32 FinishAddingFiles( AppId_t unAppID ) = 0;
-
-	virtual bool GetAppStateInfo( AppId_t unAppID, EAppReleaseState * peReleaseState, EAppOwnershipFlags * peOwnershipFlags, EAppState * peAppState, CSteamID * pSteamID ) = 0;
-	virtual bool BIsAvailableOnPlatform( uint32 uUnk, const char * pUnk );
-
-	virtual int32 GetNumInstallBaseFolders() = 0;
-	virtual int32 GetInstallBaseFolder( int32 iBaseFolder, char *pchPath, int32 cbPath ) = 0;
-	virtual int32 AddInstallBaseFolder( const char *szPath ) = 0;
-	virtual bool RemoveInstallBaseFolder( int32 iBaseFolder ) = 0;
-	virtual uint64 GetFreeDiskSpace( int32 iBaseFolder ) = 0;
-	
-	virtual int32 GetAppInstallBaseFolder( int32 iBaseFolder ) = 0;
-	virtual void ForceInstallDirOverride( const char *cszPath ) = 0;
-	
-	virtual bool SetDownloadThrottleRateKbps( int32 iRate ) = 0;
-	virtual int32 GetDownloadThrottleRateKbps() = 0;
-	virtual void SuspendDownloadThrottling( bool bSuspend ) = 0;
-
-	virtual const char * GetLaunchQueryParam( AppId_t unAppID, const char * pchKey ) = 0;
-	virtual void BeginLaunchQueryParams( AppId_t unAppId ) = 0;
-	virtual void SetLaunchQueryParam( AppId_t unAppId, const char * pchKey, const char * pchValue ) = 0;
-	virtual bool CommitLaunchQueryParams( AppId_t unAppId ) = 0;
+    virtual unknown_ret InstallApp(unsigned int, int, bool) = 0;
+    virtual unknown_ret UninstallApp(unsigned int) = 0;
+    virtual unknown_ret LaunchApp(CGameID, unsigned int, unsigned int, char const*) = 0;
+    virtual unknown_ret ShutdownApp(unsigned int, bool) = 0;
+    virtual unknown_ret GetAppInstallState(unsigned int) = 0;
+    virtual unknown_ret GetAppInstallDir(unsigned int, char*, unsigned int) = 0;
+    virtual unknown_ret GetAppContentInfo(unsigned int, bool, unsigned int*, unsigned int*, unsigned long long*, unsigned long long*) = 0;
+    virtual unknown_ret IsAppDlcInstalled(unsigned int, unsigned int) = 0;
+    virtual unknown_ret GetDlcDownloadProgress(unsigned int, unsigned int, unsigned long long*, unsigned long long*) = 0;
+    virtual unknown_ret GetDlcSizeOnDisk(unsigned int, unsigned int) = 0;
+    virtual unknown_ret BIsDlcEnabled(unsigned int, unsigned int, bool*) = 0;
+    virtual unknown_ret SetDlcEnabled(unsigned int, unsigned int, bool) = 0;
+    virtual unknown_ret GetNumInstalledApps() = 0;
+    virtual unknown_ret GetInstalledApps(unsigned int*, unsigned int) = 0;
+    virtual unknown_ret GetAppDependency(unsigned int) = 0;
+    virtual unknown_ret GetAppDependencies(unsigned int, unsigned int*, unsigned int) = 0;
+    virtual unknown_ret GetDependentApps(unsigned int, unsigned int*, unsigned int) = 0;
+    virtual unknown_ret GetUpdateInfo(unsigned int, AppUpdateInfo_s*) = 0;
+    virtual unknown_ret GetAppConfigValue(unsigned int, char const*, char*, int) = 0;
+    virtual unknown_ret SetAppConfigValue(unsigned int, char const*, char const*) = 0;
+    virtual unknown_ret BIsAppUpToDate(unsigned int) = 0;
+    virtual unknown_ret GetAvailableLanguages(unsigned int, bool, char*, unsigned int) = 0;
+    virtual unknown_ret GetCurrentLanguage(unsigned int, char*, unsigned int) = 0;
+    virtual unknown_ret GetCurrentLanguage(unsigned int) = 0;
+    virtual unknown_ret GetFallbackLanguage(unsigned int, ELanguage) = 0;
+    virtual unknown_ret SetCurrentLanguage(unsigned int, ELanguage) = 0;
+    virtual unknown_ret StartValidatingApp(unsigned int) = 0;
+    virtual unknown_ret CancelValidation(unsigned int) = 0;
+    virtual unknown_ret MarkContentCorrupt(unsigned int, bool) = 0;
+    virtual unknown_ret GetInstalledDepots(unsigned int, unsigned int*, unsigned int) = 0;
+    virtual unknown_ret GetFileDetails(unsigned int, char const*) = 0;
+    virtual unknown_ret VerifySignedFiles(unsigned int) = 0;
+    virtual unknown_ret GetAvailableBetas(unsigned int, int*, char*, int) = 0;
+    virtual unknown_ret CheckBetaPassword(unsigned int, char const*) = 0;
+    virtual unknown_ret BHasCachedBetaPassword(unsigned int, char const*) = 0;
+    virtual unknown_ret GetActiveBeta(unsigned int, char*, int) = 0;
+    virtual unknown_ret BGetActiveBetaForApps(unsigned int*, int, char*, int) = 0;
+    virtual unknown_ret SetDownloadingEnabled(bool) = 0;
+    virtual unknown_ret BIsDownloadingEnabled() = 0;
+    virtual unknown_ret GetDownloadStats(DownloadStats_s*) = 0;
+    virtual unknown_ret GetDownloadingAppID() = 0;
+    virtual unknown_ret GetAutoUpdateTimeRestrictionEnabled() = 0;
+    virtual unknown_ret SetAutoUpdateTimeRestrictionEnabled(bool) = 0;
+    virtual unknown_ret GetAutoUpdateTimeRestrictionHours(int*, int*) = 0;
+    virtual unknown_ret SetAutoUpdateTimeRestrictionStartHour(int) = 0;
+    virtual unknown_ret SetAutoUpdateTimeRestrictionEndHour(int) = 0;
+    virtual unknown_ret GetAppAutoUpdateBehavior(unsigned int) = 0;
+    virtual unknown_ret SetAppAutoUpdateBehavior(unsigned int, EAppAutoUpdateBehavior) = 0;
+    virtual unknown_ret SetAppAllowDownloadsWhileRunningBehavior(unsigned int, EAppAllowDownloadsWhileRunningBehavior) = 0;
+    virtual unknown_ret GetAppAllowDownloadsWhileRunningBehavior(unsigned int) = 0;
+    virtual unknown_ret SetAllowDownloadsWhileAnyAppRunning(bool) = 0;
+    virtual unknown_ret BAllowDownloadsWhileAnyAppRunning() = 0;
+    virtual unknown_ret ChangeAppDownloadQueuePlacement(unsigned int, EAppDownloadQueuePlacement) = 0;
+    virtual unknown_ret SetAppDownloadQueueIndex(unsigned int, int) = 0;
+    virtual unknown_ret GetAppDownloadQueueIndex(unsigned int) = 0;
+    virtual unknown_ret GetAppAutoUpdateDelayedUntilTime(unsigned int) = 0;
+    virtual unknown_ret GetNumAppsInDownloadQueue() = 0;
+    virtual unknown_ret BHasLocalContentServer() = 0;
+    virtual unknown_ret BuildBackup(unsigned int, unsigned long long, char const*) = 0;
+    virtual unknown_ret BuildInstaller(char const*, char const*, char const*, char const*) = 0;
+    virtual unknown_ret CancelBackup() = 0;
+    virtual unknown_ret RestoreAppFromBackup(unsigned int, char const*) = 0;
+    virtual unknown_ret RecoverAppFromFolder(unsigned int, char const*) = 0;
+    virtual unknown_ret CanMoveApp(unsigned int) = 0;
+    virtual unknown_ret MoveApp(unsigned int, int) = 0;
+    virtual unknown_ret GetMoveAppProgress(unsigned int, unsigned long long*, unsigned long long*, unsigned int*) = 0;
+    virtual unknown_ret CancelMoveApp(unsigned int) = 0;
+    virtual unknown_ret BWaitForFiles(unsigned int) = 0;
+    virtual unknown_ret BNeedsFile(unsigned int, char const*, unsigned long long, unsigned int) = 0;
+    virtual unknown_ret BAddFileOnDisk(unsigned int, char const*, unsigned long long, unsigned int, SHADigestWrapper_t) = 0;
+    virtual unknown_ret FinishAddingFiles(unsigned int) = 0;
+    virtual unknown_ret GetAppStateInfo(unsigned int, AppStateInfo_s*) = 0;
+    virtual unknown_ret BIsAvailableOnPlatform(unsigned int, char const*) = 0;
+    virtual unknown_ret BCanRemotePlayTogether(unsigned int) = 0;
+    virtual unknown_ret BIsLocalMultiplayerApp(unsigned int) = 0;
+    virtual unknown_ret GetNumLibraryFolders() = 0;
+    virtual unknown_ret GetLibraryFolderPath(int, char*, int) = 0;
+    virtual unknown_ret AddLibraryFolder(char const*, char const*) = 0;
+    virtual unknown_ret RemoveLibraryFolder(int, bool, bool) = 0;
+    virtual unknown_ret BGetLibraryFolderInfo(int, bool*, unsigned long long*, unsigned long long*) = 0;
+    virtual unknown_ret GetAppLibraryFolder(unsigned int) = 0;
+    virtual unknown_ret ForceInstallDirOverride(char const*) = 0;
+    virtual unknown_ret SetDownloadThrottleRateKbps(int, bool) = 0;
+    virtual unknown_ret GetDownloadThrottleRateKbps(bool) = 0;
+    virtual unknown_ret SuspendDownloadThrottling(bool) = 0;
+    virtual unknown_ret SetThrottleDownloadsWhileStreaming(bool) = 0;
+    virtual unknown_ret BThrottleDownloadsWhileStreaming() = 0;
+    virtual unknown_ret GetLaunchQueryParam(unsigned int, char const*) = 0;
+    virtual unknown_ret BeginLaunchQueryParams(unsigned int) = 0;
+    virtual unknown_ret SetLaunchQueryParam(unsigned int, char const*, char const*) = 0;
+    virtual unknown_ret CommitLaunchQueryParams(unsigned int, char const*) = 0;
+    virtual unknown_ret GetLaunchCommandLine(unsigned int, char*, int) = 0;
+    virtual unknown_ret AddContentLogLine(StringView) = 0;
+    virtual unknown_ret GetSystemIconFile(unsigned int, char*, int, unsigned int*) = 0;
+    virtual unknown_ret SetUseHTTPSForDownloads(bool) = 0;
+    virtual unknown_ret GetUseHTTPSForDownloads() = 0;
+    virtual unknown_ret SetAppPlatformOverride(unsigned int, char const*, char const*) = 0;
 };
-
-#endif // ICLIENTAPPMANAGER_H

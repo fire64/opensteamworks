@@ -1,66 +1,92 @@
-//==========================  Open Steamworks  ================================
-//
-// This file is part of the Open Steamworks project. All individuals associated
-// with this project do not claim ownership of the contents
-// 
-// The code, comments, and all related files, projects, resources,
-// redistributables included with this project are Copyright Valve Corporation.
-// Additionally, Valve, the Valve logo, Half-Life, the Half-Life logo, the
-// Lambda logo, Steam, the Steam logo, Team Fortress, the Team Fortress logo,
-// Opposing Force, Day of Defeat, the Day of Defeat logo, Counter-Strike, the
-// Counter-Strike logo, Source, the Source logo, and Counter-Strike Condition
-// Zero are trademarks and or registered trademarks of Valve Corporation.
-// All other trademarks are property of their respective owners.
-//
-//=============================================================================
-
-#ifndef ICLIENTUGC_H
-#define ICLIENTUGC_H
-#ifdef _WIN32
-#pragma once
-#endif
-
-#include "SteamTypes.h"
-#include "UGCCommon.h"
-#include "RemoteStorageCommon.h"
-
-#define CLIENTUGC_INTERFACE_VERSION "CLIENTUGC_INTERFACE_VERSION001"
-
-abstract_class UNSAFE_INTERFACE IClientUGC
+class IClientUGC
 {
 public:
-	virtual UGCQueryHandle_t CreateQueryUserUGCRequest( AccountID_t unAccountID, EUserUGCList eListType, EUGCMatchingUGCType eMatchingUGCType, EUserUGCListSortOrder eSortOrder, AppId_t nCreatorAppID, AppId_t nConsumerAppID, uint32 unPage ) = 0;
-	virtual UGCQueryHandle_t CreateQueryAllUGCRequest( EUGCQuery eQueryType, EUGCMatchingUGCType eMatchingeMatchingUGCTypeFileType, AppId_t nCreatorAppID, AppId_t nConsumerAppID, uint32 unPage ) = 0;
-	virtual SteamAPICall_t SendQueryUGCRequest( UGCQueryHandle_t handle ) = 0;
-	virtual bool GetQueryUGCResult( UGCQueryHandle_t handle, uint32 index, SteamUGCDetails_t *pDetails ) = 0;
-	virtual bool ReleaseQueryUGCRequest( UGCQueryHandle_t handle ) = 0;
-	virtual bool AddRequiredTag( UGCQueryHandle_t handle, const char *pTagName ) = 0;
-	virtual bool AddExcludedTag( UGCQueryHandle_t handle, const char *pTagName ) = 0;
-	virtual bool SetReturnLongDescription( UGCQueryHandle_t handle, bool bReturnLongDescription ) = 0;
-	virtual bool SetReturnTotalOnly( UGCQueryHandle_t handle, bool bReturnTotalOnly ) = 0;
-	virtual bool SetAllowCachedResponse( UGCQueryHandle_t handle, uint32 ) = 0;
-	virtual bool SetCloudFileNameFilter( UGCQueryHandle_t handle, const char *pMatchCloudFileName ) = 0;
-	virtual bool SetMatchAnyTag( UGCQueryHandle_t handle, bool bMatchAnyTag ) = 0;
-	virtual bool SetSearchText( UGCQueryHandle_t handle, const char *pSearchText ) = 0;
-	virtual bool SetRankedByTrendDays( UGCQueryHandle_t handle, uint32 unDays ) = 0;
-	virtual SteamAPICall_t RequestUGCDetails( PublishedFileId_t nPublishedFileID ) = 0;
-	virtual uint64 CreateItem( uint32, EWorkshopFileType ) = 0;
-	virtual uint64 UploadItemContent( uint64, const char * ) = 0;
-	virtual uint64 UploadItemPreview( uint64, const char * ) = 0;
-	virtual uint64 StartItemUpdate( uint32, uint64 ) = 0;
-	virtual bool SetItemTitle( uint64, const char * ) = 0;
-	virtual bool SetItemChangeDescription( uint64, const char * ) = 0;
-	virtual bool SetItemDescription( uint64, const char * ) = 0;
-	virtual bool SetItemVisibility( uint64, ERemoteStoragePublishedFileVisibility ) = 0;
-	virtual bool SetItemTags( uint64, SteamParamStringArray_t  const* ) = 0;
-	virtual bool SetItemContent( uint64, uint64 ) = 0;
-	virtual bool SetItemPreview( uint64, uint64 ) = 0;
-	virtual uint64 CommitItemUpdate( uint64 ) = 0;
-	virtual uint64 SubscribeItem( uint32, uint64 ) = 0;
-	virtual uint64 UnsubscribeItem( uint32, uint64 ) = 0;
-	virtual uint32 GetNumSubscribedItems( uint32 ) = 0;
-	virtual uint32 GetSubscribedItems( uint32, uint64 *, uint32 ) = 0;
-	virtual bool GetSubscribedItemInfo( uint32, uint64, char *, int32, char *, int32, EWorkshopFileType *, bool *, char *, int32, uint64 * ) = 0;
-	};
-
-#endif // ICLIENTUGC_H
+    virtual unknown_ret CreateQueryUserUGCRequest(unsigned int, EUserUGCList, EUGCMatchingUGCType, EUserUGCListSortOrder, unsigned int, unsigned int, unsigned int) = 0;
+    virtual unknown_ret CreateQueryAllUGCRequest(EUGCQuery, EUGCMatchingUGCType, unsigned int, unsigned int, unsigned int) = 0;
+    virtual unknown_ret CreateQueryAllUGCRequest(EUGCQuery, EUGCMatchingUGCType, unsigned int, unsigned int, char const*) = 0;
+    virtual unknown_ret CreateQueryUGCDetailsRequest(unsigned long long*, unsigned int) = 0;
+    virtual unknown_ret SendQueryUGCRequest(unsigned long long) = 0;
+    virtual unknown_ret GetQueryUGCResult(unsigned long long, unsigned int, SteamUGCDetails_t*) = 0;
+    virtual unknown_ret GetQueryUGCNumTags(unsigned long long, unsigned int) = 0;
+    virtual unknown_ret GetQueryUGCTag(unsigned long long, unsigned int, unsigned int, char*, unsigned int) = 0;
+    virtual unknown_ret GetQueryUGCTagDisplayName(unsigned long long, unsigned int, unsigned int, char*, unsigned int) = 0;
+    virtual unknown_ret GetQueryUGCPreviewURL(unsigned long long, unsigned int, char*, unsigned int) = 0;
+    virtual unknown_ret GetQueryUGCImageURL(unsigned long long, unsigned int, char*, unsigned int, unsigned int*, unsigned int*) = 0;
+    virtual unknown_ret GetQueryUGCMetadata(unsigned long long, unsigned int, char*, unsigned int) = 0;
+    virtual unknown_ret GetQueryUGCChildren(unsigned long long, unsigned int, unsigned long long*, unsigned int) = 0;
+    virtual unknown_ret GetQueryUGCStatistic(unsigned long long, unsigned int, EItemStatistic, unsigned long long*) = 0;
+    virtual unknown_ret GetQueryUGCNumAdditionalPreviews(unsigned long long, unsigned int) = 0;
+    virtual unknown_ret GetQueryUGCAdditionalPreview(unsigned long long, unsigned int, unsigned int, char*, unsigned int, char*, unsigned int, EItemPreviewType*) = 0;
+    virtual unknown_ret GetQueryUGCNumKeyValueTags(unsigned long long, unsigned int) = 0;
+    virtual unknown_ret GetQueryUGCKeyValueTag(unsigned long long, unsigned int, unsigned int, char*, unsigned int, char*, unsigned int) = 0;
+    virtual unknown_ret GetQueryUGCKeyValueTag(unsigned long long, unsigned int, char const*, char*, unsigned int) = 0;
+    virtual unknown_ret GetQueryUGCIsDepotBuild(unsigned long long, unsigned int, bool*) = 0;
+    virtual unknown_ret ReleaseQueryUGCRequest(unsigned long long) = 0;
+    virtual unknown_ret AddRequiredTag(unsigned long long, char const*) = 0;
+    virtual unknown_ret AddRequiredTagGroup(unsigned long long, SteamParamStringArray_t const*) = 0;
+    virtual unknown_ret AddExcludedTag(unsigned long long, char const*) = 0;
+    virtual unknown_ret SetReturnOnlyIDs(unsigned long long, bool) = 0;
+    virtual unknown_ret SetReturnKeyValueTags(unsigned long long, bool) = 0;
+    virtual unknown_ret SetReturnLongDescription(unsigned long long, bool) = 0;
+    virtual unknown_ret SetReturnMetadata(unsigned long long, bool) = 0;
+    virtual unknown_ret SetReturnChildren(unsigned long long, bool) = 0;
+    virtual unknown_ret SetReturnAdditionalPreviews(unsigned long long, bool) = 0;
+    virtual unknown_ret SetReturnTotalOnly(unsigned long long, bool) = 0;
+    virtual unknown_ret SetReturnPlaytimeStats(unsigned long long, unsigned int) = 0;
+    virtual unknown_ret SetLanguage(unsigned long long, char const*) = 0;
+    virtual unknown_ret SetAllowCachedResponse(unsigned long long, unsigned int) = 0;
+    virtual unknown_ret SetCloudFileNameFilter(unsigned long long, char const*) = 0;
+    virtual unknown_ret SetMatchAnyTag(unsigned long long, bool) = 0;
+    virtual unknown_ret SetSearchText(unsigned long long, char const*) = 0;
+    virtual unknown_ret SetRankedByTrendDays(unsigned long long, unsigned int) = 0;
+    virtual unknown_ret AddRequiredKeyValueTag(unsigned long long, char const*, char const*) = 0;
+    virtual unknown_ret RequestUGCDetails(unsigned long long, unsigned int) = 0;
+    virtual unknown_ret CreateItem(unsigned int, EWorkshopFileType) = 0;
+    virtual unknown_ret StartItemUpdate(unsigned int, unsigned long long) = 0;
+    virtual unknown_ret SetItemTitle(unsigned long long, char const*) = 0;
+    virtual unknown_ret SetItemDescription(unsigned long long, char const*) = 0;
+    virtual unknown_ret SetItemUpdateLanguage(unsigned long long, char const*) = 0;
+    virtual unknown_ret SetItemMetadata(unsigned long long, char const*) = 0;
+    virtual unknown_ret SetItemVisibility(unsigned long long, ERemoteStoragePublishedFileVisibility) = 0;
+    virtual unknown_ret SetItemTags(unsigned long long, SteamParamStringArray_t const*) = 0;
+    virtual unknown_ret SetItemContent(unsigned long long, char const*) = 0;
+    virtual unknown_ret SetItemPreview(unsigned long long, char const*) = 0;
+    virtual unknown_ret SetAllowLegacyUpload(unsigned long long, bool) = 0;
+    virtual unknown_ret RemoveAllItemKeyValueTags(unsigned long long) = 0;
+    virtual unknown_ret RemoveItemKeyValueTags(unsigned long long, char const*) = 0;
+    virtual unknown_ret AddItemKeyValueTag(unsigned long long, char const*, char const*) = 0;
+    virtual unknown_ret AddItemPreviewFile(unsigned long long, char const*, EItemPreviewType) = 0;
+    virtual unknown_ret AddItemPreviewVideo(unsigned long long, char const*) = 0;
+    virtual unknown_ret UpdateItemPreviewFile(unsigned long long, unsigned int, char const*) = 0;
+    virtual unknown_ret UpdateItemPreviewVideo(unsigned long long, unsigned int, char const*) = 0;
+    virtual unknown_ret RemoveItemPreview(unsigned long long, unsigned int) = 0;
+    virtual unknown_ret SubmitItemUpdate(unsigned long long, char const*) = 0;
+    virtual unknown_ret GetItemUpdateProgress(unsigned long long, unsigned long long*, unsigned long long*) = 0;
+    virtual unknown_ret SetUserItemVote(unsigned long long, bool) = 0;
+    virtual unknown_ret GetUserItemVote(unsigned long long) = 0;
+    virtual unknown_ret AddItemToFavorites(unsigned int, unsigned long long) = 0;
+    virtual unknown_ret RemoveItemFromFavorites(unsigned int, unsigned long long) = 0;
+    virtual unknown_ret SubscribeItem(unsigned int, unsigned long long, bool) = 0;
+    virtual unknown_ret UnsubscribeItem(unsigned int, unsigned long long) = 0;
+    virtual unknown_ret GetNumSubscribedItems(unsigned int) = 0;
+    virtual unknown_ret GetSubscribedItems(unsigned int, unsigned long long*, unsigned int) = 0;
+    virtual unknown_ret GetItemState(unsigned int, unsigned long long) = 0;
+    virtual unknown_ret GetItemInstallInfo(unsigned int, unsigned long long, unsigned long long*, char*, unsigned int, unsigned int*) = 0;
+    virtual unknown_ret GetItemDownloadInfo(unsigned int, unsigned long long, unsigned long long*, unsigned long long*) = 0;
+    virtual unknown_ret DownloadItem(unsigned int, unsigned long long, bool) = 0;
+    virtual unknown_ret GetAppItemsStatus(unsigned int, bool*, bool*) = 0;
+    virtual unknown_ret BInitWorkshopForGameServer(unsigned int, unsigned int, char const*) = 0;
+    virtual unknown_ret SuspendDownloads(unsigned int, bool) = 0;
+    virtual unknown_ret GetAllItemsSizeOnDisk(unsigned int) = 0;
+    virtual unknown_ret StartPlaytimeTracking(unsigned int, unsigned long long*, unsigned int) = 0;
+    virtual unknown_ret StopPlaytimeTracking(unsigned int, unsigned long long*, unsigned int) = 0;
+    virtual unknown_ret StopPlaytimeTrackingForAllItems(unsigned int) = 0;
+    virtual unknown_ret AddDependency(unsigned long long, unsigned long long) = 0;
+    virtual unknown_ret RemoveDependency(unsigned long long, unsigned long long) = 0;
+    virtual unknown_ret AddAppDependency(unsigned long long, unsigned int) = 0;
+    virtual unknown_ret RemoveAppDependency(unsigned long long, unsigned int) = 0;
+    virtual unknown_ret GetAppDependencies(unsigned long long) = 0;
+    virtual unknown_ret DeleteItem(unsigned long long) = 0;
+    virtual unknown_ret ShowWorkshopEULA() = 0;
+    virtual unknown_ret GetWorkshopEULAStatus() = 0;
+};

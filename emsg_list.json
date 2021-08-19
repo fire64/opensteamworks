@@ -1,0 +1,2352 @@
+[
+    {
+        "emsg": 113,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 124,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 146,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 147,
+        "flags": 63,
+        "server_type": 41
+    },
+    {
+        "emsg": 151,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 152,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 597,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 701,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 702,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 703,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 704,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 706,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 707,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 710,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 712,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 714,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 715,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 716,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 717,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 718,
+        "flags": 6,
+        "server_type": 102
+    },
+    {
+        "emsg": 726,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 727,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 728,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 730,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 731,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 732,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 736,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 740,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 741,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 742,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 743,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 744,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 745,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 746,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 747,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 751,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 755,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 756,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 757,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 758,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 759,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 760,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 761,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 763,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 764,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 765,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 766,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 767,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 768,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 771,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 773,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 774,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 779,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 780,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 782,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 783,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 784,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 785,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 791,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 792,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 796,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 797,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 798,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 799,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 800,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 801,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 802,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 803,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 805,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 807,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 808,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 809,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 810,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 813,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 814,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 815,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 818,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 819,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 820,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 821,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 822,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 830,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 831,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 832,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 839,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 842,
+        "flags": 6,
+        "server_type": 17
+    },
+    {
+        "emsg": 845,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 846,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 848,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 849,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 850,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 851,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 855,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 856,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 857,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 858,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 880,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 896,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 897,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 901,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 903,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 905,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 906,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 907,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 908,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 909,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 910,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 911,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 918,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 919,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 920,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 923,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 936,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 937,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 938,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 939,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 940,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 941,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 1200,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 1201,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 1202,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 1203,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 1204,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 1303,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 1304,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 1620,
+        "flags": 6,
+        "server_type": 17
+    },
+    {
+        "emsg": 1621,
+        "flags": 6,
+        "server_type": 17
+    },
+    {
+        "emsg": 1622,
+        "flags": 6,
+        "server_type": 17
+    },
+    {
+        "emsg": 1623,
+        "flags": 6,
+        "server_type": 17
+    },
+    {
+        "emsg": 1625,
+        "flags": 6,
+        "server_type": 17
+    },
+    {
+        "emsg": 1627,
+        "flags": 6,
+        "server_type": 17
+    },
+    {
+        "emsg": 1630,
+        "flags": 6,
+        "server_type": 16
+    },
+    {
+        "emsg": 4026,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 4331,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 4332,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 4402,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 4403,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 4406,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 4407,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 4408,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 4409,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5202,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5203,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5204,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5205,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5206,
+        "flags": 6,
+        "server_type": 21
+    },
+    {
+        "emsg": 5207,
+        "flags": 6,
+        "server_type": 21
+    },
+    {
+        "emsg": 5210,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5211,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5212,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5213,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5214,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5216,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5219,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5220,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5226,
+        "flags": 6,
+        "server_type": 21
+    },
+    {
+        "emsg": 5227,
+        "flags": 6,
+        "server_type": 21
+    },
+    {
+        "emsg": 5230,
+        "flags": 6,
+        "server_type": 21
+    },
+    {
+        "emsg": 5231,
+        "flags": 6,
+        "server_type": 21
+    },
+    {
+        "emsg": 5232,
+        "flags": 6,
+        "server_type": 21
+    },
+    {
+        "emsg": 5233,
+        "flags": 6,
+        "server_type": 21
+    },
+    {
+        "emsg": 5251,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5252,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5401,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5402,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5403,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5404,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5405,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5407,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5408,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5409,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5410,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5411,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5412,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5413,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5414,
+        "flags": 6,
+        "server_type": 34
+    },
+    {
+        "emsg": 5415,
+        "flags": 6,
+        "server_type": 34
+    },
+    {
+        "emsg": 5416,
+        "flags": 6,
+        "server_type": 34
+    },
+    {
+        "emsg": 5417,
+        "flags": 6,
+        "server_type": 34
+    },
+    {
+        "emsg": 5418,
+        "flags": 6,
+        "server_type": 34
+    },
+    {
+        "emsg": 5419,
+        "flags": 6,
+        "server_type": 34
+    },
+    {
+        "emsg": 5426,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5427,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5428,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5429,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5430,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5431,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5432,
+        "flags": 6,
+        "server_type": 58
+    },
+    {
+        "emsg": 5433,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5434,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5435,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5438,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5439,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5440,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5443,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5444,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5445,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5446,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5448,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5449,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5450,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5451,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5452,
+        "flags": 6,
+        "server_type": 57
+    },
+    {
+        "emsg": 5453,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5456,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5457,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5458,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5459,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5460,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5461,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5463,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5464,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5465,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5466,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5467,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5468,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5469,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5470,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5480,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5481,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5482,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5483,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5484,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5485,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5486,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5487,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5488,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5489,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5490,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5491,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5492,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5493,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5494,
+        "flags": 6,
+        "server_type": 39
+    },
+    {
+        "emsg": 5495,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5496,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5500,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5501,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5502,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5503,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5504,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5505,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5506,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5508,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5509,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5510,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5511,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5512,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5514,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5515,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 5516,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 5517,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 5518,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 5519,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 5520,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 5521,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 5522,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 5523,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 5524,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 5525,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 5526,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5527,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5528,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5529,
+        "flags": 6,
+        "server_type": 34
+    },
+    {
+        "emsg": 5530,
+        "flags": 6,
+        "server_type": 34
+    },
+    {
+        "emsg": 5531,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5532,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5535,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5536,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5537,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5538,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5539,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5540,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5541,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5542,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5543,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5546,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5547,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5548,
+        "flags": 63,
+        "server_type": 16
+    },
+    {
+        "emsg": 5551,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5552,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5553,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5554,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5555,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5558,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5559,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5560,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5561,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5562,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5563,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5564,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5565,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5566,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5567,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5568,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5569,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5570,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5571,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5572,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5573,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5574,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5575,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5576,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5577,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5578,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5582,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5583,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 5584,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5585,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5586,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5587,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5588,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5589,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5592,
+        "flags": 6,
+        "server_type": 17
+    },
+    {
+        "emsg": 5593,
+        "flags": 6,
+        "server_type": 17
+    },
+    {
+        "emsg": 5594,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 5595,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 5596,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5597,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5598,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5599,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5605,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5606,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5607,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5617,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5621,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5622,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5623,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5624,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5625,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5626,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 5627,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 6403,
+        "flags": 63,
+        "server_type": 43
+    },
+    {
+        "emsg": 6404,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 6407,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 6501,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 6502,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 6503,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 6504,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 6505,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 6506,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 6507,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 6509,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 6601,
+        "flags": 63,
+        "server_type": 42
+    },
+    {
+        "emsg": 6602,
+        "flags": 63,
+        "server_type": 42
+    },
+    {
+        "emsg": 6603,
+        "flags": 63,
+        "server_type": 42
+    },
+    {
+        "emsg": 6604,
+        "flags": 63,
+        "server_type": 42
+    },
+    {
+        "emsg": 6605,
+        "flags": 63,
+        "server_type": 42
+    },
+    {
+        "emsg": 6606,
+        "flags": 63,
+        "server_type": 42
+    },
+    {
+        "emsg": 6607,
+        "flags": 63,
+        "server_type": 42
+    },
+    {
+        "emsg": 6608,
+        "flags": 63,
+        "server_type": 42
+    },
+    {
+        "emsg": 6609,
+        "flags": 6,
+        "server_type": 42
+    },
+    {
+        "emsg": 6610,
+        "flags": 6,
+        "server_type": 42
+    },
+    {
+        "emsg": 6611,
+        "flags": 63,
+        "server_type": 42
+    },
+    {
+        "emsg": 6612,
+        "flags": 63,
+        "server_type": 42
+    },
+    {
+        "emsg": 6613,
+        "flags": 6,
+        "server_type": 42
+    },
+    {
+        "emsg": 6614,
+        "flags": 6,
+        "server_type": 42
+    },
+    {
+        "emsg": 6615,
+        "flags": 6,
+        "server_type": 42
+    },
+    {
+        "emsg": 6616,
+        "flags": 6,
+        "server_type": 42
+    },
+    {
+        "emsg": 6617,
+        "flags": 6,
+        "server_type": 42
+    },
+    {
+        "emsg": 6618,
+        "flags": 6,
+        "server_type": 42
+    },
+    {
+        "emsg": 6619,
+        "flags": 6,
+        "server_type": 42
+    },
+    {
+        "emsg": 6620,
+        "flags": 6,
+        "server_type": 42
+    },
+    {
+        "emsg": 6621,
+        "flags": 63,
+        "server_type": 42
+    },
+    {
+        "emsg": 6624,
+        "flags": 6,
+        "server_type": 42
+    },
+    {
+        "emsg": 6625,
+        "flags": 6,
+        "server_type": 42
+    },
+    {
+        "emsg": 6626,
+        "flags": 6,
+        "server_type": 42
+    },
+    {
+        "emsg": 6627,
+        "flags": 6,
+        "server_type": 42
+    },
+    {
+        "emsg": 6801,
+        "flags": 0,
+        "server_type": -1
+    },
+    {
+        "emsg": 6802,
+        "flags": 0,
+        "server_type": -1
+    },
+    {
+        "emsg": 6803,
+        "flags": 0,
+        "server_type": -1
+    },
+    {
+        "emsg": 6804,
+        "flags": 0,
+        "server_type": -1
+    },
+    {
+        "emsg": 6805,
+        "flags": 0,
+        "server_type": -1
+    },
+    {
+        "emsg": 6806,
+        "flags": 0,
+        "server_type": -1
+    },
+    {
+        "emsg": 6807,
+        "flags": 0,
+        "server_type": -1
+    },
+    {
+        "emsg": 6808,
+        "flags": 0,
+        "server_type": -1
+    },
+    {
+        "emsg": 6809,
+        "flags": 0,
+        "server_type": -1
+    },
+    {
+        "emsg": 6810,
+        "flags": 0,
+        "server_type": -1
+    },
+    {
+        "emsg": 6811,
+        "flags": 0,
+        "server_type": -1
+    },
+    {
+        "emsg": 6815,
+        "flags": 0,
+        "server_type": -1
+    },
+    {
+        "emsg": 7001,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 7002,
+        "flags": 6,
+        "server_type": 41
+    },
+    {
+        "emsg": 7005,
+        "flags": 6,
+        "server_type": 102
+    },
+    {
+        "emsg": 7301,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7302,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7309,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7310,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7311,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7312,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7315,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7316,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7325,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7326,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7364,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7365,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7366,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7367,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7378,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7379,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7381,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 7382,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7383,
+        "flags": 6,
+        "server_type": 45
+    },
+    {
+        "emsg": 7501,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 7502,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 7503,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 7515,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 7516,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 7517,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 7518,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 7519,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 7520,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 7523,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 7524,
+        "flags": 6,
+        "server_type": 102
+    },
+    {
+        "emsg": 7525,
+        "flags": 6,
+        "server_type": 102
+    },
+    {
+        "emsg": 7526,
+        "flags": 6,
+        "server_type": 102
+    },
+    {
+        "emsg": 7527,
+        "flags": 6,
+        "server_type": 102
+    },
+    {
+        "emsg": 7528,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 7529,
+        "flags": 6,
+        "server_type": 47
+    },
+    {
+        "emsg": 7701,
+        "flags": 6,
+        "server_type": 59
+    },
+    {
+        "emsg": 7702,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 7703,
+        "flags": 6,
+        "server_type": 59
+    },
+    {
+        "emsg": 7704,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 7705,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 7706,
+        "flags": 6,
+        "server_type": 59
+    },
+    {
+        "emsg": 7901,
+        "flags": 6,
+        "server_type": 119
+    },
+    {
+        "emsg": 7902,
+        "flags": 6,
+        "server_type": 119
+    },
+    {
+        "emsg": 8503,
+        "flags": 6,
+        "server_type": 53
+    },
+    {
+        "emsg": 8504,
+        "flags": 6,
+        "server_type": 53
+    },
+    {
+        "emsg": 8507,
+        "flags": 6,
+        "server_type": 53
+    },
+    {
+        "emsg": 8508,
+        "flags": 6,
+        "server_type": 53
+    },
+    {
+        "emsg": 8509,
+        "flags": 6,
+        "server_type": 53
+    },
+    {
+        "emsg": 8510,
+        "flags": 6,
+        "server_type": 53
+    },
+    {
+        "emsg": 8901,
+        "flags": 6,
+        "server_type": 14
+    },
+    {
+        "emsg": 8902,
+        "flags": 6,
+        "server_type": 14
+    },
+    {
+        "emsg": 8903,
+        "flags": 6,
+        "server_type": 14
+    },
+    {
+        "emsg": 8904,
+        "flags": 6,
+        "server_type": 14
+    },
+    {
+        "emsg": 8905,
+        "flags": 6,
+        "server_type": 14
+    },
+    {
+        "emsg": 8906,
+        "flags": 6,
+        "server_type": 14
+    },
+    {
+        "emsg": 9330,
+        "flags": 6,
+        "server_type": 63
+    },
+    {
+        "emsg": 9331,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9405,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9406,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9503,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9504,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9505,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9506,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9507,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 9508,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 9510,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9511,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9513,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 9514,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 9600,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9601,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9700,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9701,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9702,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9703,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9704,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9800,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 9801,
+        "flags": 59,
+        "server_type": -1
+    },
+    {
+        "emsg": 9802,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9900,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 9901,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 10100,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 10101,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 10102,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 10103,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 10104,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 10105,
+        "flags": 2,
+        "server_type": -1
+    },
+    {
+        "emsg": 10106,
+        "flags": 2,
+        "server_type": -1
+    }
+]
